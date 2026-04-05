@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hargrove Plumbing & Heating | Monticello, IL | (217) 762-4400</title>
+  <meta name="description" content="Hargrove Plumbing & Heating — Monticello's trusted plumber since 1987. Licensed, insured, and available 24/7 for emergencies. Call (217) 762-4400." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a3a5c;
+      --navy-dark: #122840;
+      --navy-light: #2a5080;
+      --red: #c0392b;
+      --red-dark: #a93226;
+      --white: #ffffff;
+      --gray-light: #f5f5f5;
+      --gray-mid: #e8e8e8;
+      --gray-text: #555555;
+      --gray-dark: #333333;
+      --shadow: 0 2px 16px rgba(0,0,0,0.10);
+      --shadow-hover: 0 6px 24px rgba(0,0,0,0.16);
+      --font-heading: 'Merriweather', Georgia, serif;
+      --font-body: 'Open Sans', Arial, sans-serif;
+      --radius: 4px;
+      --transition: 0.25s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--gray-dark);
+      background: var(--white);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== UTILITY ===== */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .section-subhead {
+      font-size: 1.05rem;
+      color: var(--gray-text);
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    section { padding: 80px 0; }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: var(--red);
+      color: var(--white);
+      text-align: center;
+      padding: 9px 24px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      z-index: 1000;
+      position: relative;
+    }
+
+    .top-bar a {
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .top-bar a:hover { opacity: 0.85; }
+
+    /* ===== NAV ===== */
+    .site-nav {
+      background: var(--white);
+      border-bottom: 3px solid var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 16px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo svg {
+      width: 28px;
+      height: 28px;
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .nav-logo-text span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 400;
+      font-family: var(--font-body);
+      color: var(--gray-text);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      padding: 8px 14px;
+      border-radius: var(--radius);
+      transition: background var(--transition), color var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      background: var(--gray-light);
+      color: var(--red);
+    }
+
+    .nav-cta {
+      background: var(--red) !important;
+      color: var(--white) !important;
+      padding: 9px 18px !important;
+      border-radius: var(--radius) !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--red-dark) !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--navy);
+      z-index: 850;
+      padding: 100px 40px 40px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      transition: color var(--transition);
+    }
+
+    .mobile-menu a:hover { color: var(--red); }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center 40%;
+      padding: 80px 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(18,40,64,0.88) 0%, rgba(26,58,92,0.78) 60%, rgba(18,40,64,0.65) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 36px;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      border: 2px solid var(--red);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition), transform 0.15s;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .btn-red:hover {
+      background: var(--red-dark);
+      border-color: var(--red-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      border: 2px solid rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition), transform 0.15s;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .hero-phone {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-phone a {
+      color: var(--white);
+      transition: color var(--transition);
+    }
+
+    .hero-phone a:hover { color: #f9c9c6; }
+
+    .hero-phone-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+      font-family: var(--font-body);
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== SERVICES ===== */
+    #services { background: var(--gray-light); }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header .section-subhead {
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border-top: 4px solid var(--navy);
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .service-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      font-size: 0.92rem;
+      color: var(--gray-text);
+      line-height: 1.65;
+    }
+
+    /* ===== WHY US ===== */
+    #about { background: var(--navy); padding-bottom: 0; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+
+    .why-item { text-align: center; }
+
+    .why-icon {
+      width: 56px;
+      height: 56px;
+      color: var(--white);
+      opacity: 0.85;
+      margin: 0 auto 20px;
+    }
+
+    .why-item h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .why-item p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    #about .section-heading { color: var(--white); text-align: center; }
+    #about .section-label { text-align: center; }
+
+    .numbers-bar {
+      background: rgba(0,0,0,0.2);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 36px 24px;
+    }
+
+    .numbers-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .number-stat {
+      text-align: center;
+    }
+
+    .number-stat strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .number-stat span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ===== PHOTO GRID ===== */
+    .photo-grid-section { padding: 0; }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .photo-grid-item {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .photo-grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .photo-grid-item:hover img { transform: scale(1.04); }
+
+    /* ===== REVIEWS ===== */
+    #reviews { background: var(--white); }
+
+    .reviews-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .google-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray-light);
+      border: 1px solid var(--gray-mid);
+      border-radius: 24px;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    .google-badge svg { width: 18px; height: 18px; }
+
+    .star-rating {
+      color: #f5a623;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--gray-light);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      border-left: 4px solid var(--navy);
+    }
+
+    .review-card::before {
+      content: '\201C';
+      font-family: Georgia, serif;
+      font-size: 4rem;
+      color: var(--navy);
+      opacity: 0.12;
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      line-height: 1;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      color: var(--gray-text);
+      line-height: 1.72;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .reviewer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .reviewer-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .reviewer-location {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+    }
+
+    /* ===== SERVICE AREA ===== */
+    #area { background: var(--gray-light); }
+
+    .area-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .area-text p {
+      color: var(--gray-text);
+      margin-bottom: 20px;
+      line-height: 1.75;
+    }
+
+    .area-text .cta-note {
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--gray-text);
+      border-left: 3px solid var(--red);
+      padding-left: 14px;
+      margin-top: 28px;
+    }
+
+    .map-box {
+      border: 2px solid var(--navy);
+      border-radius: var(--radius);
+      background: var(--white);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .map-box-header {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--gray-mid);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .map-box-header svg {
+      width: 20px;
+      height: 20px;
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    .town-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+    }
+
+    .town-list li {
+      font-size: 0.92rem;
+      color: var(--gray-dark);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .town-list li::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .county-note {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--gray-mid);
+      font-size: 0.85rem;
+      color: var(--gray-text);
+    }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--white); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+
+    .contact-phone-big {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 900;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+
+    .contact-phone-big a {
+      color: var(--red);
+      transition: color var(--transition);
+    }
+
+    .contact-phone-big a:hover { color: var(--red-dark); }
+
+    .contact-info-list {
+      list-style: none;
+      margin-top: 28px;
+    }
+
+    .contact-info-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-mid);
+      font-size: 0.92rem;
+      color: var(--gray-text);
+    }
+
+    .contact-info-list li:last-child { border-bottom: none; }
+
+    .contact-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--navy);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .contact-info-label {
+      font-weight: 700;
+      color: var(--gray-dark);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Form */
+    .contact-form {
+      background: var(--gray-light);
+      border-radius: var(--radius);
+      padding: 40px;
+      border-top: 4px solid var(--navy);
+    }
+
+    .contact-form h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-dark);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--gray-mid);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.93rem;
+      color: var(--gray-dark);
+      background: var(--white);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(26,58,92,0.12);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .form-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--gray-mid);
+      border-radius: 3px;
+      cursor: pointer;
+      flex-shrink: 0;
+      accent-color: var(--red);
+    }
+
+    .form-check label {
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: var(--gray-dark);
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), transform 0.15s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-submit:hover {
+      background: var(--red-dark);
+      transform: translateY(-1px);
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--gray-text);
+      margin-top: 12px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.75);
+      padding: 48px 0 28px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 28px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .footer-logo svg {
+      width: 26px;
+      height: 26px;
+      color: var(--white);
+    }
+
+    .footer-logo-text {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .footer-tagline {
+      font-size: 0.88rem;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .footer-license {
+      font-size: 0.78rem;
+      opacity: 0.55;
+      margin-top: 8px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.65);
+      transition: color var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-hours li { color: rgba(255,255,255,0.65); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.82rem;
+    }
+
+    .footer-bottom a {
+      color: rgba(255,255,255,0.6);
+      transition: color var(--transition);
+    }
+
+    .footer-bottom a:hover { color: var(--white); }
+
+    .footer-designer {
+      opacity: 0.55;
+    }
+
+    /* ===== SUCCESS MESSAGE ===== */
+    .form-success {
+      display: none;
+      background: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      color: #2e7d32;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 60px 0; }
+
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .hero { min-height: 520px; padding: 60px 0; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; gap: 36px; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-grid-item { aspect-ratio: 16/9; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .area-grid { grid-template-columns: 1fr; gap: 32px; }
+
+      .contact-form { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .numbers-inner { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 24px; }
+      .number-stat { min-width: 120px; }
+
+      .reviews-meta { flex-wrap: wrap; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.75rem; }
+      .hero-buttons { flex-direction: column; }
+      .btn-red, .btn-outline { text-align: center; }
+      .town-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="top-bar" role="banner">
+    24/7 Emergency Service &nbsp;&middot;&nbsp; Call Now: <a href="tel:2177624400">(217) 762-4400</a>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo" aria-label="Hargrove Plumbing & Heating — Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+        <div class="nav-logo-text">
+          Hargrove Plumbing & Heating
+          <span>Monticello, IL &mdash; Est. 1987</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">Why Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#area">Service Area</a></li>
+        <li><a href="#contact" class="nav-cta">Request Service</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu" aria-modal="true">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">&times;</button>
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#about" class="mobile-link">Why Us</a>
+    <a href="#reviews" class="mobile-link">Reviews</a>
+    <a href="#area" class="mobile-link">Service Area</a>
+    <a href="#contact" class="mobile-link">Request Service</a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-eyebrow">Monticello &amp; Central Illinois</span>
+        <h1>Monticello's Trusted Plumber Since 1987</h1>
+        <p class="hero-sub">Licensed, insured, and available 24/7 for emergencies. Family-owned and operated for over 35 years. When something goes wrong, Bill Hargrove picks up the phone.</p>
+        <div class="hero-buttons">
+          <a href="tel:2177624400" class="btn-red">Call Now: (217) 762-4400</a>
+          <a href="#contact" class="btn-outline">Request Service</a>
+        </div>
+        <div class="hero-phone">
+          <div class="hero-phone-label">24/7 Emergency Line</div>
+          <a href="tel:2177624400">(217) 762-4400</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-heading" id="services-heading">Our Services</h2>
+        <p class="section-subhead">From a dripping faucet to a full HVAC system replacement, Hargrove handles it all — promptly and professionally.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- Plumbing Repair -->
+        <div class="service-card fade-in">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <h3>Plumbing Repair</h3>
+          <p>Leaks, burst pipes, fixture replacement, and everything in between. No job too small — we treat every call like it's the only one on the schedule.</p>
+        </div>
+
+        <!-- Water Heaters -->
+        <div class="service-card fade-in">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10"/>
+            <path d="M12 6v6l4 2"/>
+            <path d="M16 2l2 2-2 2"/>
+            <path d="M22 8l-2-2 2-2"/>
+          </svg>
+          <h3>Water Heaters</h3>
+          <p>Installation and repair of tank and tankless water heaters. Same-day service available. We carry common units on the truck so you're not waiting days without hot water.</p>
+        </div>
+
+        <!-- HVAC -->
+        <div class="service-card fade-in">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 10 16H2m15.73-8.27A2 2 0 1 1 19 12H2"/>
+          </svg>
+          <h3>HVAC</h3>
+          <p>Heating and cooling installation, maintenance, and emergency repair for all major brands. Keeping Monticello comfortable through central Illinois winters and summers alike.</p>
+        </div>
+
+        <!-- Drain Cleaning -->
+        <div class="service-card fade-in">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="8 12 12 16 16 12"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+          </svg>
+          <h3>Drain Cleaning</h3>
+          <p>Clogged drains cleared fast with professional hydro-jetting and snake equipment. Kitchen, bath, floor drains, and sewer lines — we've seen it all and cleared it all.</p>
+        </div>
+
+        <!-- New Construction -->
+        <div class="service-card fade-in">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <h3>New Construction</h3>
+          <p>Rough-in plumbing for new builds and major renovations. We work seamlessly with your contractor or ours — on schedule and to code, every time.</p>
+        </div>
+
+        <!-- Water Treatment -->
+        <div class="service-card fade-in">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            <line x1="12" y1="14" x2="12" y2="18"/>
+            <line x1="10" y1="16" x2="14" y2="16"/>
+          </svg>
+          <h3>Water Treatment</h3>
+          <p>Water softeners, filtration systems, and well pump service for rural properties throughout Piatt County. Better water starts with the right equipment, properly installed.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY US ===== -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <span class="section-label" style="color: rgba(255,255,255,0.6);">Why Hargrove</span>
+      <h2 class="section-heading" id="about-heading" style="text-align:center; color: var(--white); margin-bottom: 52px;">A Name You've Been Able to Count On Since 1987</h2>
+
+      <div class="why-grid">
+
+        <div class="why-item fade-in">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="7"/>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+          </svg>
+          <h3>35+ Years Experience</h3>
+          <p>Bill Hargrove learned the trade from his father. We've been serving Monticello and surrounding communities since 1987 — through floods, deep freezes, and everything in between.</p>
+        </div>
+
+        <div class="why-item fade-in">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <h3>Licensed &amp; Insured</h3>
+          <p>All work is performed by licensed plumbers and HVAC technicians. Fully bonded and insured for your protection. You'll never wonder if the person in your home is qualified.</p>
+        </div>
+
+        <div class="why-item fade-in">
+          <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <h3>Same-Day Service</h3>
+          <p>We answer the phone and show up when we say we will. No 4-hour windows, no runaround. We respect your time — because we know what it's like to wait on a contractor who never shows.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="numbers-bar">
+      <div class="numbers-inner">
+        <div class="number-stat fade-in">
+          <strong>35+</strong>
+          <span>Years in Business</span>
+        </div>
+        <div class="number-stat fade-in">
+          <strong>3,000+</strong>
+          <span>Jobs Completed</span>
+        </div>
+        <div class="number-stat fade-in">
+          <strong>4.9</strong>
+          <span>Star Google Rating</span>
+        </div>
+        <div class="number-stat fade-in">
+          <strong>24/7</strong>
+          <span>Emergency Available</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PHOTO GRID ===== -->
+  <div class="photo-grid-section" aria-hidden="true">
+    <div class="photo-grid">
+      <div class="photo-grid-item">
+        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80" alt="Plumber working on pipes" loading="lazy" />
+      </div>
+      <div class="photo-grid-item">
+        <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=600&q=80" alt="HVAC technician servicing unit" loading="lazy" />
+      </div>
+      <div class="photo-grid-item">
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=600&q=80" alt="Professional plumbing work" loading="lazy" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REVIEWS ===== -->
+  <section id="reviews" aria-labelledby="reviews-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Customer Reviews</span>
+        <h2 class="section-heading" id="reviews-heading">What Our Customers Say</h2>
+        <div class="reviews-meta">
+          <div class="google-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            200+ Reviews on Google &nbsp;·&nbsp; ★ 4.9
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+
+        <div class="review-card fade-in">
+          <span class="star-rating" aria-label="5 out of 5 stars">★★★★★</span>
+          <p class="review-text">"Bill came out the same afternoon our water heater started leaking. Had it replaced by 6pm. Fair price, no pressure, cleaned up everything. Will never call anyone else."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" aria-hidden="true">LM</div>
+            <div>
+              <div class="reviewer-name">Linda M.</div>
+              <div class="reviewer-location">Monticello, IL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card fade-in">
+          <span class="star-rating" aria-label="5 out of 5 stars">★★★★★</span>
+          <p class="review-text">"Hargrove has done plumbing work on two of my rental properties. Always professional, always on time, always fair. They're the only number in my phone for plumbing."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" aria-hidden="true">DT</div>
+            <div>
+              <div class="reviewer-name">Dave T.</div>
+              <div class="reviewer-location">Bement, IL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card fade-in">
+          <span class="star-rating" aria-label="5 out of 5 stars">★★★★★</span>
+          <p class="review-text">"3am emergency — pipe burst in the basement. They answered on the first ring and had someone here within an hour. Can't say enough good things about this family."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" aria-hidden="true">KS</div>
+            <div>
+              <div class="reviewer-name">Karen S.</div>
+              <div class="reviewer-location">Monticello, IL</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE AREA ===== -->
+  <section id="area" aria-labelledby="area-heading">
+    <div class="container">
+      <div class="area-grid">
+        <div class="area-text fade-in">
+          <span class="section-label">Where We Work</span>
+          <h2 class="section-heading" id="area-heading">We Serve Central Illinois</h2>
+          <p>Hargrove Plumbing & Heating has been the go-to service provider across Piatt County and the surrounding communities since 1987. Whether you're right in Monticello or out on a rural property in the county, we make the trip.</p>
+          <p>Our service trucks are stocked with the parts and equipment to handle most jobs in a single visit — so we're not just showing up to look at your problem and schedule a second appointment.</p>
+          <p class="cta-note">If you don't see your town listed, give us a call — we may still be able to help. We never turn away a neighbor who needs it.</p>
+        </div>
+
+        <div class="map-box fade-in">
+          <div class="map-box-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Service Coverage Area
+          </div>
+          <ul class="town-list" aria-label="Served towns">
+            <li>Monticello</li>
+            <li>Bement</li>
+            <li>Cerro Gordo</li>
+            <li>Cisco</li>
+            <li>Deland</li>
+            <li>Forsyth</li>
+            <li>Heyworth</li>
+            <li>Mahomet</li>
+          </ul>
+          <div class="county-note">
+            <strong>Piatt County (all of it)</strong> &mdash; including unincorporated rural areas and farm properties. Well pump service available countywide.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="section-header fade-in" style="text-align:left; margin-bottom:48px;">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-heading" id="contact-heading">Request Service</h2>
+        <p class="section-subhead">Fill out the form and we'll get back to you the same business day — or call for a faster response.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info fade-in">
+          <h3>Contact Information</h3>
+          <div class="contact-phone-big">
+            <a href="tel:2177624400">(217) 762-4400</a>
+          </div>
+          <p style="font-size:0.85rem; color: var(--gray-text); margin-bottom: 8px;">Emergency line — available 24/7</p>
+
+          <ul class="contact-info-list">
+            <li>
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <div>
+                <span class="contact-info-label">Email</span>
+                <a href="mailto:info@hargroveplumbing.com" style="color: var(--navy);">info@hargroveplumbing.com</a>
+              </div>
+            </li>
+            <li>
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div>
+                <span class="contact-info-label">Address</span>
+                412 S Market St<br />Monticello, IL 61856
+              </div>
+            </li>
+            <li>
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <div>
+                <span class="contact-info-label">Business Hours</span>
+                Mon&ndash;Fri: 7am&ndash;6pm<br />
+                Sat: 8am&ndash;3pm<br />
+                <strong style="color: var(--red);">Emergency: 24/7</strong>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-form fade-in">
+          <h3>Send Us a Message</h3>
+          <form id="service-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name <span style="color:var(--red)">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number <span style="color:var(--red)">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="(217) 555-0000" required autocomplete="tel" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Service Address</label>
+              <input type="text" id="address" name="address" placeholder="123 Main St, Monticello, IL" autocomplete="street-address" />
+            </div>
+            <div class="form-group">
+              <label for="service">Service Needed <span style="color:var(--red)">*</span></label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>Select a service...</option>
+                <option>Plumbing Repair</option>
+                <option>Water Heater</option>
+                <option>HVAC</option>
+                <option>Drain Cleaning</option>
+                <option>New Construction</option>
+                <option>Water Treatment</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="description">Describe the Problem <span style="color:var(--red)">*</span></label>
+              <textarea id="description" name="description" placeholder="Tell us what's going on — the more detail the better so we can come prepared." required></textarea>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="emergency" name="emergency" />
+              <label for="emergency">This is an emergency — I need someone as soon as possible</label>
+            </div>
+            <button type="submit" class="btn-submit">Request Service &rarr;</button>
+            <p class="form-note">We respond to all requests within one business day. For immediate help, call <a href="tel:2177624400" style="color:var(--navy); font-weight:700;">(217) 762-4400</a>.</p>
+          </form>
+          <div class="form-success" id="form-success" role="alert">
+            Thank you! Your request has been received. We'll be in touch shortly — or call us anytime at (217) 762-4400.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            <div class="footer-logo-text">Hargrove Plumbing & Heating</div>
+          </div>
+          <p class="footer-tagline">Monticello's Trusted Plumber Since 1987.<br />Family-owned, licensed, and available around the clock.</p>
+          <p class="footer-tagline">412 S Market St<br />Monticello, IL 61856</p>
+          <p class="footer-license">IL Plumbing License #PL-047821</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Plumbing Repair</a></li>
+            <li><a href="#services">Water Heaters</a></li>
+            <li><a href="#services">HVAC</a></li>
+            <li><a href="#services">Drain Cleaning</a></li>
+            <li><a href="#services">New Construction</a></li>
+            <li><a href="#services">Water Treatment</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Hours &amp; Contact</h4>
+          <ul class="footer-hours">
+            <li>Mon&ndash;Fri: 7:00am &ndash; 6:00pm</li>
+            <li>Saturday: 8:00am &ndash; 3:00pm</li>
+            <li>Sunday: Emergency Only</li>
+            <li style="margin-top: 10px;"><a href="tel:2177624400" style="color: rgba(255,255,255,0.85); font-weight:700;">(217) 762-4400</a></li>
+            <li><a href="mailto:info@hargroveplumbing.com">info@hargroveplumbing.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2025 Hargrove Plumbing &amp; Heating &mdash; All Rights Reserved</div>
+        <div class="footer-designer">Site designed by <a href="https://claydunker.com" target="_blank" rel="noopener">Clay Dunker</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // --- Mobile menu ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileClose = document.getElementById('mobile-menu-close');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    mobileClose.addEventListener('click', closeMenu);
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close menu on outside click
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.classList.contains('open') &&
+          !mobileMenu.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // --- IntersectionObserver fade-in ---
+    const fadeEls = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger siblings in the same parent
+          const siblings = entry.target.parentElement.querySelectorAll('.fade-in:not(.visible)');
+          let delay = 0;
+          siblings.forEach((sib, idx) => {
+            if (sib === entry.target || entry.target.parentElement.contains(sib)) {
+              delay = idx * 80;
+            }
+          });
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // --- Form submission ---
+    const form = document.getElementById('service-form');
+    const successMsg = document.getElementById('form-success');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Basic validation
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const service = document.getElementById('service').value;
+      const description = document.getElementById('description').value.trim();
+
+      if (!name || !phone || !service || !description) {
+        // Highlight missing fields
+        [
+          { el: document.getElementById('name'), val: name },
+          { el: document.getElementById('phone'), val: phone },
+          { el: document.getElementById('service'), val: service },
+          { el: document.getElementById('description'), val: description }
+        ].forEach(({ el, val }) => {
+          if (!val) {
+            el.style.borderColor = 'var(--red)';
+            el.style.boxShadow = '0 0 0 3px rgba(192,57,43,0.15)';
+          } else {
+            el.style.borderColor = '';
+            el.style.boxShadow = '';
+          }
+        });
+        return;
+      }
+
+      // Simulate submission
+      const btn = form.querySelector('.btn-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      }, 900);
+    });
+
+    // Clear error state on input
+    ['name', 'phone', 'service', 'description'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        el.style.borderColor = '';
+        el.style.boxShadow = '';
+      });
+    });
+
+    // --- Sticky nav active link highlight ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.style.color = '';
+          });
+          const activeLink = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (activeLink && !activeLink.classList.contains('nav-cta')) {
+            activeLink.style.color = 'var(--red)';
+          }
+        }
+      });
+    }, {
+      threshold: 0.4
+    });
+
+    sections.forEach(section => navObserver.observe(section));
+  </script>
+
+</body>
+</html>

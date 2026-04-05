@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Gilded Chair — Modern cuts. Warm welcome.</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --charcoal: #1c1c1e;
+      --charcoal-light: #252528;
+      --gold: #c9a84c;
+      --gold-hover: #b8943a;
+      --cream: #f0ead6;
+      --rose: #d4a5a5;
+      --gray-text: #9a9490;
+      --border: rgba(201, 168, 76, 0.2);
+      --transition: 0.3s ease;
+      --section-padding: 110px 24px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--charcoal);
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       FADE-IN ANIMATION
+    ============================================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.35s; }
+    .fade-in-delay-4 { transition-delay: 0.5s; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    nav.scrolled {
+      background-color: rgba(28, 28, 30, 0.97);
+      padding: 16px 48px;
+      box-shadow: 0 1px 0 rgba(201, 168, 76, 0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.85;
+      transition: opacity var(--transition), color var(--transition);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--gold);
+    }
+
+    .nav-links .btn-pill {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 8px 22px;
+      border-radius: 100px;
+      opacity: 1;
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    .nav-links .btn-pill:hover {
+      background-color: var(--gold);
+      color: var(--charcoal);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+      z-index: 200;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--cream);
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 28, 30, 0.98);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      transition: color var(--transition);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold);
+    }
+
+    .mobile-menu .btn-pill-mobile {
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      padding: 12px 36px;
+      border-radius: 100px;
+      font-size: 1rem !important;
+      font-family: 'Jost', sans-serif !important;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 28, 30, 0.70);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px;
+      max-width: 800px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .hero-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-heading em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 18px 44px;
+      border-radius: 2px;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    .hero-cta:hover {
+      background: var(--gold-hover);
+      transform: translateY(-2px);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.55;
+      animation: bounce 2.4s ease-in-out infinite;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .scroll-arrow {
+      width: 16px;
+      height: 16px;
+      border-right: 1.5px solid var(--cream);
+      border-bottom: 1.5px solid var(--cream);
+      transform: rotate(45deg);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================================
+       SECTION GLOBALS
+    ============================================================ */
+    section {
+      padding: var(--section-padding);
+    }
+
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+    }
+
+    .gold-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 24px auto;
+    }
+
+    .gold-divider.left {
+      margin: 24px 0;
+    }
+
+    /* ============================================================
+       INTRO
+    ============================================================ */
+    #intro {
+      background: var(--charcoal-light);
+      text-align: center;
+    }
+
+    .intro-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .intro-inner p {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(240, 234, 214, 0.8);
+      line-height: 1.85;
+    }
+
+    /* ============================================================
+       SERVICES
+    ============================================================ */
+    #services {
+      background: var(--charcoal);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 960px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+    }
+
+    .service-category {
+      padding: 48px;
+      border: 1px solid var(--border);
+    }
+
+    .service-category h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 28px;
+      letter-spacing: 0.04em;
+    }
+
+    .service-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+    }
+
+    .service-item:last-child {
+      border-bottom: none;
+    }
+
+    .service-name {
+      font-size: 0.95rem;
+      color: var(--cream);
+      font-weight: 300;
+    }
+
+    .service-price {
+      font-size: 0.88rem;
+      color: var(--gray-text);
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    .services-note {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 0.88rem;
+      color: var(--gray-text);
+      font-style: italic;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .services-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 16px 40px;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      background: transparent;
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 15px 40px;
+      border-radius: 2px;
+      border: 1px solid rgba(240, 234, 214, 0.45);
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--cream);
+      color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       GALLERY
+    ============================================================ */
+    #gallery {
+      background: var(--charcoal-light);
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+
+    .gallery-item:nth-child(2) {
+      aspect-ratio: 3/5;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* ============================================================
+       TEAM
+    ============================================================ */
+    #team {
+      background: var(--charcoal);
+    }
+
+    .team-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .team-card {
+      background: var(--charcoal-light);
+      border: 1px solid var(--border);
+      padding: 44px 32px;
+      text-align: center;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .team-card:hover {
+      border-color: rgba(201, 168, 76, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .team-photo-wrap {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 28px;
+      border: 2px solid var(--border);
+    }
+
+    .team-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .team-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .team-title {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.65;
+      margin-bottom: 20px;
+    }
+
+    .team-bio {
+      font-size: 0.93rem;
+      color: var(--gray-text);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ============================================================
+       BOOKING CTA
+    ============================================================ */
+    #booking-cta {
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+      padding: 140px 24px;
+    }
+
+    .booking-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1470259078422-826894b933aa?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .booking-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 28, 30, 0.78);
+      z-index: 1;
+    }
+
+    .booking-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .booking-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .booking-content p {
+      font-size: 1rem;
+      color: rgba(240, 234, 214, 0.7);
+      margin-bottom: 44px;
+      letter-spacing: 0.04em;
+    }
+
+    .booking-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    #contact {
+      background: var(--charcoal-light);
+    }
+
+    .contact-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 32px;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .contact-detail-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .contact-detail-value {
+      font-size: 0.95rem;
+      color: var(--cream);
+      opacity: 0.8;
+      font-weight: 300;
+    }
+
+    .contact-detail-value a {
+      color: var(--cream);
+      opacity: 0.8;
+      transition: color var(--transition), opacity var(--transition);
+    }
+
+    .contact-detail-value a:hover {
+      color: var(--gold);
+      opacity: 1;
+    }
+
+    .contact-form h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(240, 234, 214, 0.05);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 13px 16px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color var(--transition), background-color var(--transition);
+      appearance: none;
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-color: rgba(240, 234, 214, 0.05);
+      cursor: pointer;
+    }
+
+    .form-group select option {
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(240, 234, 214, 0.3);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background-color: rgba(201, 168, 76, 0.04);
+    }
+
+    .form-group textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid var(--border);
+      padding: 52px 48px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 18px;
+    }
+
+    .footer-meta {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+      line-height: 2;
+      font-weight: 300;
+    }
+
+    .footer-meta a {
+      color: var(--gold);
+      opacity: 0.8;
+      transition: opacity var(--transition);
+    }
+
+    .footer-meta a:hover {
+      opacity: 1;
+    }
+
+    /* ============================================================
+       FORM SUCCESS MESSAGE
+    ============================================================ */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 48px 32px;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+    }
+
+    .form-success h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .form-success p {
+      font-size: 0.93rem;
+      color: var(--gray-text);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      nav {
+        padding: 20px 28px;
+      }
+
+      nav.scrolled {
+        padding: 14px 28px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 52px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-item:nth-child(2) {
+        aspect-ratio: 3/4;
+      }
+    }
+
+    @media (max-width: 600px) {
+      :root {
+        --section-padding: 80px 20px;
+      }
+
+      nav {
+        padding: 18px 20px;
+      }
+
+      nav.scrolled {
+        padding: 14px 20px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 44px 24px;
+      }
+
+      .service-category {
+        padding: 36px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">The Gilded Chair</a>
+
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="btn-pill">Book Now</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#gallery" class="mobile-link">Gallery</a>
+    <a href="#team" class="mobile-link">Team</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+    <a href="#contact" class="mobile-link btn-pill-mobile">Book Now</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-in">Monticello, Illinois</p>
+      <h1 class="hero-heading fade-in fade-in-delay-1">
+        Modern cuts.<br><em>Warm welcome.</em>
+      </h1>
+      <a href="#contact" class="hero-cta fade-in fade-in-delay-2">Book Your Appointment</a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTRO
+  ============================================================ -->
+  <section id="intro">
+    <div class="intro-inner">
+      <div class="gold-divider fade-in"></div>
+      <p class="fade-in fade-in-delay-1">
+        The Gilded Chair is a boutique salon in the heart of Monticello. We believe every guest deserves a thoughtful experience — from the consultation to the blowout. Whether you're after a bold change or a clean refresh, our stylists take the time to get it right.
+      </p>
+      <div class="gold-divider fade-in fade-in-delay-2"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES
+  ============================================================ -->
+  <section id="services">
+    <div class="services-header">
+      <p class="section-label fade-in">What We Offer</p>
+      <h2 class="section-heading fade-in fade-in-delay-1">The Menu</h2>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-category fade-in">
+        <h3>Women's Services</h3>
+        <div class="service-item">
+          <span class="service-name">Women's Haircut &amp; Style</span>
+          <span class="service-price">$65+</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Blowout</span>
+          <span class="service-price">$45</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Bang Trim</span>
+          <span class="service-price">$15</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Updo / Special Occasion</span>
+          <span class="service-price">$85+</span>
+        </div>
+      </div>
+
+      <div class="service-category fade-in fade-in-delay-1">
+        <h3>Color Services</h3>
+        <div class="service-item">
+          <span class="service-name">Single Process Color</span>
+          <span class="service-price">$85+</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Highlights</span>
+          <span class="service-price">$110+</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Balayage</span>
+          <span class="service-price">$145+</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Toner / Gloss</span>
+          <span class="service-price">$45+</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Color Correction</span>
+          <span class="service-price">Consult required</span>
+        </div>
+      </div>
+
+      <div class="service-category fade-in fade-in-delay-2">
+        <h3>Men's Services</h3>
+        <div class="service-item">
+          <span class="service-name">Men's Cut</span>
+          <span class="service-price">$35</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Men's Cut &amp; Beard Trim</span>
+          <span class="service-price">$50</span>
+        </div>
+      </div>
+
+      <div class="service-category fade-in fade-in-delay-3">
+        <h3>Add-Ons</h3>
+        <div class="service-item">
+          <span class="service-name">Deep Conditioning Treatment</span>
+          <span class="service-price">$25</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Scalp Massage</span>
+          <span class="service-price">$20</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Olaplex Treatment</span>
+          <span class="service-price">$35</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="services-note fade-in">
+      Prices vary based on length and density. A consultation is always complimentary.
+    </p>
+
+    <div class="services-cta fade-in fade-in-delay-1">
+      <a href="#contact" class="btn-gold">Book Your Visit</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GALLERY
+  ============================================================ -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <p class="section-label fade-in">Portfolio</p>
+      <h2 class="section-heading fade-in fade-in-delay-1">The Work</h2>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item fade-in">
+        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" alt="Salon styling work" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-in fade-in-delay-1">
+        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80" alt="Hair color work" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-in fade-in-delay-2">
+        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80" alt="Balayage and highlights" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-in fade-in-delay-1">
+        <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?auto=format&fit=crop&w=600&q=80" alt="Hair styling at the chair" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-in fade-in-delay-2">
+        <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=600&q=80" alt="Precision cut" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-in fade-in-delay-3">
+        <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80" alt="Finished look" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TEAM
+  ============================================================ -->
+  <section id="team">
+    <div class="team-header">
+      <p class="section-label fade-in">The People</p>
+      <h2 class="section-heading fade-in fade-in-delay-1">Meet Your Stylists</h2>
+    </div>
+
+    <div class="team-grid">
+
+      <div class="team-card fade-in">
+        <div class="team-photo-wrap">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80" alt="Mara Ellis" loading="lazy" />
+        </div>
+        <p class="team-name">Mara Ellis</p>
+        <p class="team-title">Senior Stylist &amp; Owner</p>
+        <p class="team-bio">Mara has been behind the chair for 14 years. She opened The Gilded Chair in 2017 with one goal: a salon where you actually want to come back. Specializes in balayage, precision cuts, and color correction.</p>
+      </div>
+
+      <div class="team-card fade-in fade-in-delay-1">
+        <div class="team-photo-wrap">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80" alt="Jess Calloway" loading="lazy" />
+        </div>
+        <p class="team-name">Jess Calloway</p>
+        <p class="team-title">Color Specialist</p>
+        <p class="team-bio">Jess is obsessed with dimension — soft blondes, lived-in brunettes, and the kind of color that doesn't look "done." She completed advanced Redken color training in 2022 and it shows.</p>
+      </div>
+
+      <div class="team-card fade-in fade-in-delay-2">
+        <div class="team-photo-wrap">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Ty Okafor" loading="lazy" />
+        </div>
+        <p class="team-name">Ty Okafor</p>
+        <p class="team-title">Stylist</p>
+        <p class="team-bio">Ty joined The Gilded Chair in 2023 after cutting his teeth at a downtown Chicago salon. He brings a sharp eye for men's cuts and modern styling techniques to everything he does.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BOOKING CTA
+  ============================================================ -->
+  <section id="booking-cta">
+    <div class="booking-bg"></div>
+    <div class="booking-overlay"></div>
+    <div class="booking-content">
+      <h2 class="fade-in">Ready for a change?</h2>
+      <p class="fade-in fade-in-delay-1">Book online or give us a call.</p>
+      <div class="booking-buttons fade-in fade-in-delay-2">
+        <a href="#contact" class="btn-gold">Book Online</a>
+        <a href="tel:2177628810" class="btn-outline">(217) 762-8810</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-header">
+        <p class="section-label fade-in">Get in Touch</p>
+        <h2 class="section-heading fade-in fade-in-delay-1">Find Us</h2>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-info fade-in">
+          <h3>Visit the Studio</h3>
+
+          <div class="contact-detail">
+            <span class="contact-detail-label">Hours</span>
+            <span class="contact-detail-value">Tue–Fri &nbsp;10am – 7pm</span>
+            <span class="contact-detail-value">Sat &nbsp;9am – 5pm</span>
+            <span class="contact-detail-value">Sun–Mon &nbsp;Closed</span>
+          </div>
+
+          <div class="contact-detail">
+            <span class="contact-detail-label">Phone</span>
+            <span class="contact-detail-value">
+              <a href="tel:2177628810">(217) 762-8810</a>
+            </span>
+          </div>
+
+          <div class="contact-detail">
+            <span class="contact-detail-label">Address</span>
+            <span class="contact-detail-value">
+              <a href="https://maps.google.com/?q=118+W+Washington+St+Monticello+IL+61856" target="_blank" rel="noopener noreferrer">
+                118 W Washington St<br>Monticello, IL 61856
+              </a>
+            </span>
+          </div>
+
+          <div class="contact-detail">
+            <span class="contact-detail-label">Instagram</span>
+            <span class="contact-detail-value">
+              <a href="https://instagram.com/thegildedchair" target="_blank" rel="noopener noreferrer">@thegildedchair</a>
+            </span>
+          </div>
+        </div>
+
+        <div class="contact-form fade-in fade-in-delay-1">
+          <h3>Request an Appointment</h3>
+
+          <form id="appointment-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Your Name</label>
+                <input type="text" id="fname" name="name" placeholder="First &amp; last name" required />
+              </div>
+              <div class="form-group">
+                <label for="fphone">Phone</label>
+                <input type="tel" id="fphone" name="phone" placeholder="(217) 555-0000" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fservice">Service Interested In</label>
+              <select id="fservice" name="service" required>
+                <option value="" disabled selected>Select a service…</option>
+                <optgroup label="Women's Services">
+                  <option>Women's Haircut &amp; Style</option>
+                  <option>Blowout</option>
+                  <option>Bang Trim</option>
+                  <option>Updo / Special Occasion</option>
+                </optgroup>
+                <optgroup label="Color Services">
+                  <option>Single Process Color</option>
+                  <option>Highlights</option>
+                  <option>Balayage</option>
+                  <option>Toner / Gloss</option>
+                  <option>Color Correction (Consult Required)</option>
+                </optgroup>
+                <optgroup label="Men's Services">
+                  <option>Men's Cut</option>
+                  <option>Men's Cut &amp; Beard Trim</option>
+                </optgroup>
+                <optgroup label="Add-Ons">
+                  <option>Deep Conditioning Treatment</option>
+                  <option>Scalp Massage</option>
+                  <option>Olaplex Treatment</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="fday">Preferred Day</label>
+              <select id="fday" name="day" required>
+                <option value="" disabled selected>Select a day…</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>No preference — any available</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="fnotes">Anything else we should know?</label>
+              <textarea id="fnotes" name="notes" placeholder="Hair history, inspiration, questions — whatever helps us prepare…"></textarea>
+            </div>
+
+            <button type="submit" class="btn-gold" style="width: 100%;">Request Appointment</button>
+          </form>
+
+          <div class="form-success" id="form-success">
+            <h4>We'll be in touch soon.</h4>
+            <p>Thanks for reaching out. One of our stylists will contact you within 24 hours to confirm your appointment.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <p class="footer-logo">The Gilded Chair</p>
+    <p class="footer-meta">
+      The Gilded Chair &middot; Monticello, IL<br>
+      &copy; 2025 The Gilded Chair<br>
+      Site designed by <a href="https://claydunker.com" target="_blank" rel="noopener noreferrer">Clay Dunker</a> &middot; claydunker.com
+    </p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ----- Sticky Nav -----
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ----- Mobile Hamburger -----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ----- IntersectionObserver Fade-In -----
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    // Immediately show hero elements
+    const heroFades = document.querySelectorAll('#hero .fade-in');
+    heroFades.forEach(el => el.classList.add('visible'));
+
+    // Observe all others
+    fadeElements.forEach(el => {
+      if (!el.closest('#hero')) {
+        observer.observe(el);
+      }
+    });
+
+    // ----- Contact Form -----
+    const form = document.getElementById('appointment-form');
+    const formSuccess = document.getElementById('form-success');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = form.querySelector('#fname').value.trim();
+      const phone = form.querySelector('#fphone').value.trim();
+      const service = form.querySelector('#fservice').value;
+      const day = form.querySelector('#fday').value;
+
+      if (!name || !phone || !service || !day) {
+        // Simple inline validation — highlight empties
+        [{ id: 'fname', val: name }, { id: 'fphone', val: phone }, { id: 'fservice', val: service }, { id: 'fday', val: day }].forEach(({ id, val }) => {
+          const el = document.getElementById(id);
+          el.style.borderColor = !val ? '#c0605c' : 'rgba(201, 168, 76, 0.2)';
+        });
+        return;
+      }
+
+      form.style.display = 'none';
+      formSuccess.style.display = 'block';
+    });
+
+    // Remove error styling on input
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      el.addEventListener('input', () => {
+        el.style.borderColor = '';
+      });
+    });
+  </script>
+
+</body>
+</html>

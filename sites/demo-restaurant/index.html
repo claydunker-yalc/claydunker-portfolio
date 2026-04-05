@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Millrace Kitchen — Monticello, IL</title>
+  <meta name="description" content="The Millrace Kitchen has been serving home-cooked food in Monticello, IL since 2009. Breakfast all day, lunch, and dinner. 205 N Charter St." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================
+       RESET & BASE
+    ========================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream: #faf6f0;
+      --green: #2d5a27;
+      --green-light: #3a7232;
+      --green-dark: #1e3d1a;
+      --brown: #8b5e3c;
+      --brown-light: #a87350;
+      --charcoal: #2c2c2c;
+      --charcoal-light: #4a4a4a;
+      --warm-white: #fefcf8;
+      --border: #e8ddd0;
+      --shadow: rgba(44, 44, 44, 0.12);
+      --font-heading: 'Lora', Georgia, serif;
+      --font-body: 'Source Sans 3', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      font-size: 16px;
+      /* Subtle paper texture via CSS noise */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================================
+       SCROLL ANIMATIONS
+    ========================================= */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* =========================================
+       ANNOUNCEMENT BAR
+    ========================================= */
+    .announcement-bar {
+      background-color: var(--green);
+      color: var(--cream);
+      text-align: center;
+      padding: 10px 20px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .announcement-bar a {
+      color: #b8d9b4;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .announcement-bar a:hover {
+      color: white;
+    }
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 8px var(--shadow);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-size: 0.7rem;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: var(--brown);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--charcoal-light);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: var(--charcoal);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background-color: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px;
+      z-index: 999;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 10px 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      letter-spacing: 0.03em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--green);
+    }
+
+    /* =========================================
+       HERO
+    ========================================= */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(20, 15, 10, 0.45) 0%,
+        rgba(20, 15, 10, 0.55) 50%,
+        rgba(20, 15, 10, 0.65) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      padding: 0 24px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background-color: var(--green);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      color: white;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subheading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.2;
+      margin-bottom: 36px;
+    }
+
+    .hero-pills {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .hero-pill {
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--green);
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .hero-cta:hover {
+      background-color: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .hero-cta svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+    .hero-cta:hover svg {
+      transform: translateY(3px);
+    }
+
+    /* =========================================
+       SECTION SHARED STYLES
+    ========================================= */
+    .section {
+      padding: 96px 24px;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .wood-divider {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brown), var(--brown-light));
+      border-radius: 2px;
+      margin: 18px 0 28px;
+    }
+
+    /* =========================================
+       ABOUT
+    ========================================= */
+    .about {
+      background-color: var(--warm-white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 8px 32px rgba(44, 44, 44, 0.16);
+    }
+
+    .about-image-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background-color: var(--green);
+      color: var(--cream);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-style: italic;
+      padding: 14px 20px;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(45, 90, 39, 0.4);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    .about-image-badge strong {
+      display: block;
+      font-size: 1.5rem;
+      font-style: normal;
+    }
+
+    .about-text p {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: var(--charcoal-light);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* =========================================
+       MENU
+    ========================================= */
+    .menu {
+      background-color: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .menu-header .wood-divider {
+      margin: 18px auto 0;
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 48px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .menu-tab {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 13px 32px;
+      cursor: pointer;
+      background-color: var(--warm-white);
+      color: var(--charcoal-light);
+      border: none;
+      border-right: 1px solid var(--border);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .menu-tab:last-child {
+      border-right: none;
+    }
+
+    .menu-tab.active {
+      background-color: var(--green);
+      color: white;
+    }
+
+    .menu-tab:hover:not(.active) {
+      background-color: #f0ebe2;
+      color: var(--charcoal);
+    }
+
+    .menu-panel {
+      display: none;
+    }
+
+    .menu-panel.active {
+      display: block;
+    }
+
+    .menu-category {
+      margin-bottom: 48px;
+    }
+
+    .menu-category-heading {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .menu-category-note {
+      font-size: 0.85rem;
+      color: var(--brown);
+      font-style: italic;
+      margin-bottom: 20px;
+      margin-top: 4px;
+    }
+
+    .menu-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .menu-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .menu-item:nth-child(odd) {
+      padding-right: 32px;
+    }
+
+    .menu-item:nth-child(even) {
+      padding-left: 32px;
+      border-left: 1px solid var(--border);
+    }
+
+    .menu-item-info {
+      flex: 1;
+    }
+
+    .menu-item-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 3px;
+    }
+
+    .menu-item-desc {
+      font-size: 0.875rem;
+      color: var(--charcoal-light);
+      line-height: 1.5;
+    }
+
+    .menu-item-price {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--brown);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .menu-sides {
+      background-color: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-top: 0;
+    }
+
+    .menu-sides-heading {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+    }
+
+    .menu-sides-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+    }
+
+    .menu-side-item {
+      font-size: 0.875rem;
+      color: var(--charcoal-light);
+    }
+
+    .menu-side-item .price {
+      font-weight: 600;
+      color: var(--brown);
+    }
+
+    .menu-footnote {
+      text-align: center;
+      margin-top: 40px;
+      font-style: italic;
+      color: var(--charcoal-light);
+      font-size: 0.9rem;
+    }
+
+    /* =========================================
+       SPECIALS CHALKBOARD
+    ========================================= */
+    .specials {
+      background-color: #1a1a1a;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .specials::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 2px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .specials-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .specials-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(180, 220, 160, 0.7);
+      margin-bottom: 12px;
+    }
+
+    .specials-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 16px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .specials-rule {
+      width: 60px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+      margin: 0 auto 48px;
+    }
+
+    .specials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .special-card {
+      background-color: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .special-card:hover {
+      background-color: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .special-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      background-color: rgba(45, 90, 39, 0.3);
+      border: 1px solid rgba(45, 90, 39, 0.5);
+      border-radius: 100px;
+      padding: 3px 12px;
+      margin-bottom: 14px;
+    }
+
+    .special-name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .special-desc {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .special-price {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #b8d9a0;
+    }
+
+    .specials-footnote {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    /* =========================================
+       GALLERY
+    ========================================= */
+    .gallery {
+      background-color: var(--warm-white);
+      border-top: 1px solid var(--border);
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .gallery-header .wood-divider {
+      margin: 18px auto 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 6px;
+      aspect-ratio: 4/3;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    /* =========================================
+       FIND US
+    ========================================= */
+    .find-us {
+      background-color: var(--cream);
+    }
+
+    .find-us-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .find-us-info address {
+      font-style: normal;
+    }
+
+    .find-us-address {
+      font-size: 1rem;
+      color: var(--charcoal-light);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .find-us-phone {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 32px;
+    }
+
+    .hours-heading {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+
+    .hours-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.925rem;
+      color: var(--charcoal-light);
+      max-width: 280px;
+    }
+
+    .hours-list li .day {
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    .hours-note {
+      font-size: 0.875rem;
+      color: var(--charcoal-light);
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .directions-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .directions-link:hover {
+      color: var(--green-light);
+    }
+
+    /* Map placeholder */
+    .map-placeholder {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(44, 44, 44, 0.16);
+      background-color: #2a3d26;
+    }
+
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .map-road-h {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: rgba(255,255,255,0.18);
+    }
+
+    .map-road-h-main {
+      top: 55%;
+      height: 6px;
+      background-color: rgba(255, 220, 120, 0.3);
+    }
+
+    .map-road-v {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: rgba(255,255,255,0.18);
+    }
+
+    .map-road-v-main {
+      left: 48%;
+      width: 6px;
+      background-color: rgba(255, 220, 120, 0.3);
+    }
+
+    .map-road-h-1 { top: 25%; }
+    .map-road-h-2 { top: 40%; }
+    .map-road-h-3 { top: 65%; }
+    .map-road-h-4 { top: 80%; }
+    .map-road-v-1 { left: 20%; }
+    .map-road-v-2 { left: 35%; }
+    .map-road-v-3 { left: 62%; }
+    .map-road-v-4 { left: 76%; }
+
+    .map-blocks {
+      position: absolute;
+      inset: 0;
+    }
+
+    .map-block {
+      position: absolute;
+      background-color: rgba(255,255,255,0.04);
+      border-radius: 2px;
+    }
+
+    .map-pin-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 48%;
+      transform: translate(-50%, -100%);
+    }
+
+    .map-pin {
+      width: 32px;
+      height: 32px;
+      background-color: var(--green);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      position: relative;
+    }
+
+    .map-pin::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .map-pin-shadow {
+      width: 16px;
+      height: 6px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 50%;
+      margin: 4px auto 0;
+    }
+
+    .map-address-card {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background-color: white;
+      border-radius: 6px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      min-width: 220px;
+    }
+
+    .map-address-card-name {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+
+    .map-address-card-addr {
+      font-size: 0.8rem;
+      color: var(--charcoal-light);
+      line-height: 1.4;
+    }
+
+    .map-label {
+      position: absolute;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    /* =========================================
+       CONTACT
+    ========================================= */
+    .contact {
+      background-color: var(--warm-white);
+      border-top: 1px solid var(--border);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+
+    .contact-subtext {
+      font-size: 0.95rem;
+      color: var(--charcoal-light);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1rem;
+      color: var(--charcoal);
+    }
+
+    .contact-detail a {
+      color: var(--green);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .contact-detail a:hover {
+      color: var(--green-light);
+    }
+
+    .contact-detail-icon {
+      color: var(--brown);
+    }
+
+    .contact-note {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--charcoal-light);
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      line-height: 1.6;
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    .footer {
+      background-color: var(--green);
+      color: var(--cream);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .footer-address {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-bottom: 6px;
+    }
+
+    .footer-credit {
+      font-size: 0.8rem;
+      opacity: 0.65;
+    }
+
+    .footer-credit a {
+      color: var(--cream);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      opacity: 1;
+    }
+
+    .footer-credit a:hover {
+      opacity: 1;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .about-image-badge {
+        right: 16px;
+        bottom: -12px;
+      }
+
+      .find-us-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .specials-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .menu-items {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-item:nth-child(even) {
+        padding-left: 0;
+        border-left: none;
+      }
+
+      .menu-item:nth-child(odd) {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section {
+        padding: 64px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-item {
+        aspect-ratio: 16/10;
+      }
+
+      .menu-tabs {
+        width: 100%;
+      }
+
+      .menu-tab {
+        flex: 1;
+        padding: 12px 12px;
+        font-size: 0.78rem;
+      }
+
+      .about-image-wrap img {
+        height: 300px;
+      }
+
+      .hero-pills {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .map-placeholder {
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================
+       ANNOUNCEMENT BAR
+  ========================================= -->
+  <div class="announcement-bar">
+    Now Open Sundays &middot; 8am&ndash;2pm &middot;
+    <a href="https://facebook.com" target="_blank" rel="noopener">Follow us on Facebook</a>
+  </div>
+
+  <!-- =========================================
+       NAV
+  ========================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        The Millrace Kitchen
+        <span>Monticello, Illinois</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#specials">Specials</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#find-us">Find Us</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu" role="menu">
+      <ul>
+        <li><a href="#menu" role="menuitem">Menu</a></li>
+        <li><a href="#specials" role="menuitem">Specials</a></li>
+        <li><a href="#gallery" role="menuitem">Gallery</a></li>
+        <li><a href="#about" role="menuitem">About</a></li>
+        <li><a href="#find-us" role="menuitem">Find Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- =========================================
+       HERO
+  ========================================= -->
+  <section class="hero" aria-label="Hero banner">
+    <div class="hero-bg" role="img" aria-label="Restaurant interior with warm lighting and plates of food"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge fade-in">Monticello, IL &middot; Since 2009</div>
+      <h1 class="hero-heading fade-in fade-in-delay-1">Home cooking.</h1>
+      <p class="hero-subheading fade-in fade-in-delay-2">No shortcuts.</p>
+      <div class="hero-pills fade-in fade-in-delay-3">
+        <span class="hero-pill">Open Daily 7am&ndash;9pm</span>
+        <span class="hero-pill">Breakfast All Day</span>
+      </div>
+      <a href="#menu" class="hero-cta fade-in fade-in-delay-4">
+        View Our Menu
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================
+       ABOUT
+  ========================================= -->
+  <section class="section about" id="about" aria-labelledby="about-heading">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-image-wrap fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80"
+            alt="Warm restaurant interior with wood tables and cozy lighting"
+            loading="lazy"
+          />
+          <div class="about-image-badge">
+            <strong>2009</strong>
+            Est. Monticello
+          </div>
+        </div>
+
+        <div class="about-text fade-in fade-in-delay-2">
+          <p class="section-label">Our Story</p>
+          <h2 class="section-heading" id="about-heading">Food worth driving for.</h2>
+          <div class="wood-divider"></div>
+          <p>The Millrace Kitchen has been feeding Monticello since 2009. What started as a 12-seat breakfast counter has grown into the spot locals bring their families, their first dates, and their out-of-town guests.</p>
+          <p>We source from regional farms when we can — eggs from Piatt County, pork from a family operation in Farmer City, produce from the farmers market May through October. Not because it's trendy. Because it tastes better.</p>
+          <p>Tom and Diane Kellerman opened this place with a simple idea: serve food you'd actually want to eat, every time, without pretending it's something fancier than it is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       MENU
+  ========================================= -->
+  <section class="section menu" id="menu" aria-labelledby="menu-heading">
+    <div class="section-inner">
+      <div class="menu-header fade-in">
+        <p class="section-label">What We're Serving</p>
+        <h2 class="section-heading" id="menu-heading">The Menu</h2>
+        <div class="wood-divider"></div>
+      </div>
+
+      <div class="menu-tabs fade-in" role="tablist" aria-label="Menu sections">
+        <button class="menu-tab active" role="tab" aria-selected="true" aria-controls="panel-breakfast" data-target="breakfast">Breakfast</button>
+        <button class="menu-tab" role="tab" aria-selected="false" aria-controls="panel-lunch" data-target="lunch">Lunch</button>
+        <button class="menu-tab" role="tab" aria-selected="false" aria-controls="panel-dinner" data-target="dinner">Dinner</button>
+      </div>
+
+      <!-- BREAKFAST -->
+      <div class="menu-panel active" id="panel-breakfast" role="tabpanel">
+        <div class="menu-category">
+          <h3 class="menu-category-heading">Entrees</h3>
+          <p class="menu-category-note">Served all day — because breakfast shouldn't have a cutoff.</p>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">The Millrace Stack</div>
+                <div class="menu-item-desc">Three buttermilk pancakes, whipped butter, real maple syrup</div>
+              </div>
+              <div class="menu-item-price">$11</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Farm Scramble</div>
+                <div class="menu-item-desc">Three eggs, seasonal vegetables, cheddar, toast</div>
+              </div>
+              <div class="menu-item-price">$10</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Biscuits &amp; Gravy</div>
+                <div class="menu-item-desc">Scratch-made biscuits, pork sausage gravy</div>
+              </div>
+              <div class="menu-item-price">$9</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">The Full House</div>
+                <div class="menu-item-desc">Two eggs any style, bacon or sausage, hash browns, toast</div>
+              </div>
+              <div class="menu-item-price">$12</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Avocado Toast</div>
+                <div class="menu-item-desc">Grilled sourdough, smashed avocado, soft egg, chili flake</div>
+              </div>
+              <div class="menu-item-price">$11</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Oatmeal</div>
+                <div class="menu-item-desc">Steel-cut, brown sugar, seasonal compote</div>
+              </div>
+              <div class="menu-item-price">$7</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-sides">
+          <div class="menu-sides-heading">Sides</div>
+          <div class="menu-sides-list">
+            <span class="menu-side-item">Bacon (3 strips) <span class="price">$4</span></span>
+            <span class="menu-side-item">Sausage Links <span class="price">$4</span></span>
+            <span class="menu-side-item">Hash Browns <span class="price">$4</span></span>
+            <span class="menu-side-item">Toast <span class="price">$2</span></span>
+            <span class="menu-side-item">Egg Add-on <span class="price">$2</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LUNCH -->
+      <div class="menu-panel" id="panel-lunch" role="tabpanel">
+        <div class="menu-category">
+          <h3 class="menu-category-heading">Sandwiches</h3>
+          <p class="menu-category-note">Served 11am to close. Comes with fries or side salad.</p>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">The Millrace Club</div>
+                <div class="menu-item-desc">Turkey, bacon, Swiss, lettuce, tomato, honey mustard</div>
+              </div>
+              <div class="menu-item-price">$13</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Smash Burger</div>
+                <div class="menu-item-desc">Double smash patty, American cheese, pickles, special sauce</div>
+              </div>
+              <div class="menu-item-price">$14</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">BLT on Sourdough</div>
+                <div class="menu-item-desc">Thick-cut bacon, heirloom tomato, bibb lettuce, mayo</div>
+              </div>
+              <div class="menu-item-price">$12</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Grilled Cheese &amp; Tomato Soup</div>
+                <div class="menu-item-desc">Cheddar on Texas toast, house tomato bisque</div>
+              </div>
+              <div class="menu-item-price">$11</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Pulled Pork Sandwich</div>
+                <div class="menu-item-desc">Slow-cooked 12 hours, house slaw, pickled onion</div>
+              </div>
+              <div class="menu-item-price">$14</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category">
+          <h3 class="menu-category-heading">Bowls &amp; Salads</h3>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Grain Bowl</div>
+                <div class="menu-item-desc">Farro, roasted squash, kale, goat cheese, lemon tahini</div>
+              </div>
+              <div class="menu-item-price">$13</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">House Salad</div>
+                <div class="menu-item-desc">Mixed greens, seasonal vegetables, house vinaigrette</div>
+              </div>
+              <div class="menu-item-price">$8</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Side Salad</div>
+                <div class="menu-item-desc">Simple greens, cucumber, tomato, choice of dressing</div>
+              </div>
+              <div class="menu-item-price">$5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DINNER -->
+      <div class="menu-panel" id="panel-dinner" role="tabpanel">
+        <div class="menu-category">
+          <h3 class="menu-category-heading">Mains</h3>
+          <p class="menu-category-note">Served from 5pm to close.</p>
+          <div class="menu-items">
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Pan-Seared Trout</div>
+                <div class="menu-item-desc">Lemon brown butter, green beans, fingerling potatoes</div>
+              </div>
+              <div class="menu-item-price">$22</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Short Rib Meatloaf</div>
+                <div class="menu-item-desc">House-ground beef, mushroom gravy, mashed potatoes, seasonal veg</div>
+              </div>
+              <div class="menu-item-price">$20</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Roasted Half Chicken</div>
+                <div class="menu-item-desc">Herb-brined, pan jus, roasted root vegetables</div>
+              </div>
+              <div class="menu-item-price">$21</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">Pasta Primavera</div>
+                <div class="menu-item-desc">Seasonal vegetables, ricotta, lemon, parmigiano, bucatini</div>
+              </div>
+              <div class="menu-item-price">$17</div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <div class="menu-item-name">8oz Sirloin</div>
+                <div class="menu-item-desc">Hand-cut, garlic butter, your choice of two sides</div>
+              </div>
+              <div class="menu-item-price">$27</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-sides">
+          <div class="menu-sides-heading">Sides</div>
+          <div class="menu-sides-list">
+            <span class="menu-side-item">Mashed Potatoes <span class="price">$5</span></span>
+            <span class="menu-side-item">Roasted Vegetables <span class="price">$5</span></span>
+            <span class="menu-side-item">Mac &amp; Cheese <span class="price">$6</span></span>
+            <span class="menu-side-item">Side Salad <span class="price">$5</span></span>
+          </div>
+        </div>
+      </div>
+
+      <p class="menu-footnote fade-in"><em>Menu items change seasonally. Ask your server about today's specials.</em></p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       SPECIALS CHALKBOARD
+  ========================================= -->
+  <section class="specials" id="specials" aria-labelledby="specials-heading">
+    <div class="specials-inner">
+      <p class="specials-label fade-in">Weekly Features</p>
+      <h2 class="specials-heading fade-in fade-in-delay-1" id="specials-heading">This Week's Specials</h2>
+      <div class="specials-rule fade-in fade-in-delay-1"></div>
+
+      <div class="specials-grid">
+        <div class="special-card fade-in fade-in-delay-1">
+          <div class="special-tag">Sat &ndash; Sun Only</div>
+          <div class="special-name">Weekend French Toast</div>
+          <div class="special-desc">Brioche bread, fresh strawberry compote, mascarpone</div>
+          <div class="special-price">$13</div>
+        </div>
+
+        <div class="special-card fade-in fade-in-delay-2">
+          <div class="special-tag">Fridays Only</div>
+          <div class="special-name">Fish Fry Friday</div>
+          <div class="special-desc">Beer-battered walleye, fries, coleslaw, house tartar sauce</div>
+          <div class="special-price">$17</div>
+        </div>
+
+        <div class="special-card fade-in fade-in-delay-3">
+          <div class="special-tag">Soup of the Week</div>
+          <div class="special-name">Chicken Pot Pie Soup</div>
+          <div class="special-desc">Creamy and chunky, served with a warm biscuit on the side</div>
+          <div class="special-price">$8 cup &nbsp;/&nbsp; $11 bowl</div>
+        </div>
+      </div>
+
+      <p class="specials-footnote fade-in">Ask your server — we usually have one or two more up our sleeve.</p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       GALLERY
+  ========================================= -->
+  <section class="section gallery" id="gallery" aria-labelledby="gallery-heading">
+    <div class="section-inner">
+      <div class="gallery-header fade-in">
+        <p class="section-label">A Peek Inside</p>
+        <h2 class="section-heading" id="gallery-heading">From Our Kitchen</h2>
+        <div class="wood-divider"></div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item fade-in fade-in-delay-1">
+          <img
+            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=80"
+            alt="Beautifully plated colorful dish"
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item fade-in fade-in-delay-2">
+          <img
+            src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=700&q=80"
+            alt="Wood-fired pizza fresh from the oven"
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item fade-in fade-in-delay-3">
+          <img
+            src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=700&q=80"
+            alt="Stacked pancakes with syrup and fresh berries"
+            loading="lazy"
+          />
+        </div>
+        <div class="gallery-item fade-in fade-in-delay-4">
+          <img
+            src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=700&q=80"
+            alt="Rustic breakfast spread on a wooden table"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       FIND US
+  ========================================= -->
+  <section class="section find-us" id="find-us" aria-labelledby="findus-heading">
+    <div class="section-inner">
+      <div class="find-us-grid">
+        <div class="find-us-info fade-in">
+          <p class="section-label">Location &amp; Hours</p>
+          <h2 class="section-heading" id="findus-heading">Come Find Us</h2>
+          <div class="wood-divider"></div>
+
+          <address>
+            <p class="find-us-address">
+              205 N Charter St<br />
+              Monticello, IL 61856
+            </p>
+            <p class="find-us-phone">(217) 762-3311</p>
+          </address>
+
+          <h3 class="hours-heading">Hours</h3>
+          <ul class="hours-list">
+            <li>
+              <span class="day">Mon &ndash; Fri</span>
+              <span>7am &ndash; 9pm</span>
+            </li>
+            <li>
+              <span class="day">Saturday</span>
+              <span>7am &ndash; 9pm</span>
+            </li>
+            <li>
+              <span class="day">Sunday</span>
+              <span>8am &ndash; 2pm</span>
+            </li>
+          </ul>
+
+          <p class="hours-note">Just off the town square, one block north of Charter Street Bridge. Plenty of parking on the street.</p>
+
+          <a
+            href="https://www.google.com/maps/dir//205+N+Charter+St,+Monticello,+IL+61856"
+            target="_blank"
+            rel="noopener"
+            class="directions-link"
+          >
+            Get Directions
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <div class="fade-in fade-in-delay-2">
+          <!-- Styled CSS map placeholder -->
+          <div class="map-placeholder" role="img" aria-label="Map showing location of The Millrace Kitchen at 205 N Charter St, Monticello, IL">
+            <div class="map-grid"></div>
+
+            <!-- Roads -->
+            <div class="map-road-h map-road-h-1"></div>
+            <div class="map-road-h map-road-h-2"></div>
+            <div class="map-road-h map-road-h-main"></div>
+            <div class="map-road-h map-road-h-3"></div>
+            <div class="map-road-h map-road-h-4"></div>
+            <div class="map-road-v map-road-v-1"></div>
+            <div class="map-road-v map-road-v-2"></div>
+            <div class="map-road-v map-road-v-main"></div>
+            <div class="map-road-v map-road-v-3"></div>
+            <div class="map-road-v map-road-v-4"></div>
+
+            <!-- Road labels -->
+            <div class="map-label" style="top: 52%; left: 2%; transform: translateY(-50%);">Charter St</div>
+            <div class="map-label" style="top: 38%; left: 2%; transform: translateY(-50%);">N Market St</div>
+            <div class="map-label" style="top: 15%; left: 44%; writing-mode: vertical-lr; transform: translateX(-50%);">N Charter St</div>
+
+            <!-- Pin -->
+            <div class="map-pin-wrapper">
+              <div class="map-pin"></div>
+              <div class="map-pin-shadow"></div>
+            </div>
+
+            <!-- Address card overlay -->
+            <div class="map-address-card">
+              <div class="map-address-card-name">The Millrace Kitchen</div>
+              <div class="map-address-card-addr">205 N Charter St<br />Monticello, IL 61856</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CONTACT
+  ========================================= -->
+  <section class="contact" id="contact" aria-labelledby="contact-heading">
+    <div class="contact-inner fade-in">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="contact-heading" id="contact-heading">Questions? Catering inquiries?</h2>
+      <p class="contact-subtext">We'd love to hear from you. Reach us by phone or email any time.</p>
+
+      <div class="contact-details">
+        <div class="contact-detail">
+          <span class="contact-detail-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </span>
+          <a href="mailto:hello@millracekitchen.com">hello@millracekitchen.com</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </span>
+          <a href="tel:+12177623311">(217) 762-3311</a>
+        </div>
+      </div>
+
+      <p class="contact-note">We do private events and off-site catering for 20&ndash;200 guests.<br />Ask us about it — we're happy to make something special happen.</p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+  <footer class="footer" role="contentinfo">
+    <p class="footer-name">The Millrace Kitchen</p>
+    <p class="footer-address">205 N Charter St &middot; Monticello, IL &middot; (217) 762-3311</p>
+    <p class="footer-copy">&copy; 2025 The Millrace Kitchen. All rights reserved.</p>
+    <p class="footer-credit">Site designed by <a href="https://claydunker.com" target="_blank" rel="noopener">Clay Dunker</a></p>
+  </footer>
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+  <script>
+    // ---- Mobile hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close mobile menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ---- Menu tabs ----
+    const tabs = document.querySelectorAll('.menu-tab');
+    const panels = document.querySelectorAll('.menu-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.target;
+
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById('panel-' + target).classList.add('active');
+      });
+    });
+
+    // ---- IntersectionObserver scroll animations ----
+    const fadeEls = document.querySelectorAll('.fade-in');
+
+    // Trigger hero items immediately (above the fold)
+    const heroFades = document.querySelectorAll('.hero .fade-in');
+    // Small delay to allow paint then trigger
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        heroFades.forEach(el => el.classList.add('visible'));
+      }, 100);
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      }
+    );
+
+    fadeEls.forEach(el => {
+      // Skip hero elements — those are handled above
+      if (!el.closest('.hero')) {
+        observer.observe(el);
+      }
+    });
+  </script>
+</body>
+</html>
