@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>West Side Tavern | Taylorville's Neighborhood Bar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --amber: #C9933A;
+      --amber-dark: #A67A2E;
+      --charcoal: #1A1A1A;
+      --slate: #2D2D2D;
+      --cream: #F5F0E6;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--charcoal);
+      color: var(--cream);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--charcoal);
+      border-bottom: 1px solid rgba(201,147,58,0.2);
+    }
+
+    .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--amber);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--amber); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5%;
+      background: var(--charcoal);
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(201,147,58,0.1) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      border: 2px solid var(--amber);
+      color: var(--amber);
+      padding: 0.4rem 1.25rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-title span {
+      color: var(--amber);
+    }
+
+    .hero-sub {
+      color: rgba(245,240,230,0.7);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--charcoal);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--white);
+    }
+
+    /* Features */
+    .features {
+      padding: 5rem 5%;
+      background: var(--slate);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .feature h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      color: rgba(245,240,230,0.7);
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--charcoal);
+      text-align: center;
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 2;
+      color: rgba(245,240,230,0.8);
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--amber);
+      text-align: center;
+      color: var(--charcoal);
+    }
+
+    .contact .section-label { color: var(--charcoal); opacity: 0.7; }
+    .contact .section-title { color: var(--charcoal); margin-bottom: 3rem; }
+
+    .contact-info {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .features {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo">West Side</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Taylorville</span>
+      <h1 class="hero-title">West Side <span>Tavern</span></h1>
+      <p class="hero-sub">Your neighborhood spot for cold drinks, good food, and even better company. Pull up a stool — you're among friends here.</p>
+      <a href="#contact" class="hero-cta">Come Hang</a>
+    </div>
+  </section>
+
+  <div class="features">
+    <div class="feature">
+      <h3>Cold Drinks</h3>
+      <p>Beer, cocktails, and your favorites on tap</p>
+    </div>
+    <div class="feature">
+      <h3>Casual Dining</h3>
+      <p>Bar food done right</p>
+    </div>
+    <div class="feature">
+      <h3>Local Favorites</h3>
+      <p>The classics you know and love</p>
+    </div>
+  </div>
+
+  <section class="about" id="about">
+    <span class="section-label">About Us</span>
+    <h2 class="section-title">Taylorville's neighborhood bar</h2>
+    <p class="about-text">West Side Tavern is the kind of place where everybody knows your name. We've been serving Taylorville with cold drinks, casual dining, and a welcoming atmosphere. Whether you're catching the game, grabbing a bite, or just need a place to unwind, the West Side is always open.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop By</h2>
+    <div class="contact-info">
+      Taylorville, IL
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+</body>
+</html>

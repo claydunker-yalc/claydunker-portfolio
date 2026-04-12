@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Roots Bakery & Cafe | Lincoln, IL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Aleo:wght@400;500;600&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --earth: #5D4E37;
+      --earth-light: #8B7355;
+      --forest: #4A5D4A;
+      --cream: #FAF7F2;
+      --warm-white: #FFFDF8;
+      --charcoal: #2A2520;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--warm-white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Aleo', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--earth);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--forest); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+      background: var(--earth);
+      color: var(--cream);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--earth-light);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Aleo', serif;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: rgba(250,247,242,0.8);
+      font-size: 1rem;
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--forest);
+      color: var(--cream);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      width: fit-content;
+    }
+
+    .hero-cta:hover {
+      background: var(--cream);
+      color: var(--earth);
+    }
+
+    /* Menu */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Aleo', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--earth);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: var(--warm-white);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(93,78,55,0.12);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 1.75rem;
+    }
+
+    .menu-card h3 {
+      font-family: 'Aleo', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--earth);
+    }
+
+    .menu-card p {
+      color: var(--earth-light);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--forest);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      color: var(--cream);
+    }
+
+    .about-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .about .section-label { color: var(--earth-light); }
+    .about .section-title { color: var(--cream); margin-bottom: 2rem; }
+
+    .about-text {
+      opacity: 0.9;
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Aleo', serif;
+      font-size: 1.25rem;
+      color: var(--earth);
+    }
+
+    .contact-item a {
+      color: var(--earth);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--forest); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--forest);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+        order: -1;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 300px;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Deep Roots</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1000&h=1400&fit=crop" alt="Fresh bread" class="hero-image">
+    </div>
+    <div class="hero-content">
+      <span class="hero-tag">Lincoln, Illinois</span>
+      <h1 class="hero-title">Homemade sandwiches & fresh-baked bread</h1>
+      <p class="hero-sub">Everything made from scratch, served with heart. Deep Roots is Lincoln's spot for real food, fresh bread, and a welcoming atmosphere.</p>
+      <a href="#contact" class="hero-cta">Visit Us</a>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">Our Menu</span>
+      <h2 class="section-title">Made fresh daily</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&h=400&fit=crop" alt="Sandwiches" class="menu-image">
+        <div class="menu-content">
+          <h3>Homemade Sandwiches</h3>
+          <p>Crafted on our fresh-baked bread with quality ingredients.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=600&h=400&fit=crop" alt="Fresh bread" class="menu-image">
+        <div class="menu-content">
+          <h3>Fresh-Baked Bread</h3>
+          <p>Baked in-house every day. The heart of everything we make.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&h=400&fit=crop" alt="Cafe" class="menu-image">
+        <div class="menu-content">
+          <h3>Cafe Favorites</h3>
+          <p>Soups, salads, and daily specials to round out your meal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1556217477-d325251ece38?w=800&h=800&fit=crop" alt="Bakery atmosphere" class="about-image">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Rooted in Lincoln</h2>
+      <p class="about-text">Deep Roots Bakery & Cafe is all about real food made with care. From our scratch-made sandwiches to our fresh-baked bread, everything we serve is made in-house. We're proud to be part of Lincoln's downtown community.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop by anytime</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2177321217">(217) 732-1217</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>127 S Kickapoo St<br>Lincoln, IL 62656</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

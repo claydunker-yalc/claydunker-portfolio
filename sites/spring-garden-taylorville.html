@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spring Garden Restaurant | Family Dining in Taylorville</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #5A8F5A;
+      --green-light: #D4E8D4;
+      --gold: #C9A84C;
+      --cream: #FDFCF8;
+      --white: #FFFFFF;
+      --charcoal: #2D2D2D;
+      --warm-gray: #6B6B6B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--green-light);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--green);
+      color: var(--white);
+      padding: 0.4rem 1.25rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+
+    .hero-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--warm-gray);
+      font-size: 1.05rem;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      width: fit-content;
+    }
+
+    .hero-cta:hover {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Menu */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-top: 4px solid var(--green);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(90,143,90,0.12);
+    }
+
+    .menu-card h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--green);
+    }
+
+    .menu-card p {
+      color: var(--warm-gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--green);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .about .section-label { color: var(--gold); }
+    .about .section-title { color: var(--white); margin-bottom: 2rem; }
+
+    .about-text {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 2;
+      opacity: 0.95;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--white);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Merriweather', serif;
+      font-size: 1.25rem;
+      color: var(--charcoal);
+    }
+
+    .contact-item a {
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--green); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+        order: -1;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Spring Garden</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Taylorville</span>
+      <h1 class="hero-title">Home-style meals for the whole family</h1>
+      <p class="hero-sub">Fresh, honest cooking served in a welcoming atmosphere. Spring Garden is where Taylorville gathers for good food and good company.</p>
+      <a href="#contact" class="hero-cta">Join Us</a>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1000&h=1400&fit=crop" alt="Home cooking" class="hero-image">
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">Our Menu</span>
+      <h2 class="section-title">Something for everyone</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <h3>Home-Style Meals</h3>
+        <p>Comfort food classics made fresh, just like home.</p>
+      </div>
+
+      <div class="menu-card">
+        <h3>Family Dining</h3>
+        <p>Generous portions meant for sharing around the table.</p>
+      </div>
+
+      <div class="menu-card">
+        <h3>Daily Specials</h3>
+        <p>Check our board for today's fresh-made features.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">A Taylorville gathering spot</h2>
+    <p class="about-text">Spring Garden Restaurant has been serving Taylorville families with honest, home-style meals. We believe food tastes better when it's made with care and served with a smile. Whether you're stopping in for a quick lunch or bringing the whole family for dinner, we're glad you're here.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Come on in</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2177132700">(217) 713-2700</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>1220 W Springfield Rd<br>Taylorville, IL</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

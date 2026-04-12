@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Kitchen | Home-Style Cooking in Taylorville</title>
+  <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #C1272D;
+      --red-dark: #9E1F24;
+      --navy: #1E3A5F;
+      --cream: #FDF9F3;
+      --white: #FFFFFF;
+      --charcoal: #2D2D2D;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--red);
+    }
+
+    .logo {
+      font-family: 'Arvo', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-links a:hover { opacity: 0.8; }
+
+    /* Hero */
+    .hero {
+      padding: 10rem 5% 6rem;
+      background: var(--red);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      border: 2px solid var(--white);
+      color: var(--white);
+      padding: 0.4rem 1.25rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Arvo', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.1rem;
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--white);
+      color: var(--red);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* Features */
+    .features {
+      padding: 5rem 5%;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .feature h3 {
+      font-family: 'Arvo', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Menu */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Arvo', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: var(--white);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(193,39,45,0.12);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 1.75rem;
+      text-align: center;
+    }
+
+    .menu-card h3 {
+      font-family: 'Arvo', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--navy);
+    }
+
+    .menu-card p {
+      color: var(--charcoal);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--white);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Arvo', serif;
+      font-size: 1.25rem;
+      color: var(--navy);
+    }
+
+    .contact-item a {
+      color: var(--navy);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--red); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--red);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .features {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo">Country Kitchen</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-tag">Taylorville, IL</span>
+    <h1 class="hero-title">Home-style cooking done right</h1>
+    <p class="hero-sub">Breakfast all day, daily specials, and the kind of comfort food that keeps you coming back. Country Kitchen is Taylorville's go-to spot for good, honest food.</p>
+    <a href="#contact" class="hero-cta">Come Hungry</a>
+  </section>
+
+  <div class="features">
+    <div class="feature">
+      <h3>Breakfast All Day</h3>
+      <p>Your favorites, any time you want them</p>
+    </div>
+    <div class="feature">
+      <h3>Home-Style</h3>
+      <p>Made like your grandma used to make</p>
+    </div>
+    <div class="feature">
+      <h3>Daily Specials</h3>
+      <p>Something new to try every day</p>
+    </div>
+  </div>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">What We Serve</span>
+      <h2 class="section-title">Good food, good company</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&h=360&fit=crop" alt="Breakfast" class="menu-image">
+        <div class="menu-content">
+          <h3>Breakfast</h3>
+          <p>Eggs, pancakes, biscuits & gravy — all day long.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=360&fit=crop" alt="Lunch" class="menu-image">
+        <div class="menu-content">
+          <h3>Lunch & Dinner</h3>
+          <p>Hearty plates and comfort classics.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600&h=360&fit=crop" alt="Daily specials" class="menu-image">
+        <div class="menu-content">
+          <h3>Daily Specials</h3>
+          <p>Check the board — something new every day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop by anytime</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2178243111">(217) 824-3111</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>Taylorville, IL</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

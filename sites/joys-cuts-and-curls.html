@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joy's Cuts & Curls | Pontiac Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink: #E8A5B3;
+      --pink-dark: #D18A9A;
+      --mint: #A8D5C2;
+      --cream: #FDF9F7;
+      --charcoal: #2D2D2D;
+      --warm-gray: #7A7575;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--pink-dark);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--pink-dark); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5%;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--mint) 100%);
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: white;
+      color: var(--pink-dark);
+      padding: 0.5rem 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      border-radius: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: white;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: white;
+      color: var(--pink-dark);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border-radius: 2rem;
+    }
+
+    .hero-cta:hover {
+      background: var(--charcoal);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Services */
+    .services {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      color: var(--charcoal);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(232,165,179,0.2);
+    }
+
+    .service-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .service-content {
+      padding: 1.75rem;
+      text-align: center;
+    }
+
+    .service-card h3 {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      color: var(--pink-dark);
+    }
+
+    .service-card p {
+      color: var(--warm-gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--mint);
+      text-align: center;
+      color: white;
+    }
+
+    .about .section-label { color: rgba(255,255,255,0.7); }
+    .about .section-title { color: white; margin-bottom: 2rem; }
+
+    .about-text {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 2;
+      opacity: 0.95;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-info {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: var(--pink-dark);
+    }
+
+    .contact-info span {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--pink);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Joy's</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Pontiac, IL</span>
+      <h1 class="hero-title">Joy's Cuts & Curls</h1>
+      <p class="hero-sub">Hair cuts, color, and manicures in a welcoming, fun atmosphere. Feel good when you leave — that's our goal.</p>
+      <a href="#contact" class="hero-cta">Book Your Visit</a>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Our Services</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=360&fit=crop" alt="Hair cuts" class="service-image">
+        <div class="service-content">
+          <h3>Hair Cuts</h3>
+          <p>Precision cuts for every style and hair type.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=360&fit=crop" alt="Hair color" class="service-image">
+        <div class="service-content">
+          <h3>Color</h3>
+          <p>From subtle highlights to bold transformations.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=360&fit=crop" alt="Manicures" class="service-image">
+        <div class="service-content">
+          <h3>Manicures</h3>
+          <p>Pamper yourself with a fresh mani.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Since 2019</h2>
+    <p class="about-text">Joy's Cuts & Curls opened in 2019 with a simple mission: make everyone who walks through the door feel amazing. We're a small salon with a big heart, focused on creating a fun, friendly atmosphere where you can relax and leave looking your best.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Come see us!</h2>
+
+    <div class="contact-info">
+      <span>Location</span>
+      Pontiac, IL
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

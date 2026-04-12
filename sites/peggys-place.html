@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peggy's Place by Hilary | Custom Bakery & Catering | Lincoln, IL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --peach: #F5B895;
+      --peach-light: #FDE8DB;
+      --brown: #6B4E3D;
+      --cream: #FFFBF7;
+      --white: #FFFFFF;
+      --charcoal: #2D2520;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(107,78,61,0.1);
+    }
+
+    .logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--brown);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--peach); }
+
+    /* Hero */
+    .hero {
+      padding: 10rem 5% 6rem;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: var(--brown);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--brown);
+      font-size: 1.1rem;
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.9;
+      opacity: 0.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--peach);
+      color: var(--charcoal);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--brown);
+      color: var(--cream);
+    }
+
+    .hero-image {
+      margin-top: 4rem;
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      object-fit: cover;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    /* Services */
+    .services {
+      padding: 8rem 5%;
+      background: var(--peach-light);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      color: var(--brown);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(245,184,149,0.25);
+    }
+
+    .service-card h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+      color: var(--brown);
+    }
+
+    .service-card p {
+      color: var(--charcoal);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .about .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      max-width: 700px;
+      margin: 0 auto;
+      color: var(--charcoal);
+      font-size: 1.1rem;
+      line-height: 2;
+      opacity: 0.85;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--brown);
+      text-align: center;
+      color: var(--cream);
+    }
+
+    .contact .section-label { color: var(--peach); }
+    .contact .section-title { color: var(--cream); margin-bottom: 2rem; }
+
+    .contact-text {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .contact-text a {
+      color: var(--peach);
+      text-decoration: none;
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--peach);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero-image {
+        height: 280px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo">Peggy's Place</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1 class="hero-title">Peggy's Place by Hilary</h1>
+    <p class="hero-sub">Custom bakery creations and catering for your special moments. Made with love in Lincoln, IL.</p>
+    <a href="#contact" class="hero-cta">Get in Touch</a>
+    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1200&h=800&fit=crop" alt="Custom cake" class="hero-image">
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Made with Love</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Custom Bakery</h3>
+        <p>Custom cakes, cupcakes, cookies, and baked goods for birthdays, weddings, and every celebration in between.</p>
+      </div>
+
+      <div class="service-card">
+        <h3>Catering</h3>
+        <p>From small gatherings to large events, we bring the homemade touch to your celebration.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Homemade in Lincoln</h2>
+    <p class="about-text">Peggy's Place by Hilary is a small custom bakery and catering business in Lincoln, IL. Every creation is made from scratch with quality ingredients and a whole lot of heart. Whether it's a custom cake for a milestone birthday or catering for your next event, we're here to make it delicious.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Let's create something sweet</h2>
+    <p class="contact-text">Find us on <a href="https://www.facebook.com/p/Peggys-Place-by-Hilary-100090621104086/" target="_blank">Facebook</a> to see our latest creations and get in touch about your custom order.</p>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

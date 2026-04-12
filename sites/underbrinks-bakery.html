@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Underbrink's Bakery | Quincy's Classic Bakery Since 1929</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brown: #5C4033;
+      --brown-light: #8B7355;
+      --cream: #FDF8F0;
+      --gold: #C9A227;
+      --warm-white: #FFFEF9;
+      --charcoal: #2C2420;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(92,64,51,0.1);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--brown);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* Hero */
+    .hero {
+      padding: 10rem 5% 6rem;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 0.5rem 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--brown);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--brown-light);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--brown);
+      color: var(--cream);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    .hero-image {
+      margin-top: 4rem;
+      width: 100%;
+      max-width: 1000px;
+      height: 450px;
+      object-fit: cover;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    /* Legacy Banner */
+    .legacy {
+      background: var(--brown);
+      color: var(--cream);
+      padding: 4rem 5%;
+      text-align: center;
+    }
+
+    .legacy-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .legacy-text {
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.9;
+      line-height: 1.8;
+    }
+
+    /* Menu Section */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--warm-white);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--brown);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: var(--cream);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(92,64,51,0.15);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .menu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      color: var(--brown);
+    }
+
+    .menu-card p {
+      color: var(--brown-light);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--brown);
+    }
+
+    .contact-item a {
+      color: var(--brown);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--gold); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero-image {
+        height: 300px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo">Underbrink's</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-badge">Est. 1929</span>
+    <h1 class="hero-title">Baking Quincy's favorites for nearly a century</h1>
+    <p class="hero-sub">From scratch-made donuts to custom cakes, Underbrink's Bakery has been a Quincy tradition for generations. Some things are worth keeping the same.</p>
+    <a href="#contact" class="hero-cta">Visit the Bakery</a>
+    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&h=900&fit=crop" alt="Fresh baked goods" class="hero-image">
+  </section>
+
+  <div class="legacy">
+    <h2 class="legacy-title">A Quincy Tradition</h2>
+    <p class="legacy-text">For almost 100 years, families have trusted Underbrink's for birthday cakes, holiday treats, and those perfect Saturday morning donuts. We're proud to keep that tradition alive.</p>
+  </div>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">Fresh Daily</span>
+      <h2 class="section-title">What we bake</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&h=440&fit=crop" alt="Donuts" class="menu-image">
+        <div class="menu-content">
+          <h3>Donuts</h3>
+          <p>Fresh every morning. Glazed, frosted, filled — the classics done right.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=440&fit=crop" alt="Custom cakes" class="menu-image">
+        <div class="menu-content">
+          <h3>Custom Cakes</h3>
+          <p>Birthdays, weddings, celebrations. Let us make your moment special.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1486427944544-d2c6128c5d94?w=600&h=440&fit=crop" alt="Scratch baked goods" class="menu-image">
+        <div class="menu-content">
+          <h3>Scratch Baked</h3>
+          <p>Cookies, pastries, breads — everything made from scratch, just like always.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop in anytime</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2172221831">(217) 222-1831</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>1627 College Ave<br>Quincy, IL 62301</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest House Coffee & Pastries | Lincoln, IL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blush: #E8D5D5;
+      --rose: #9C7B7B;
+      --cream: #FFFBF8;
+      --white: #FFFFFF;
+      --charcoal: #2D2D2D;
+      --warm-gray: #7A7575;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--rose);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--rose); }
+
+    /* Hero - Centered */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5%;
+      background: var(--blush);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Crimson Text', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--charcoal);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--warm-gray);
+      font-size: 1.05rem;
+      max-width: 550px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--rose);
+      color: var(--white);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--charcoal);
+    }
+
+    .hero-image {
+      margin-top: 4rem;
+      width: 100%;
+      max-width: 900px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Menu */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--white);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Crimson Text', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: var(--cream);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(156,123,123,0.15);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .menu-card h3 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+    }
+
+    .menu-card p {
+      color: var(--warm-gray);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .about-content .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      color: var(--warm-gray);
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--rose);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .contact .section-label { color: var(--blush); }
+    .contact .section-title { color: var(--white); margin-bottom: 3rem; }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.25rem;
+    }
+
+    .contact-item a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--blush); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--rose);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero-image {
+        height: 280px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 280px;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Guest House</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-tag">Lincoln, Illinois</span>
+    <h1 class="hero-title">In-house roasted coffee & fresh pastries</h1>
+    <p class="hero-sub">A welcoming space for great coffee, fresh-baked pastries, and good conversation. Guest House is Lincoln's cozy corner cafe.</p>
+    <a href="#contact" class="hero-cta">Come Visit</a>
+    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=800&fit=crop" alt="Coffee and pastries" class="hero-image">
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">Our Menu</span>
+      <h2 class="section-title">What we serve</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=360&fit=crop" alt="Coffee" class="menu-image">
+        <div class="menu-content">
+          <h3>Roasted In-House</h3>
+          <p>Our beans are roasted right here for the freshest cup in town.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=360&fit=crop" alt="Pastries" class="menu-image">
+        <div class="menu-content">
+          <h3>Fresh Pastries</h3>
+          <p>Baked daily — muffins, scones, and sweet treats.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&h=360&fit=crop" alt="Light bites" class="menu-image">
+        <div class="menu-content">
+          <h3>Light Bites</h3>
+          <p>Simple, satisfying options to pair with your coffee.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=800&fit=crop" alt="Cafe interior" class="about-image">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Lincoln's cozy corner</h2>
+      <p class="about-text">Guest House Coffee & Pastries is where Lincoln comes to slow down. We roast our coffee in-house, bake fresh pastries every day, and create a space that feels like home. Whether you're grabbing a quick cup or settling in with a book, you're always welcome here.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop by anytime</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2176050091">(217) 605-0091</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>113 S Kickapoo St<br>Lincoln, IL 62656</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

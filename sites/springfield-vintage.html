@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Springfield Vintage | Vintage Clothing, Decor & Furniture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mustard: #C9A227;
+      --rust: #A65D3F;
+      --olive: #5D5C44;
+      --cream: #F5F0E6;
+      --charcoal: #1E1E1E;
+      --warm-white: #FDFBF7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--rust); }
+
+    /* Hero - Bold Asymmetric */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      background: var(--charcoal);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+      color: var(--cream);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--mustard);
+      color: var(--charcoal);
+      padding: 0.4rem 1rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+
+    .hero-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: rgba(245,240,230,0.7);
+      font-size: 1rem;
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--rust);
+      color: var(--cream);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      width: fit-content;
+    }
+
+    .hero-cta:hover {
+      background: var(--mustard);
+      color: var(--charcoal);
+    }
+
+    /* Categories */
+    .categories {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .categories-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .category-card {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .category-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .category-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .category-card:hover .category-image {
+      transform: scale(1.1);
+    }
+
+    .category-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(30,30,30,0.9) 0%, transparent 100%);
+    }
+
+    .category-card h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.35rem;
+      color: var(--cream);
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--olive);
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .about .section-label { color: var(--mustard); }
+    .about .section-title { color: var(--cream); margin-bottom: 2rem; }
+
+    .about-text {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 2;
+      opacity: 0.9;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--warm-white);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.25rem;
+      color: var(--charcoal);
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--mustard);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+        order: -1;
+      }
+
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-card {
+        aspect-ratio: 16/9;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Springfield Vintage</a>
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&h=1400&fit=crop" alt="Vintage clothing" class="hero-image">
+    </div>
+    <div class="hero-content">
+      <span class="hero-tag">Since 2016</span>
+      <h1 class="hero-title">Curated vintage in downtown Springfield</h1>
+      <p class="hero-sub">One-of-a-kind clothing, decor, and furniture. Sustainable style with character and story.</p>
+      <a href="#contact" class="hero-cta">Come Explore</a>
+    </div>
+  </section>
+
+  <section class="categories" id="shop">
+    <div class="categories-header">
+      <span class="section-label">What We Carry</span>
+      <h2 class="section-title">Finds with character</h2>
+    </div>
+
+    <div class="categories-grid">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&h=600&fit=crop" alt="Vintage clothing" class="category-image">
+        <div class="category-overlay">
+          <h3>Clothing</h3>
+        </div>
+      </div>
+
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=600&fit=crop" alt="Vintage decor" class="category-image">
+        <div class="category-overlay">
+          <h3>Decor</h3>
+        </div>
+      </div>
+
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=600&fit=crop" alt="Vintage furniture" class="category-image">
+        <div class="category-overlay">
+          <h3>Furniture</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Quirky, curated, Springfield</h2>
+    <p class="about-text">Springfield Vintage has been bringing one-of-a-kind finds to downtown since 2016. We believe in sustainable style — giving beautiful pieces a second life while helping you build a wardrobe and home that's uniquely you. Every item in our shop has been hand-picked for its character and quality.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop by downtown</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>215 S 5th St<br>Springfield, IL</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.category-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

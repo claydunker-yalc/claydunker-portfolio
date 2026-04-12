@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thyme Square Bakery & Cafe | Fresh Food in Downtown Quincy</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sage: #6B8E6B;
+      --sage-light: #A8C5A8;
+      --cream: #FAFDF7;
+      --charcoal: #2D2D2D;
+      --warm-gray: #6B6B6B;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--sage);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--sage); }
+
+    /* Hero - Split */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+      background: var(--white);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--warm-gray);
+      font-size: 1rem;
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--sage);
+      color: var(--white);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      width: fit-content;
+    }
+
+    .hero-cta:hover {
+      background: var(--charcoal);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Features */
+    .features {
+      background: var(--sage);
+      padding: 4rem 5%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .feature h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    /* Menu */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(107,142,107,0.15);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 1.75rem;
+    }
+
+    .menu-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+    }
+
+    .menu-card p {
+      color: var(--warm-gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .about-content .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      color: var(--warm-gray);
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--charcoal);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .contact .section-label { color: var(--sage-light); }
+    .contact .section-title { color: var(--white); margin-bottom: 3rem; }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage-light);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+    }
+
+    .contact-item a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--sage-light); }
+
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--sage-light);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+        order: -1;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 300px;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Thyme Square</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Downtown Quincy</span>
+      <h1 class="hero-title">Fresh breakfast, lunch & baked goods</h1>
+      <p class="hero-sub">Locally sourced ingredients, scratch-made recipes, and a cozy downtown spot to enjoy it all. This is Thyme Square.</p>
+      <a href="#contact" class="hero-cta">Come See Us</a>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1000&h=1400&fit=crop" alt="Cafe interior" class="hero-image">
+    </div>
+  </section>
+
+  <div class="features">
+    <div class="feature">
+      <h3>Locally Sourced</h3>
+      <p>Fresh ingredients from nearby farms</p>
+    </div>
+    <div class="feature">
+      <h3>Scratch Made</h3>
+      <p>Baked and prepared in-house daily</p>
+    </div>
+    <div class="feature">
+      <h3>Downtown</h3>
+      <p>Right in the heart of Quincy</p>
+    </div>
+  </div>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">Our Menu</span>
+      <h2 class="section-title">Made fresh every day</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&h=400&fit=crop" alt="Breakfast" class="menu-image">
+        <div class="menu-content">
+          <h3>Breakfast</h3>
+          <p>Start your morning with scratch-made favorites using local ingredients.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop" alt="Lunch" class="menu-image">
+        <div class="menu-content">
+          <h3>Lunch</h3>
+          <p>Fresh salads, hearty sandwiches, and seasonal specials.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=400&fit=crop" alt="Bakery" class="menu-image">
+        <div class="menu-content">
+          <h3>Bakery</h3>
+          <p>Pastries, breads, and sweet treats baked fresh each morning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=900&fit=crop" alt="Cafe atmosphere" class="about-image">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">A downtown gathering spot</h2>
+      <p class="about-text">Thyme Square Bakery & Cafe is where Quincy comes together. We believe in real food made from real ingredients — locally sourced whenever possible and always prepared with care. Whether you're grabbing breakfast on the go or settling in for lunch with friends, we're glad you're here.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Visit Us</span>
+    <h2 class="section-title">Stop by anytime</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2172243515">(217) 224-3515</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>615 Hampshire St<br>Quincy, IL</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
