@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los Rancheros | Authentic Mexican Cuisine in Taylorville</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --terracotta: #C75B39;
+      --terracotta-dark: #A84829;
+      --teal: #1D6B6B;
+      --cream: #FDF9F3;
+      --sand: #E8DFD0;
+      --charcoal: #1F1E1C;
+      --gold: #D4A84B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--terracotta);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--terracotta); }
+
+    /* Hero - Full Width with Overlay */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(29,107,107,0.85) 0%, rgba(199,91,57,0.75) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 0.5rem 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      color: white;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.15rem;
+      max-width: 550px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: white;
+      color: var(--terracotta);
+      padding: 1.25rem 3rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--gold);
+      color: var(--charcoal);
+      transform: translateY(-3px);
+    }
+
+    /* Menu Section */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      color: var(--terracotta);
+      letter-spacing: 0.02em;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      position: relative;
+      overflow: hidden;
+      background: white;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(199,91,57,0.15);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .menu-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+      color: var(--teal);
+      letter-spacing: 0.02em;
+    }
+
+    .menu-card p {
+      color: var(--charcoal);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--teal);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .about-content {
+      color: white;
+    }
+
+    .about .section-label {
+      color: var(--gold);
+    }
+
+    .about .section-title {
+      color: white;
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 2;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--sand);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--terracotta);
+      letter-spacing: 0.02em;
+    }
+
+    .contact-item a {
+      color: var(--terracotta);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--teal); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 350px;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Los Rancheros</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1600&h=1000&fit=crop" alt="Mexican food">
+    </div>
+    <div class="hero-content">
+      <span class="hero-badge">Taylorville, Illinois</span>
+      <h1 class="hero-title">Authentic Mexican Flavors</h1>
+      <p class="hero-sub">From sizzling fajitas to handcrafted margaritas, Los Rancheros brings the taste of Mexico to Taylorville. Family recipes, fresh ingredients, and a warm welcome await.</p>
+      <a href="#contact" class="hero-cta">Join Us for Dinner</a>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">Our Menu</span>
+      <h2 class="section-title">Made Fresh Daily</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&h=440&fit=crop" alt="Tacos" class="menu-image">
+        <div class="menu-content">
+          <h3>Mexican Cuisine</h3>
+          <p>Tacos, enchiladas, burritos, and all your favorites. Made with authentic recipes and fresh ingredients.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=440&fit=crop" alt="Margaritas" class="menu-image">
+        <div class="menu-content">
+          <h3>Margaritas & Drinks</h3>
+          <p>Handcrafted margaritas, cold cerveza, and refreshing agua frescas. The perfect complement to your meal.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=440&fit=crop" alt="Family dining" class="menu-image">
+        <div class="menu-content">
+          <h3>Family Dining</h3>
+          <p>Generous portions meant for sharing. Bring the whole family and enjoy a meal together.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?w=800&h=1000&fit=crop" alt="Restaurant atmosphere" class="about-image">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">A Taste of Home</h2>
+      <p class="about-text">Los Rancheros has been serving Taylorville with authentic Mexican cuisine for years. Our recipes come from generations of family tradition, and we're proud to share that heritage with our community. Whether you're stopping in for a quick lunch or celebrating with friends, we treat every guest like family.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Visit Us</span>
+    <h2 class="section-title">Come Hungry</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2178248200">(217) 824-8200</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>201 W Bidwell St<br>Taylorville, IL 62568</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

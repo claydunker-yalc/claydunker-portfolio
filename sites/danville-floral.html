@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danville Floral and Gifts | Your Local Danville Florist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #E8897E;
+      --coral-light: #FCEAE8;
+      --blush: #FDF5F4;
+      --white: #FFFFFF;
+      --charcoal: #2D2D2D;
+      --soft-gray: #8A8A8A;
+      --mint: #9FC5B8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--coral);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--coral); }
+
+    /* Hero - Split with Text Left */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--blush);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--soft-gray);
+      font-size: 1rem;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--coral);
+      color: var(--white);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      width: fit-content;
+    }
+
+    .hero-cta:hover {
+      background: var(--charcoal);
+      transform: translateY(-2px);
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Services */
+    .services {
+      padding: 8rem 5%;
+      background: var(--white);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      background: var(--blush);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(232,137,126,0.15);
+    }
+
+    .service-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .service-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--charcoal);
+    }
+
+    .service-card p {
+      color: var(--soft-gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* Gallery Strip */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--coral-light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-content .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      color: var(--charcoal);
+      font-size: 1.05rem;
+      line-height: 2;
+      font-weight: 300;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--charcoal);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .contact .section-label { color: var(--mint); }
+    .contact .section-title { color: var(--white); margin-bottom: 3rem; }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+    }
+
+    .contact-item a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--coral); }
+
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--coral);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery img {
+        height: 200px;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 300px;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Danville Floral</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Danville, Illinois</span>
+      <h1 class="hero-title">Beautiful blooms delivered with care</h1>
+      <p class="hero-sub">Fresh flowers, unique gifts, and same-day local delivery. Danville Floral has been helping you celebrate life's moments for over 30 years.</p>
+      <a href="#contact" class="hero-cta">Order Now</a>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=1000&h=1400&fit=crop" alt="Beautiful flowers" class="hero-image">
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Flowers for every occasion</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <img src="https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=160&h=160&fit=crop" alt="Fresh flowers">
+        </div>
+        <h3>Fresh Flowers</h3>
+        <p>Stunning arrangements crafted daily from the freshest seasonal blooms.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=160&h=160&fit=crop" alt="Gift items">
+        </div>
+        <h3>Gift Items</h3>
+        <p>Unique gifts, chocolates, and keepsakes to pair with your flowers.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=160&h=160&fit=crop" alt="Delivery">
+        </div>
+        <h3>Local Delivery</h3>
+        <p>Same-day delivery throughout Danville and surrounding communities.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=500&h=600&fit=crop" alt="Flower arrangement">
+    <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500&h=600&fit=crop" alt="Pink roses">
+    <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=500&h=600&fit=crop" alt="Mixed bouquet">
+    <img src="https://images.unsplash.com/photo-1518882605630-8def0a0e6511?w=500&h=600&fit=crop" alt="White flowers">
+  </div>
+
+  <section class="about" id="about">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Serving Danville with heart</h2>
+      <p class="about-text">Danville Floral and Gifts has been a part of the community for over three decades. We believe flowers have the power to brighten any day, comfort in times of sorrow, and celebrate life's milestones. Every arrangement we create is made with care and attention to detail.</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=800&h=900&fit=crop" alt="Florist at work" class="about-image">
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Let's create something beautiful</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2174424500">(217) 442-4500</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>437 N Walnut St<br>Danville, IL</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

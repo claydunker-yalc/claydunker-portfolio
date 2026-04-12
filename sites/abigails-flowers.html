@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abigail's Flowers & Gifts | Jacksonville, IL Florist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --plum: #6B4259;
+      --plum-light: #8A5A73;
+      --blush: #F2E3E7;
+      --ivory: #FDFBF9;
+      --charcoal: #2B2B2B;
+      --warm-gray: #7D7573;
+      --gold: #C9A962;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background: var(--ivory);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--ivory);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--plum);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--plum); }
+
+    /* Hero - Centered */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5%;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(253,251,249,0.85) 0%, rgba(253,251,249,0.7) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--plum);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .hero-title em {
+      font-style: italic;
+    }
+
+    .hero-sub {
+      color: var(--warm-gray);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--plum);
+      color: white;
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--plum-light);
+      transform: translateY(-2px);
+    }
+
+    /* Services */
+    .services {
+      padding: 8rem 5%;
+      background: var(--blush);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--plum);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--ivory);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(107,66,89,0.15);
+    }
+
+    .service-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .service-content {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .service-card h3 {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      color: var(--plum);
+    }
+
+    .service-card p {
+      color: var(--warm-gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--ivory);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-content .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      color: var(--warm-gray);
+      font-size: 1.05rem;
+      line-height: 1.9;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--plum);
+      text-align: center;
+      color: white;
+    }
+
+    .contact .section-label { color: var(--gold); }
+    .contact .section-title { color: white; margin-bottom: 3rem; }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Lora', serif;
+      font-size: 1.25rem;
+    }
+
+    .contact-item a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--gold); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 350px;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Abigail's</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=1600&h=1000&fit=crop" alt="Beautiful flowers">
+    </div>
+    <div class="hero-content">
+      <span class="hero-label">Jacksonville, Illinois</span>
+      <h1 class="hero-title">Flowers & gifts for <em>every</em> occasion</h1>
+      <p class="hero-sub">For over 25 years, Abigail's has been Jacksonville's trusted florist, creating beautiful arrangements and curating thoughtful gifts for life's special moments.</p>
+      <a href="#contact" class="hero-cta">Get in Touch</a>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title">Fresh flowers & unique gifts</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?w=600&h=500&fit=crop" alt="Floral arrangements" class="service-image">
+        <div class="service-content">
+          <h3>Floral Arrangements</h3>
+          <p>Custom designs using fresh, seasonal blooms for any occasion, from everyday joy to sympathy tributes.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=500&fit=crop" alt="Gift baskets" class="service-image">
+        <div class="service-content">
+          <h3>Gift Baskets</h3>
+          <p>Thoughtfully curated gift baskets filled with gourmet treats, spa items, or themed surprises.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=500&fit=crop" alt="Event florals" class="service-image">
+        <div class="service-content">
+          <h3>Event Florals</h3>
+          <p>Weddings, parties, and celebrations. We bring your vision to life with stunning floral design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">A Jacksonville tradition</h2>
+      <p class="about-text">For more than 25 years, Abigail's Flowers & Gifts has been a Jacksonville favorite. We're proud to be an owner-operated shop where personal service and attention to detail come first. Whether you're celebrating, comforting, or simply spreading joy, we're here to help you find the perfect arrangement or gift.</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1445053023192-8d45cb66099d?w=800&h=1000&fit=crop" alt="Fresh flowers" class="about-image">
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">We'd love to hear from you</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2172456937">(217) 245-6937</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>880 S Main<br>Jacksonville, IL 62650</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

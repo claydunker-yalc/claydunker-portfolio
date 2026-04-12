@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noble Flower Shop | Charleston's Florist Since 1940s</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal: #1C1C1C;
+      --charcoal-light: #2A2A2A;
+      --terracotta: #C65D3B;
+      --terracotta-dark: #A84E30;
+      --cream: #F8F6F3;
+      --cream-dark: #EDE9E3;
+      --muted: #7A756E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--charcoal);
+      padding: 1rem 5%;
+    }
+
+    .logo {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--terracotta); }
+
+    /* Hero - Bold Dark with Image */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to right, rgba(28,28,28,0.95) 0%, rgba(28,28,28,0.7) 50%, rgba(28,28,28,0.4) 100%);
+    }
+
+    .hero-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 5% 4rem 8%;
+      position: relative;
+      z-index: 2;
+      max-width: 60%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-badge-line {
+      width: 40px;
+      height: 2px;
+      background: var(--terracotta);
+    }
+
+    .hero-badge-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      max-width: 450px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 1.1rem 2.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta-primary {
+      background: var(--terracotta);
+      color: var(--cream);
+    }
+
+    .hero-cta-primary:hover {
+      background: var(--terracotta-dark);
+    }
+
+    .hero-cta-secondary {
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--cream);
+    }
+
+    .hero-cta-secondary:hover {
+      border-color: var(--cream);
+      background: var(--cream);
+      color: var(--charcoal);
+    }
+
+    .hero-years {
+      position: absolute;
+      bottom: 4rem;
+      right: 8%;
+      z-index: 3;
+      background: var(--charcoal);
+      padding: 2rem 3rem;
+    }
+
+    .hero-years-num {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .hero-years-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Services - Alternating with Images */
+    .services {
+      padding: 8rem 0;
+      background: var(--cream);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      padding: 0 5%;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--charcoal);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    .service-row {
+      display: flex;
+      min-height: 400px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s ease;
+    }
+
+    .service-row.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-row:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .service-visual {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .service-row:hover .service-image {
+      transform: scale(1.05);
+    }
+
+    .service-visual-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-row:nth-child(1) .service-visual-overlay { background: rgba(28,28,28,0.5); }
+    .service-row:nth-child(2) .service-visual-overlay { background: rgba(198,93,59,0.5); }
+    .service-row:nth-child(3) .service-visual-overlay { background: rgba(42,42,42,0.5); }
+
+    .service-visual-label {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .service-content {
+      flex: 1;
+      padding: 4rem 6%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--cream-dark);
+    }
+
+    .service-row:nth-child(even) .service-content {
+      background: var(--cream);
+    }
+
+    .service-num {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--terracotta);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-content h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-content p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      max-width: 400px;
+    }
+
+    /* About - Angled */
+    .about {
+      background: var(--charcoal);
+      padding: 10rem 8%;
+      position: relative;
+      clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+      margin: -60px 0;
+    }
+
+    .about-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--cream);
+    }
+
+    .about .section-label {
+      color: var(--terracotta);
+    }
+
+    .about .section-title {
+      color: var(--cream);
+      margin-bottom: 2.5rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 2;
+      opacity: 0.85;
+      font-weight: 300;
+    }
+
+    .about-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--terracotta);
+      margin: 0 auto 2rem;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 10rem 8% 6rem;
+      background: var(--cream);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: white;
+      padding: 3rem;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.4s ease;
+    }
+
+    .contact-card:hover {
+      border-color: var(--terracotta);
+      transform: translateY(-5px);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--charcoal);
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--cream);
+    }
+
+    .contact-card h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .contact-card p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      color: var(--charcoal);
+    }
+
+    .contact-card a {
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-card a:hover { color: var(--terracotta); }
+
+    /* Footer */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--terracotta);
+      text-decoration: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero-left {
+        padding: 8rem 5% 6rem;
+        max-width: 100%;
+      }
+
+      .hero-years {
+        position: static;
+        margin-top: 3rem;
+        display: inline-block;
+      }
+
+      .hero-years-num { font-size: 3rem; }
+
+      .service-row,
+      .service-row:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .service-visual {
+        min-height: 250px;
+      }
+
+      .about {
+        clip-path: none;
+        margin: 0;
+        padding: 6rem 5%;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Noble Flower Shop</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1495231916356-a86217efff12?w=1800&h=1200&fit=crop" alt="Beautiful flower arrangement">
+    </div>
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="hero-badge-line"></span>
+        <span class="hero-badge-text">Charleston's Florist</span>
+      </div>
+      <h1 class="hero-title">Flowers crafted with <em>generations</em> of care</h1>
+      <p class="hero-sub">For over 80 years, Noble Flower Shop has been Charleston's trusted source for fresh flowers, meaningful arrangements, and wedding florals that make moments unforgettable.</p>
+      <div class="hero-cta-group">
+        <a href="#contact" class="hero-cta hero-cta-primary">Get in Touch</a>
+        <a href="#services" class="hero-cta hero-cta-secondary">Our Services</a>
+      </div>
+    </div>
+    <div class="hero-years">
+      <div class="hero-years-num">80+</div>
+      <div class="hero-years-label">Years Serving Charleston</div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Arrangements for every moment that matters</h2>
+    </div>
+
+    <div class="service-row">
+      <div class="service-visual">
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=800&h=600&fit=crop" alt="Flower delivery" class="service-image">
+        <div class="service-visual-overlay">
+          <span class="service-visual-label">Delivery</span>
+        </div>
+      </div>
+      <div class="service-content">
+        <span class="service-num">01</span>
+        <h3>Flower Delivery</h3>
+        <p>Fresh flowers delivered throughout Charleston and surrounding areas. Same-day delivery available when you order by noon.</p>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-visual">
+        <img src="https://images.unsplash.com/photo-1504204267155-aabd8e9926e7?w=800&h=600&fit=crop" alt="Sympathy flowers" class="service-image">
+        <div class="service-visual-overlay">
+          <span class="service-visual-label">Sympathy</span>
+        </div>
+      </div>
+      <div class="service-content">
+        <span class="service-num">02</span>
+        <h3>Sympathy Arrangements</h3>
+        <p>Compassionate tributes and standing sprays to honor loved ones. We handle everything with the care and dignity your family deserves.</p>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-visual">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop" alt="Wedding flowers" class="service-image">
+        <div class="service-visual-overlay">
+          <span class="service-visual-label">Weddings</span>
+        </div>
+      </div>
+      <div class="service-content">
+        <span class="service-num">03</span>
+        <h3>Wedding Florals</h3>
+        <p>Complete floral design for your special day. From bridal bouquets to ceremony arches, we bring your wedding vision to life.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-inner">
+      <span class="section-label">Our Heritage</span>
+      <div class="about-divider"></div>
+      <h2 class="section-title">A Charleston tradition</h2>
+      <p class="about-text">For more than 80 years, Noble Flower Shop has been a cornerstone of the Charleston community. Three generations of flower expertise, a dedication to quality, and genuine care for our customers have made us the florist families trust for life's most important moments.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+        </div>
+        <h4>Phone</h4>
+        <p><a href="tel:2173457007">(217) 345-7007</a></p>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <h4>Location</h4>
+        <p>2121 18th St<br>Charleston, IL 61920</p>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h4>Hours</h4>
+        <p>Mon-Fri 9-5<br>Sat 9-2</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // Service rows animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.service-row').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

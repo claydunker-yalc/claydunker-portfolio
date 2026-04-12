@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krazy Cakes Cafe & Bakery | Quincy's Favorite Bakery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #E8735A;
+      --coral-dark: #D4614A;
+      --butter: #F5E6C8;
+      --butter-dark: #E8D4AC;
+      --espresso: #2D2520;
+      --cream: #FFFBF7;
+      --warm-gray: #6B6460;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--espresso);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--espresso);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--espresso);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--coral); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--butter);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--coral);
+      color: white;
+      padding: 0.5rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      width: fit-content;
+      border-radius: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--espresso);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: var(--warm-gray);
+      font-size: 1.1rem;
+      max-width: 450px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+      width: fit-content;
+    }
+
+    .hero-cta:hover {
+      background: var(--coral);
+      transform: translateY(-2px);
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-location {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      background: var(--cream);
+      padding: 1.25rem 1.75rem;
+      border-radius: 4px;
+    }
+
+    .hero-location span {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--coral);
+      font-weight: 600;
+    }
+
+    .hero-location strong {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      color: var(--espresso);
+    }
+
+    /* Services */
+    .services {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--espresso);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .service-image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .service-content {
+      padding: 2rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      color: var(--espresso);
+    }
+
+    .service-card p {
+      color: var(--warm-gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--espresso);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .about-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 150px;
+      height: 150px;
+      background: var(--coral);
+      border-radius: 8px;
+      z-index: -1;
+    }
+
+    .about-content {
+      color: var(--cream);
+    }
+
+    .about .section-label {
+      color: var(--butter);
+    }
+
+    .about .section-title {
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      opacity: 0.9;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--butter);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      color: var(--espresso);
+    }
+
+    .contact-item a {
+      color: var(--espresso);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--coral); }
+
+    footer {
+      background: var(--espresso);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--coral);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+      }
+
+      .hero-location {
+        bottom: 2rem;
+        left: 2rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-accent { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Krazy Cakes</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">Downtown Quincy</span>
+      <h1 class="hero-title">Where every day deserves a little sweetness</h1>
+      <p class="hero-sub">Fresh-baked treats, made-to-order breakfasts, and custom cakes that make celebrations unforgettable. Serving Quincy since 2012.</p>
+      <a href="#contact" class="hero-cta">
+        <span>Visit Us</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1517433670267-30f41c3fd7f0?w=1000&h=1400&fit=crop" alt="Fresh baked pastries" class="hero-image">
+      <div class="hero-location">
+        <span>Find us in</span>
+        <strong>Quincy, IL</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="menu">
+    <div class="services-header">
+      <span class="section-label">What We Serve</span>
+      <h2 class="section-title">Made fresh, made with love</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&h=440&fit=crop" alt="Breakfast" class="service-image">
+        <div class="service-content">
+          <h3>Breakfast</h3>
+          <p>Start your day right with our scratch-made breakfast favorites, from fluffy pancakes to hearty omelets.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=440&fit=crop" alt="Custom Cakes" class="service-image">
+        <div class="service-content">
+          <h3>Custom Cakes</h3>
+          <p>Birthdays, weddings, or just because. Our custom cakes are designed to make your celebration memorable.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=440&fit=crop" alt="Bakery Treats" class="service-image">
+        <div class="service-content">
+          <h3>Bakery Treats</h3>
+          <p>Fresh pastries, cookies, and sweet treats baked daily. Perfect for a midday pick-me-up or dessert.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-image-wrap">
+      <img src="https://images.unsplash.com/photo-1556217477-d325251ece38?w=800&h=600&fit=crop" alt="Bakery interior" class="about-image">
+      <div class="about-accent"></div>
+    </div>
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">A Quincy favorite</h2>
+      <p class="about-text">Since 2012, Krazy Cakes Cafe & Bakery has been serving downtown Quincy with scratch-made breakfast, fresh-baked treats, and custom cakes for every occasion. We believe that good food brings people together, and we put that belief into everything we make.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Come Visit</span>
+    <h2 class="section-title">Stop by for something sweet</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2172222253">(217) 222-2253</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>512 Hampshire St<br>Quincy, IL 62301</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

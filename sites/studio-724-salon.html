@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio 724 Salon | Pontiac, IL Hair Salon & Spa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mauve: #A67F8E;
+      --mauve-dark: #8B6574;
+      --charcoal: #1F1F1F;
+      --sand: #E8E2DB;
+      --cream: #FAF9F7;
+      --warm-gray: #6E6A66;
+      --blush: #F5EFED;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Marcellus', serif;
+      font-size: 1.3rem;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--mauve); }
+
+    /* Hero - Full Width Image */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 5% 8rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to top, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.3) 60%, rgba(31,31,31,0.1) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mauve);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.75);
+      font-size: 1.05rem;
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--mauve);
+      color: white;
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--mauve-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Services */
+    .services {
+      padding: 8rem 5%;
+      background: var(--cream);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mauve);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--charcoal);
+    }
+
+    .services-intro {
+      max-width: 400px;
+      color: var(--warm-gray);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.5s ease;
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .service-card:hover .service-image {
+      transform: scale(1.08);
+    }
+
+    .service-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(31,31,31,0.9) 0%, transparent 100%);
+      color: white;
+    }
+
+    .service-card h3 {
+      font-family: 'Marcellus', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      font-weight: 300;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+    }
+
+    .about-content .section-title {
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      color: var(--warm-gray);
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--charcoal);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+    }
+
+    .contact-content {
+      color: white;
+    }
+
+    .contact .section-label { color: var(--mauve); }
+    .contact .section-title { color: white; margin-bottom: 2rem; }
+
+    .contact-text {
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-item h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mauve);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .contact-item p {
+      font-family: 'Marcellus', serif;
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    .contact-item a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--mauve); }
+
+    .contact-image-wrap {
+      position: relative;
+    }
+
+    .contact-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 400px;
+    }
+
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--mauve);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .services-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        aspect-ratio: 4/3;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 350px;
+        order: -1;
+      }
+
+      .contact {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .contact-image-wrap {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Studio 724</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&h=1000&fit=crop" alt="Salon interior">
+    </div>
+    <div class="hero-content">
+      <span class="hero-label">Pontiac, Illinois</span>
+      <h1 class="hero-title">Where beauty meets artistry</h1>
+      <p class="hero-sub">A full-service salon experience featuring expert hair color, precision cuts, and rejuvenating spa services. Your transformation starts here.</p>
+      <a href="#contact" class="hero-cta">Book Your Visit</a>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <div>
+        <span class="section-label">Our Services</span>
+        <h2 class="section-title">Crafted for you</h2>
+      </div>
+      <p class="services-intro">From subtle enhancements to complete transformations, our team delivers personalized results that bring out your best.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=800&fit=crop" alt="Hair color" class="service-image">
+        <div class="service-overlay">
+          <h3>Hair Color</h3>
+          <p>Balayage, highlights, and custom color artistry</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&h=800&fit=crop" alt="Cuts and styling" class="service-image">
+        <div class="service-overlay">
+          <h3>Cuts & Styling</h3>
+          <p>Precision cuts and blowouts for every occasion</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=800&fit=crop" alt="Manicures" class="service-image">
+        <div class="service-overlay">
+          <h3>Nails & Spa</h3>
+          <p>Manicures, pedicures, and relaxation</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=800&h=1000&fit=crop" alt="Salon styling" class="about-image">
+    <div class="about-content">
+      <span class="section-label">About Us</span>
+      <h2 class="section-title">Your neighborhood salon</h2>
+      <p class="about-text">Studio 724 is more than a salon. We're a place to relax, refresh, and leave feeling confident. Our team of skilled stylists and technicians are dedicated to providing personalized service in a welcoming atmosphere. Proudly serving Pontiac and the surrounding community.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-content">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title">Ready for your appointment?</h2>
+      <p class="contact-text">Give us a call or stop by the salon. Walk-ins welcome, but appointments are recommended.</p>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <h4>Phone</h4>
+          <p><a href="tel:8158441111">(815) 844-1111</a></p>
+        </div>
+        <div class="contact-item">
+          <h4>Location</h4>
+          <p>724 W Madison St<br>Pontiac, IL 61764</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-image-wrap">
+      <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&h=800&fit=crop" alt="Salon products" class="contact-image">
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

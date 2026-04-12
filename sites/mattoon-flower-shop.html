@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mattoon Flower Shop | Fresh Flowers & Same-Day Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --burgundy: #722F37;
+      --burgundy-dark: #5a252c;
+      --cream: #FDF8F3;
+      --cream-dark: #F5EDE4;
+      --charcoal: #2C2C2C;
+      --gold: #C4A35A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--burgundy);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--burgundy); }
+
+    /* Hero - Split Screen */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-left {
+      background: var(--burgundy);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 8% 4rem;
+      position: relative;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100px;
+      background: var(--burgundy);
+      clip-path: ellipse(100% 50% at 0% 50%);
+      transform: translateX(50%);
+      z-index: 2;
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .hero-tagline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1rem;
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--cream);
+      color: var(--burgundy);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(253,248,243,0.3) 0%, rgba(253,248,243,0) 50%);
+    }
+
+    .hero-location {
+      position: absolute;
+      bottom: 4rem;
+      right: 4rem;
+      text-align: right;
+      z-index: 3;
+      background: var(--cream);
+      padding: 1.5rem 2rem;
+    }
+
+    .hero-location span {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      opacity: 0.7;
+    }
+
+    .hero-location strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--burgundy);
+    }
+
+    /* Services Section */
+    .services {
+      padding: 8rem 5%;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .services::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 150px;
+      background: var(--burgundy);
+      clip-path: ellipse(80% 100% at 50% 0%);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--charcoal);
+      margin-bottom: 4rem;
+      max-width: 500px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .service-card {
+      background: white;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(114, 47, 55, 0.15);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--burgundy);
+      transition: height 0.4s ease;
+      z-index: 2;
+    }
+
+    .service-card:hover::before { height: 100%; }
+
+    .service-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .service-content {
+      padding: 2rem;
+    }
+
+    .service-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--burgundy);
+      opacity: 0.15;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--charcoal);
+      margin-bottom: 1rem;
+    }
+
+    .service-desc {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* About Section */
+    .about {
+      padding: 8rem 5%;
+      background: var(--burgundy);
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-content {
+      color: var(--cream);
+    }
+
+    .about-content .section-label {
+      color: var(--gold);
+    }
+
+    .about-content .section-title {
+      color: var(--cream);
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      clip-path: polygon(10% 0, 100% 5%, 95% 100%, 0 90%);
+    }
+
+    .about-accent {
+      position: absolute;
+      bottom: -2rem;
+      right: -2rem;
+      width: 150px;
+      height: 150px;
+      border: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 6rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      text-align: center;
+    }
+
+    .contact-item h4 {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-item p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--charcoal);
+    }
+
+    .contact-item a {
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--burgundy); }
+
+    /* Footer */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-left {
+        padding: 8rem 8% 6rem;
+      }
+
+      .hero-left::after { display: none; }
+
+      .hero-right {
+        min-height: 50vh;
+      }
+
+      .hero-location {
+        bottom: 2rem;
+        right: 2rem;
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links { display: none; }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-visual { order: -1; }
+
+      .contact-grid { gap: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Mattoon Flower Shop</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <h1 class="hero-tagline">Flowers for <em>every</em> moment</h1>
+      <p class="hero-sub">Fresh arrangements crafted with care, delivered same-day throughout Mattoon and Coles County.</p>
+      <a href="#contact" class="hero-cta">
+        <span>Get in Touch</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1200&h=1600&fit=crop" alt="Beautiful flower arrangement" class="hero-image">
+      <div class="hero-overlay"></div>
+      <div class="hero-location">
+        <span>Located in</span>
+        <strong>Mattoon, IL</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <span class="section-label">What We Do</span>
+    <h2 class="section-title">Beautiful blooms for life's biggest moments</h2>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&h=400&fit=crop" alt="Fresh flowers" class="service-image">
+        <div class="service-content">
+          <div class="service-number">01</div>
+          <h3 class="service-title">Fresh Flowers</h3>
+          <p class="service-desc">Hand-selected seasonal blooms arranged daily, from classic roses to unique wildflower mixes.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=400&fit=crop" alt="Wedding flowers" class="service-image">
+        <div class="service-content">
+          <div class="service-number">02</div>
+          <h3 class="service-title">Wedding Arrangements</h3>
+          <p class="service-desc">Complete floral design for your special day, from bouquets to ceremony and reception decor.</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=400&fit=crop" alt="Flower delivery" class="service-image">
+        <div class="service-content">
+          <div class="service-number">03</div>
+          <h3 class="service-title">Same-Day Delivery</h3>
+          <p class="service-desc">Order by noon for same-day delivery throughout Mattoon and surrounding communities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">Your neighborhood florist</h2>
+      <p class="about-text">Proudly serving Mattoon and the surrounding community with fresh flowers, thoughtful arrangements, and personalized service. Whether you're celebrating a milestone, expressing sympathy, or simply brightening someone's day, we're here to help you find the perfect blooms.</p>
+    </div>
+    <div class="about-visual">
+      <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=800&h=1000&fit=crop" alt="Florist at work" class="about-image">
+      <div class="about-accent"></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Ready to order?</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2172350331">(217) 235-0331</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>1819 Broadway Ave<br>Mattoon, IL 61938</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

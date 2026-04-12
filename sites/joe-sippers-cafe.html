@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joe Sippers Cafe | Effingham's Local Coffee & Eatery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --espresso: #2C1810;
+      --roast: #4A3228;
+      --copper: #B87333;
+      --cream: #FDF8F3;
+      --latte: #E8DDD4;
+      --charcoal: #1A1A1A;
+      --warm-white: #FFFCF8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: var(--warm-white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--espresso);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--espresso);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--copper); }
+
+    /* Hero - Asymmetric Split */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 55% 45%;
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      background: var(--espresso);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 8%;
+      color: var(--cream);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .hero-sub {
+      color: rgba(253,248,243,0.75);
+      font-size: 1rem;
+      max-width: 400px;
+      margin-bottom: 3rem;
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--copper);
+      color: var(--cream);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: var(--cream);
+      color: var(--espresso);
+    }
+
+    .hero-cta svg {
+      transition: transform 0.3s ease;
+    }
+
+    .hero-cta:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Story Band */
+    .story-band {
+      background: var(--latte);
+      padding: 5rem 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .story-stat {
+      text-align: center;
+    }
+
+    .story-stat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      color: var(--espresso);
+      margin-bottom: 0.5rem;
+    }
+
+    .story-stat span {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--roast);
+      font-weight: 500;
+    }
+
+    /* Menu Section */
+    .menu {
+      padding: 8rem 5%;
+      background: var(--warm-white);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--espresso);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .menu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(44,24,16,0.15);
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 2rem;
+    }
+
+    .menu-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--espresso);
+    }
+
+    .menu-card p {
+      color: var(--roast);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* About */
+    .about {
+      padding: 8rem 5%;
+      background: var(--espresso);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-content {
+      color: var(--cream);
+    }
+
+    .about .section-label {
+      color: var(--copper);
+    }
+
+    .about .section-title {
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 2;
+      opacity: 0.85;
+      font-weight: 300;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--copper);
+      color: var(--cream);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .about-badge strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+    }
+
+    .about-badge span {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact .section-title {
+      margin-bottom: 3rem;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .contact-item h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .contact-item p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--espresso);
+    }
+
+    .contact-item a {
+      color: var(--espresso);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--copper); }
+
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--copper);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 50vh;
+        order: -1;
+      }
+
+      .hero-content {
+        padding: 4rem 5%;
+      }
+
+      .story-band {
+        gap: 2rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        height: 350px;
+      }
+
+      .about-badge {
+        bottom: auto;
+        top: -20px;
+        left: auto;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="#" class="logo">Joe Sippers</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#contact">Visit</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=1400&fit=crop" alt="Artisan coffee" class="hero-image">
+    </div>
+    <div class="hero-content">
+      <span class="hero-tag">Downtown Effingham</span>
+      <h1 class="hero-title">Coffee crafted with care, food made from scratch</h1>
+      <p class="hero-sub">From locally roasted espresso to chef-inspired sandwiches, every item on our menu is made with intention. This is your neighborhood cafe.</p>
+      <a href="#contact" class="hero-cta">
+        <span>Come Say Hi</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="story-band">
+    <div class="story-stat">
+      <strong>Local</strong>
+      <span>Roasted Coffee</span>
+    </div>
+    <div class="story-stat">
+      <strong>Scratch</strong>
+      <span>Made Daily</span>
+    </div>
+    <div class="story-stat">
+      <strong>Culinary</strong>
+      <span>Trained Chefs</span>
+    </div>
+  </div>
+
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">What We Serve</span>
+      <h2 class="section-title">Crafted with intention</h2>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=480&fit=crop" alt="Coffee drinks" class="menu-image">
+        <div class="menu-content">
+          <h3>Coffee & Espresso</h3>
+          <p>Locally roasted beans, expertly pulled shots, and handcrafted drinks. From classic lattes to seasonal specials.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&h=480&fit=crop" alt="Sandwiches" class="menu-image">
+        <div class="menu-content">
+          <h3>Sandwiches & Wraps</h3>
+          <p>Chef-inspired creations made fresh. Hearty enough for lunch, flavorful enough to crave again.</p>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&h=480&fit=crop" alt="Baked goods" class="menu-image">
+        <div class="menu-content">
+          <h3>Bakery</h3>
+          <p>Fresh pastries, muffins, and sweet treats baked in-house. The perfect companion to your morning coffee.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-content">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title">More than just coffee</h2>
+      <p class="about-text">Joe Sippers is owned by Emily and her husband Brennan, a culinary school graduate who brings chef-level quality to every dish. We partner with a local roastery to source our beans, ensuring every cup is as fresh as it is flavorful. This is your neighborhood gathering spot — come for the coffee, stay for the community.</p>
+    </div>
+    <div class="about-image-wrap">
+      <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&h=1000&fit=crop" alt="Coffee roasting" class="about-image">
+      <div class="about-badge">
+        <strong>Local</strong>
+        <span>Roastery Partner</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Stop in anytime</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <h4>Phone</h4>
+        <p><a href="tel:2173472233">(217) 347-2233</a></p>
+      </div>
+      <div class="contact-item">
+        <h4>Location</h4>
+        <p>114 S 4th St<br>Effingham, IL 62401</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Site concept by Clay Dunker | <a href="https://claydunker.com">claydunker.com</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
