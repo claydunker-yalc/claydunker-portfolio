@@ -770,6 +770,45 @@
       border-color: var(--gold);
     }
 
+    /* Real client card variant */
+    .work-card.real-client {
+      position: relative;
+      box-shadow: 0 8px 32px rgba(44, 64, 51, 0.12);
+      border: 1.5px solid rgba(44, 64, 51, 0.15);
+    }
+
+    .work-card.real-client .work-preview {
+      background: linear-gradient(135deg, #2C4033 0%, #3d5544 100%) !important;
+    }
+
+    .work-preview-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 58%;
+      max-width: 220px;
+      height: auto;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
+      z-index: 2;
+    }
+
+    .work-client-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #D6B888;
+      color: #2C4033;
+      padding: .35rem .8rem;
+      border-radius: 2rem;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
     /* ─── ABOUT ─────────────────────────────────────────────────── */
     #about {
       background: var(--white);
@@ -1383,8 +1422,24 @@
       </div>
 
       <div class="work-grid">
+        <!-- Beauty Nook (Live Client) -->
+        <div class="work-card real-client fade-up delay-1">
+          <div class="work-preview">
+            <span class="work-client-badge">Live Client</span>
+            <img src="beauty-nook/logo.png" alt="The Beauty Nook" class="work-preview-logo">
+          </div>
+          <div class="work-body">
+            <span class="work-tag">Beauty / Salon · Monticello, IL</span>
+            <h3>The Beauty Nook</h3>
+            <p>A calm, editorial site for a solo stylist who wanted her logo front-and-center. Real service menu, real hair work, and a booking flow that sends clients straight to her existing Square system.</p>
+            <a href="beauty-nook/index.html" target="_blank" class="work-link">
+              View Site <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
         <!-- Plumbing -->
-        <div class="work-card fade-up delay-1">
+        <div class="work-card fade-up delay-2">
           <div class="work-preview" style="background: #1a2744;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1405,7 +1460,7 @@
         </div>
 
         <!-- Salon -->
-        <div class="work-card fade-up delay-2">
+        <div class="work-card fade-up delay-3">
           <div class="work-preview" style="background: #2a2a2a;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1430,7 +1485,7 @@
         </div>
 
         <!-- Restaurant -->
-        <div class="work-card fade-up delay-3">
+        <div class="work-card fade-up delay-4">
           <div class="work-preview" style="background: #2d5a27;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
