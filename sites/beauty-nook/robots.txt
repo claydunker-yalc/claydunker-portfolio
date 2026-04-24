@@ -1,0 +1,8 @@
+# Allow all search engines to crawl everything.
+# AI training crawlers are handled at the Cloudflare WAF level
+# (Block AI training bots was enabled when the domain was added to CF).
+
+User-agent: *
+Allow: /
+
+Sitemap: https://nikkisbeautynook.com/sitemap.xml
