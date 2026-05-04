@@ -10,13 +10,13 @@
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --ink:#13151a;
-    --ink-2:#1d2027;
-    --paper:#f4f1ea;
-    --paper-2:#e8e3d6;
-    --amber:#ff6a13;
-    --amber-glow:#ffae5c;
-    --rule:#2a2e36;
+    --ink:#1a1230;          /* deep purple-black */
+    --ink-2:#241942;        /* royal purple */
+    --paper:#f6f1e6;        /* warm cream */
+    --paper-2:#ece4cf;      /* soft gold-cream */
+    --amber:#d4a534;        /* gold */
+    --amber-glow:#f0c862;   /* light gold */
+    --rule:#3a2a5e;         /* purple rule */
   }
   html{scroll-behavior:smooth}
   body{
@@ -44,7 +44,13 @@
 
   /* HERO */
   .hero{
-    background:var(--ink);color:var(--paper);
+    background-color:var(--ink);color:var(--paper);
+    background-image:
+      linear-gradient(135deg,rgba(26,18,48,.82) 0%,rgba(36,25,66,.78) 55%,rgba(26,18,48,.92) 100%),
+      url('https://upload.wikimedia.org/wikipedia/commons/c/c8/Monticello%2C_Illinois_buildings_on_Charter_Street.jpg');
+    background-size:cover;
+    background-position:center 40%;
+    background-repeat:no-repeat;
     position:relative;overflow:hidden;
     padding:5rem 2rem 7rem;
   }
@@ -54,7 +60,13 @@
       linear-gradient(var(--rule) 1px,transparent 1px),
       linear-gradient(90deg,var(--rule) 1px,transparent 1px);
     background-size:64px 64px;
-    opacity:.35;mask-image:radial-gradient(ellipse at 70% 30%,black 30%,transparent 75%);
+    opacity:.18;mask-image:radial-gradient(ellipse at 70% 30%,black 30%,transparent 75%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:120px;
+    background:linear-gradient(180deg,transparent,var(--paper));
+    pointer-events:none;z-index:1;
   }
   .hero-grid{
     position:relative;z-index:2;
