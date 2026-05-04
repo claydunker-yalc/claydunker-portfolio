@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Monticello Appliance Repair — Monticello, IL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#13151a;
+    --ink-2:#1d2027;
+    --paper:#f4f1ea;
+    --paper-2:#e8e3d6;
+    --amber:#ff6a13;
+    --amber-glow:#ffae5c;
+    --rule:#2a2e36;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-.02em;line-height:.92}
+  .label{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem}
+  a{color:inherit;text-decoration:none}
+
+  /* TOP BAR */
+  .topbar{
+    background:var(--ink);color:var(--paper);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.7rem 2rem;font-size:.82rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-right:.55rem;box-shadow:0 0 12px var(--amber)}
+  .topbar a.tel{color:var(--amber-glow);font-weight:700;letter-spacing:.04em}
+  .topbar a.tel:hover{color:var(--paper)}
+
+  /* HERO */
+  .hero{
+    background:var(--ink);color:var(--paper);
+    position:relative;overflow:hidden;
+    padding:5rem 2rem 7rem;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(var(--rule) 1px,transparent 1px),
+      linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+    background-size:64px 64px;
+    opacity:.35;mask-image:radial-gradient(ellipse at 70% 30%,black 30%,transparent 75%);
+  }
+  .hero-grid{
+    position:relative;z-index:2;
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:end;
+  }
+  .est{font-family:'Archivo Black',sans-serif;color:var(--amber);font-size:.78rem;letter-spacing:.25em;margin-bottom:1.5rem}
+  .hero h1{font-size:clamp(3rem,8vw,7rem);color:var(--paper)}
+  .hero h1 .accent{color:var(--amber);display:block}
+  .hero p.kicker{
+    margin-top:1.8rem;max-width:36ch;
+    font-size:1.1rem;color:#cbc7bd;
+  }
+  .hero-side{
+    border-left:2px solid var(--amber);
+    padding:1.2rem 0 1.2rem 1.5rem;
+    align-self:end;
+  }
+  .hero-side .label{color:var(--amber-glow)}
+  .hero-side .big-phone{
+    font-family:'Archivo Black',sans-serif;font-size:2.4rem;
+    margin-top:.5rem;letter-spacing:-.01em;
+  }
+  .hero-side .big-phone:hover{color:var(--amber)}
+  .hero-side .meta{margin-top:1rem;color:#cbc7bd;font-size:.95rem}
+
+  /* MARQUEE */
+  .marquee{
+    background:var(--amber);color:var(--ink);
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    overflow:hidden;white-space:nowrap;
+  }
+  .marquee-track{
+    display:inline-block;padding:.85rem 0;
+    animation:scroll 28s linear infinite;
+    font-family:'Archivo Black',sans-serif;letter-spacing:.12em;font-size:.95rem;
+  }
+  .marquee-track span{margin:0 1.4rem}
+  .marquee-track span::after{content:"◆";margin-left:1.4rem;font-size:.7rem;vertical-align:middle}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* SERVICES */
+  .services{padding:6rem 2rem;max-width:1200px;margin:0 auto}
+  .section-head{
+    display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:end;
+    margin-bottom:3.5rem;padding-bottom:1.5rem;border-bottom:1px solid #c8c2b3;
+  }
+  .section-head .num{
+    font-family:'Archivo Black',sans-serif;font-size:5rem;color:var(--amber);line-height:.9;
+  }
+  .section-head h2{font-size:clamp(2rem,4.5vw,3.4rem)}
+  .section-head .lead{margin-top:.6rem;color:#5a5849;max-width:55ch}
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+  .svc{
+    background:var(--paper-2);
+    padding:2rem 1.6rem 2.4rem;
+    position:relative;
+    border:1px solid #d8d1bf;
+    transition:transform .25s ease,background .25s ease;
+  }
+  .svc:hover{transform:translateY(-4px);background:var(--ink);color:var(--paper)}
+  .svc:hover .svc-num{color:var(--amber)}
+  .svc:hover .svc-list{color:#cbc7bd}
+  .svc-num{font-family:'Archivo Black',sans-serif;color:#9a9281;font-size:.85rem;letter-spacing:.2em;margin-bottom:1.2rem;transition:color .25s}
+  .svc h3{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.3rem;line-height:1.05;margin-bottom:.8rem}
+  .svc p{font-size:.98rem;margin-bottom:1.2rem}
+  .svc-list{font-size:.85rem;color:#5a5849;letter-spacing:.05em;border-top:1px dashed #b9b2a0;padding-top:.9rem;transition:color .25s}
+
+  /* SPLIT ABOUT */
+  .about{
+    display:grid;grid-template-columns:1fr 1fr;
+    background:var(--ink-2);color:var(--paper);
+  }
+  .about-left{
+    padding:5rem 3rem;
+    background:linear-gradient(135deg,var(--ink-2),var(--ink));
+    border-right:1px solid var(--rule);
+  }
+  .about-left .label{color:var(--amber-glow);margin-bottom:1.5rem;display:block}
+  .about-left h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1.5rem;color:var(--paper)}
+  .about-left p{color:#cbc7bd;margin-bottom:1.1rem;max-width:50ch}
+  .about-right{
+    padding:5rem 3rem;display:flex;flex-direction:column;justify-content:center;gap:2rem;
+  }
+  .stat{display:flex;align-items:baseline;gap:1rem;padding-bottom:1.2rem;border-bottom:1px solid var(--rule)}
+  .stat .n{font-family:'Archivo Black',sans-serif;font-size:3rem;color:var(--amber)}
+  .stat .t{font-size:.95rem;color:#cbc7bd;text-transform:uppercase;letter-spacing:.1em}
+
+  /* CONTACT */
+  .contact{padding:6rem 2rem;max-width:1200px;margin:0 auto}
+  .cta-card{
+    background:var(--ink);color:var(--paper);
+    padding:4rem 3rem;
+    display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .cta-card::after{
+    content:"";position:absolute;right:-100px;top:-100px;
+    width:380px;height:380px;border-radius:50%;
+    background:radial-gradient(circle,var(--amber) 0%,transparent 65%);
+    opacity:.35;pointer-events:none;
+  }
+  .cta-card h2{font-size:clamp(2rem,4vw,3.2rem);position:relative;z-index:1}
+  .cta-card h2 span{color:var(--amber)}
+  .cta-card p{margin-top:1rem;color:#cbc7bd;max-width:42ch;position:relative;z-index:1}
+  .cta-info{position:relative;z-index:1;display:flex;flex-direction:column;gap:1.4rem}
+  .cta-row{border-left:3px solid var(--amber);padding:.4rem 0 .4rem 1.2rem}
+  .cta-row .label{color:var(--amber-glow);display:block;margin-bottom:.3rem}
+  .cta-row .v{font-family:'Archivo Black',sans-serif;font-size:1.4rem;letter-spacing:-.01em}
+  .cta-row .v.tel:hover{color:var(--amber)}
+  .cta-row .v.small{font-size:1.05rem;letter-spacing:0;font-family:'Space Grotesk',sans-serif;font-weight:500}
+
+  /* FOOTER */
+  footer{
+    background:var(--ink);color:#7a7568;
+    padding:1.6rem 2rem;text-align:center;font-size:.82rem;
+    border-top:1px solid var(--rule);
+  }
+  footer a{color:var(--amber-glow)}
+
+  /* RESPONSIVE */
+  @media(max-width:860px){
+    .hero{padding:3rem 1.4rem 4rem}
+    .hero-grid{grid-template-columns:1fr;gap:2rem}
+    .hero-side{border-left:none;border-top:2px solid var(--amber);padding:1.2rem 0 0}
+    .section-head{grid-template-columns:1fr;gap:.8rem}
+    .section-head .num{font-size:3.4rem}
+    .services{padding:4rem 1.4rem}
+    .svc-grid{grid-template-columns:1fr}
+    .about{grid-template-columns:1fr}
+    .about-left,.about-right{padding:3rem 1.6rem}
+    .contact{padding:4rem 1.4rem}
+    .cta-card{grid-template-columns:1fr;padding:2.6rem 1.6rem;gap:2rem}
+    .topbar{flex-direction:column;gap:.4rem;text-align:center;padding:.7rem 1rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><span class="dot"></span><span class="label">Family-owned · Monticello, IL</span></div>
+  <div>Call now <a href="tel:+12177627121" class="tel">(217) 762-7121</a></div>
+</div>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="est">Est. in Piatt County</div>
+      <h1 class="display">Broken<br>appliance?<span class="accent">We fix it.</span></h1>
+      <p class="kicker">Honest, local repair for the machines that keep your home running. Refrigerators humming, washers spinning, ovens heating — back to work, fast.</p>
+    </div>
+    <aside class="hero-side">
+      <span class="label">Service Line</span>
+      <a href="tel:+12177627121" class="big-phone display">217·762·7121</a>
+      <div class="meta">217 E High St<br>Monticello, IL 61856</div>
+    </aside>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Refrigerators</span><span>Freezers</span><span>Washers</span><span>Dryers</span><span>Ovens</span><span>Stoves</span><span>Dishwashers</span><span>Microwaves</span>
+    <span>Refrigerators</span><span>Freezers</span><span>Washers</span><span>Dryers</span><span>Ovens</span><span>Stoves</span><span>Dishwashers</span><span>Microwaves</span>
+  </div>
+</div>
+
+<section class="services">
+  <div class="section-head">
+    <div class="num">01</div>
+    <div>
+      <h2 class="display">What we repair</h2>
+      <p class="lead">Residential and commercial. Most major brands. If it plugs in and stopped doing its job, start here.</p>
+    </div>
+  </div>
+
+  <div class="svc-grid">
+    <div class="svc">
+      <div class="svc-num">Service / 01</div>
+      <h3>Refrigerators &amp; Freezers</h3>
+      <p>Cooling issues, ice maker trouble, leaks, strange noises. We diagnose and repair the things that quietly ruin a week of groceries.</p>
+      <div class="svc-list">Compressors · Defrost systems · Door seals · Ice makers</div>
+    </div>
+    <div class="svc">
+      <div class="svc-num">Service / 02</div>
+      <h3>Washers &amp; Dryers</h3>
+      <p>Won't drain, won't spin, won't heat. Top-load, front-load, gas, electric — laundry day back on schedule without a trip to the laundromat.</p>
+      <div class="svc-list">Belts &amp; pumps · Heating elements · Sensors · Drum repair</div>
+    </div>
+    <div class="svc">
+      <div class="svc-num">Service / 03</div>
+      <h3>Ovens, Stoves &amp; Dishwashers</h3>
+      <p>From a burner that won't light to a dishwasher with a faulty door latch — including GE Profile and other major brands.</p>
+      <div class="svc-list">Igniters · Control boards · Pumps · Latches &amp; gaskets</div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-left">
+    <span class="label">About</span>
+    <h2 class="display">Local hands.<br>Honest fix.</h2>
+    <p>We're a small, local appliance repair shop based right in Monticello. When something quits in your kitchen or laundry room, you don't want to wait days for a regional call center to route a tech your way.</p>
+    <p>You want someone who knows the town, picks up the phone, and shows up. Proudly serving Monticello and the surrounding Piatt County community.</p>
+  </div>
+  <div class="about-right">
+    <div class="stat"><span class="n">8+</span><span class="t">Major appliance categories</span></div>
+    <div class="stat"><span class="n">2</span><span class="t">Service types — residential &amp; commercial</span></div>
+    <div class="stat"><span class="n">1</span><span class="t">Local family-owned shop</span></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-head">
+    <div class="num">02</div>
+    <div>
+      <h2 class="display">Get in touch</h2>
+      <p class="lead">Quickest way to reach us is the phone. Leave a message if we don't pick up — we call back the same day.</p>
+    </div>
+  </div>
+
+  <div class="cta-card">
+    <div>
+      <h2 class="display">Tell us<br>what's <span>broken.</span></h2>
+      <p>Describe what it's doing — or not doing — and we'll let you know what we think before we head out.</p>
+    </div>
+    <div class="cta-info">
+      <div class="cta-row">
+        <span class="label">Phone</span>
+        <a class="v tel" href="tel:+12177627121">(217) 762-7121</a>
+      </div>
+      <div class="cta-row">
+        <span class="label">Email</span>
+        <a class="v small" href="mailto:monticelloappliancerepair@gmail.com">monticelloappliancerepair@gmail.com</a>
+      </div>
+      <div class="cta-row">
+        <span class="label">Shop</span>
+        <span class="v small">217 E High St · Monticello, IL 61856</span>
+      </div>
+      <div class="cta-row">
+        <span class="label">Find us on</span>
+        <a class="v small" href="https://www.facebook.com/monticelloappliancerepair/" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Site concept by Clay Dunker · <a href="https://claydunker.com">claydunker.com</a>
+</footer>
+
+</body>
+</html>
