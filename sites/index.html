@@ -35,10 +35,12 @@
   Read the comment above .work-card.real-client before touching it; the
   per-client blocks MUST stay after the defaults or specificity ties break.
 
-  A reserved slot for the dashboard case study sits in the work grid as an
-  HTML comment. It is intentionally not a visible "coming soon" tile — this
-  page is live to prospects and an empty placeholder reads as an unfinished
-  site.
+  The dashboard example (hvac-company-dashboard.vercel.app) uses the .showcase
+  variant — same palette mechanism, different badge. That separation is
+  deliberate and load-bearing: "Live Client" is a credibility claim, and the
+  dashboard runs on invented data. Never merge the two variants to save a few
+  lines of CSS. If that demo ever gets replaced by a real client dashboard,
+  the card moves to .real-client and gets its own .client-* palette block.
 
   THINGS THAT BREAK EASILY
   · .fade-up animations depend on the IntersectionObserver at the bottom of
@@ -138,6 +140,7 @@
     .fade-up.delay-3 { transition-delay: 0.3s; }
     .fade-up.delay-4 { transition-delay: 0.4s; }
     .fade-up.delay-5 { transition-delay: 0.5s; }
+    .fade-up.delay-6 { transition-delay: 0.6s; }
 
     /* ─── NAV ───────────────────────────────────────────────────── */
     #nav {
@@ -920,6 +923,24 @@
       --client-accent: #d4a534;  /* gold              */
     }
 
+    /* Showcase variant — borrows the same palette mechanism and badge as
+       .real-client, but for demonstration pieces rather than client work, so
+       the badge says what it is instead of claiming a customer. Kept separate
+       from .real-client on purpose: "Live Client" is a credibility claim and
+       must never appear on something built with invented data. */
+    .work-card.showcase {
+      --client-dark:   #121214;  /* near-black  */
+      --client-light:  #27272a;  /* charcoal    */
+      --client-accent: #22d3ee;  /* cyan        */
+      position: relative;
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--client-dark) 14%, transparent);
+      border: 1.5px solid color-mix(in srgb, var(--client-dark) 18%, transparent);
+    }
+
+    .work-card.showcase .work-preview {
+      background: linear-gradient(135deg, var(--client-dark) 0%, var(--client-light) 100%) !important;
+    }
+
     .work-preview-logo {
       position: absolute;
       top: 50%;
@@ -1611,7 +1632,7 @@
       <div class="work-header fade-up">
         <p class="section-label">Recent Work</p>
         <h2 class="section-heading">Sites built to make an impression</h2>
-        <p class="section-sub">Live client sites plus a few demos, each hand-coded to fit its industry. Dashboard work is coming to this section soon.</p>
+        <p class="section-sub">Live client sites, a working dashboard example, and a few industry demos — all hand-coded.</p>
       </div>
 
       <div class="work-grid">
@@ -1653,17 +1674,33 @@
           </div>
         </div>
 
-        <!-- ─────────────────────────────────────────────────────────
-             DASHBOARD EXAMPLE SLOT — reserved.
-             Drop the dashboard case-study card here when the example is
-             ready so it lands directly after the live client work and
-             above the demo sites. Deliberately left as a comment rather
-             than an empty placeholder card: this page is live, and a
-             visible "coming soon" tile reads as an unfinished site.
-             ───────────────────────────────────────────────────────── -->
+        <!-- HVAC Operations Dashboard (demo — fictional data) -->
+        <div class="work-card showcase fade-up delay-3">
+          <div class="work-preview">
+            <span class="work-client-badge">Live Demo</span>
+            <div class="work-preview-grid"></div>
+            <div class="work-preview-icon">
+              <!-- Bar chart icon — matches the dashboards feature card above -->
+              <svg viewBox="0 0 24 24">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+                <line x1="3" y1="20" x2="21" y2="20"/>
+              </svg>
+            </div>
+          </div>
+          <div class="work-body">
+            <span class="work-tag">Dashboard · Home Services</span>
+            <h3>HVAC Operations Dashboard</h3>
+            <p>The example I walk prospects through: a home-services business on a single screen. Every figure is labelled by where it came from — recorded, calculated, or projected — so an estimate never gets mistaken for money the business actually banked. Built on fictional data.</p>
+            <a href="https://hvac-company-dashboard.vercel.app" target="_blank" rel="noopener" class="work-link">
+              View Dashboard <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
 
         <!-- Plumbing -->
-        <div class="work-card fade-up delay-3">
+        <div class="work-card fade-up delay-4">
           <div class="work-preview" style="background: #1a2744;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1684,7 +1721,7 @@
         </div>
 
         <!-- Salon -->
-        <div class="work-card fade-up delay-4">
+        <div class="work-card fade-up delay-5">
           <div class="work-preview" style="background: #2a2a2a;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1709,7 +1746,7 @@
         </div>
 
         <!-- Restaurant -->
-        <div class="work-card fade-up delay-5">
+        <div class="work-card fade-up delay-6">
           <div class="work-preview" style="background: #2d5a27;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
