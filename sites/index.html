@@ -1,10 +1,73 @@
 <!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  claydunker.com — homepage
+
+  WHAT THIS IS
+  The root document served at claydunker.com. Vercel serves this whole `sites/`
+  directory statically (see sites/vercel.json), so this file IS the site root
+  and every sibling .html file is a page or portfolio piece hanging off it.
+
+  WHY IT'S ONE FILE
+  Single self-contained HTML with an inline style block and an inline script
+  block. No build step, no framework, no dependencies. That's deliberate: the whole
+  business proposition here is "hand-coded, you own it, no lock-in", and the
+  homepage should be the proof. It also means a copy of this file opened from
+  disk in 2030 still renders. The cost is that the CSS lives above the markup
+  in the same file, so edits mean scrolling — worth it for the guarantee.
+
+  WHAT IT SELLS (updated 2026-07 — was websites only)
+  Two lines of business, three pricing tiers:
+    1. Starter Landing Page  — $500 one-time, client hosts it themselves
+    2. Custom Dashboard      — $1,200 base (2 tabs), +$200/tab, hosted by Clay
+    3. Maintenance & Support — $45/hr, first 2 hrs each month included
+  These numbers appear in FOUR places and must be kept in sync by hand:
+  the <meta name="description">, the hero sub-headline, the pricing cards,
+  and the "$500 starting price" stat in the About section. There is no
+  constants layer in a static file — grep for the number before changing it.
+
+  THE WORK SECTION
+  Cards are ordered live clients first, then demos. Live clients use the
+  .real-client variant, which is palette-driven: three CSS custom properties
+  (--client-dark / --client-light / --client-accent) feed the preview gradient,
+  the badge, and the card's tinted shadow. Adding a client is a 4-line
+  .client-* block plus two classes on the card — never a copy of the variant.
+  Read the comment above .work-card.real-client before touching it; the
+  per-client blocks MUST stay after the defaults or specificity ties break.
+
+  A reserved slot for the dashboard case study sits in the work grid as an
+  HTML comment. It is intentionally not a visible "coming soon" tile — this
+  page is live to prospects and an empty placeholder reads as an unfinished
+  site.
+
+  THINGS THAT BREAK EASILY
+  · .fade-up animations depend on the IntersectionObserver at the bottom of
+    this file. Cards added without the .fade-up class render immediately and
+    visibly break the stagger; cards added WITH it but without a .delay-N
+    class all fire at once. Delays are defined for 1–5 only.
+  · The grid column counts are tuned to the card counts: features is 2x2 for
+    four cards, pricing is 3-up and collapses at 1000px (one step earlier than
+    the other grids, because three cards don't survive tablet width). Adding
+    a fifth feature or a fourth tier means revisiting those rules.
+  · THE CONTACT FORM IS THE ENTIRE FUNNEL — every CTA on this page routes to
+    #contact. It POSTs to Web3Forms, which forwards to clay.dunker@gmail.com;
+    the access key sits in CONTACT_ACCESS_KEY at the top of the script block
+    and is public by design (see the note there before "fixing" it). If the
+    key is blank the form degrades to a pre-filled mailto rather than
+    failing. What it must never do is fake a send — an earlier version showed
+    a green "Message Sent!" with no network call and lost every lead. Test
+    this form after any change to it; a broken funnel looks exactly like a
+    working one from the outside.
+  · vercel.json sets cleanUrls + trailingSlash, so internal links to sibling
+    pages use "/name/" form, not "/name.html".
+  ═══════════════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clay Dunker · Web Design for Local Businesses</title>
-  <meta name="description" content="Professional, mobile-friendly websites for local businesses. Starting at $300. Based in Monticello, IL." />
+  <title>Clay Dunker · Websites &amp; Dashboards for Local Businesses</title>
+  <meta name="description" content="Hand-built websites and custom CRM dashboards for local businesses. Landing pages from $500, dashboards from $1,200. Based in Monticello, IL." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -73,6 +136,8 @@
     .fade-up.delay-1 { transition-delay: 0.1s; }
     .fade-up.delay-2 { transition-delay: 0.2s; }
     .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+    .fade-up.delay-5 { transition-delay: 0.5s; }
 
     /* ─── NAV ───────────────────────────────────────────────────── */
     #nav {
@@ -408,9 +473,12 @@
       margin: 0 auto;
     }
 
+    /* Two columns, not three: the fourth card (dashboards) would otherwise
+       orphan onto its own row. 2x2 also gives each card enough width for the
+       paragraph lengths this section uses. */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.6rem;
     }
 
@@ -478,12 +546,14 @@
 
     .pricing-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.6rem;
-      max-width: 820px;
+      max-width: 1100px;
       margin: 0 auto 1.8rem;
     }
 
+    /* Cards stretch to equal height so the CTA buttons line up across tiers
+       even though the feature lists are different lengths. */
     .pricing-card {
       border-radius: var(--radius-lg);
       padding: 2.4rem 2.2rem;
@@ -491,6 +561,9 @@
       background: #fff;
       position: relative;
       transition: transform 0.22s ease, box-shadow 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .pricing-card:hover {
@@ -537,12 +610,23 @@
     .pricing-card h3 {
       font-size: 1.4rem;
       color: var(--navy);
-      margin-bottom: 1rem;
+      margin-bottom: .5rem;
       font-weight: 700;
     }
 
     .pricing-card.featured h3 {
       color: #fff;
+    }
+
+    .pricing-desc {
+      font-size: .9rem;
+      color: var(--gray-dark);
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+
+    .pricing-card.featured .pricing-desc {
+      color: rgba(255,255,255,.72);
     }
 
     .pricing-price {
@@ -571,12 +655,43 @@
       color: rgba(255,255,255,.55);
     }
 
+    /* Add-on pricing (extra dashboard tabs). Sits between the headline price
+       and the feature list so the "it scales" math is visible before the
+       reader gets to the checkmarks. */
+    .pricing-addon {
+      border-left: 2px solid var(--gold);
+      padding: .1rem 0 .1rem .8rem;
+      margin: -.9rem 0 1.6rem;
+      font-size: .82rem;
+      line-height: 1.55;
+      color: var(--gray-dark);
+    }
+
+    .pricing-card.featured .pricing-addon {
+      border-left-color: var(--gold-light);
+      color: rgba(255,255,255,.72);
+    }
+
+    .pricing-addon .addon-example {
+      display: block;
+      margin-top: .3rem;
+      font-style: italic;
+      color: var(--gray);
+    }
+
+    .pricing-card.featured .pricing-addon .addon-example {
+      color: rgba(255,255,255,.5);
+    }
+
+    /* flex:1 pushes the CTA to the bottom of every card regardless of how
+       many bullets that tier has. */
     .pricing-list {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: .75rem;
       margin-bottom: 2rem;
+      flex: 1;
     }
 
     .pricing-list li {
@@ -770,15 +885,39 @@
       border-color: var(--gold);
     }
 
-    /* Real client card variant */
+    /* ─── LIVE CLIENT CARD VARIANT ──────────────────────────────────
+       Every real client gets the same card structure but their own brand
+       colours, so the palette lives in three custom properties rather than in
+       the rules themselves. To add a client: add a .client-* block in the
+       palette list below and put both classes on the card.
+
+       ORDER MATTERS: the .client-* blocks have the same specificity as the
+       defaults on .work-card.real-client, so they must stay *after* it or the
+       new client silently inherits Beauty Nook's green. */
     .work-card.real-client {
+      --client-dark:   #2C4033;
+      --client-light:  #3d5544;
+      --client-accent: #D6B888;
       position: relative;
-      box-shadow: 0 8px 32px rgba(44, 64, 51, 0.12);
-      border: 1.5px solid rgba(44, 64, 51, 0.15);
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--client-dark) 14%, transparent);
+      border: 1.5px solid color-mix(in srgb, var(--client-dark) 18%, transparent);
     }
 
     .work-card.real-client .work-preview {
-      background: linear-gradient(135deg, #2C4033 0%, #3d5544 100%) !important;
+      background: linear-gradient(135deg, var(--client-dark) 0%, var(--client-light) 100%) !important;
+    }
+
+    /* Per-client palettes — each mirrors that site's own brand colours. */
+    .work-card.client-beauty-nook {
+      --client-dark:   #2C4033;  /* forest green  */
+      --client-light:  #3d5544;
+      --client-accent: #D6B888;  /* warm tan      */
+    }
+
+    .work-card.client-monticello-appliance {
+      --client-dark:   #1a1230;  /* deep purple-black */
+      --client-light:  #241942;  /* royal purple      */
+      --client-accent: #d4a534;  /* gold              */
     }
 
     .work-preview-logo {
@@ -797,8 +936,8 @@
       position: absolute;
       top: 1rem;
       right: 1rem;
-      background: #D6B888;
-      color: #2C4033;
+      background: var(--client-accent);
+      color: var(--client-dark);
       padding: .35rem .8rem;
       border-radius: 2rem;
       font-size: .72rem;
@@ -1156,6 +1295,19 @@
       font-size: .82rem;
       color: var(--gray);
       margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Inherits the status colour so the fallback mailto link stays legible
+       against both the success green and the error red. */
+    .form-note a {
+      color: inherit;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .form-botcheck {
+      display: none !important;
     }
 
     /* ─── FOOTER ────────────────────────────────────────────────── */
@@ -1212,6 +1364,15 @@
     }
 
     /* ─── RESPONSIVE ────────────────────────────────────────────── */
+    /* Three pricing cards don't survive tablet width, so they drop to a single
+       column one step earlier than the rest of the grids. */
+    @media (max-width: 1000px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+      }
+    }
+
     @media (max-width: 900px) {
       .features-grid,
       .work-grid {
@@ -1219,11 +1380,6 @@
         max-width: 480px;
         margin-left: auto;
         margin-right: auto;
-      }
-
-      .pricing-grid {
-        grid-template-columns: 1fr;
-        max-width: 440px;
       }
 
       .about-grid {
@@ -1292,9 +1448,9 @@
   <!-- ─── HERO ──────────────────────────────────────────────────── -->
   <section id="hero">
     <div class="hero-inner">
-      <span class="hero-eyebrow">Web Design · Monticello, IL</span>
-      <h1>I build websites for <em>local businesses.</em></h1>
-      <p class="hero-sub">Professional, mobile-friendly websites starting at $300. Portfolio pricing — real work, real results.</p>
+      <span class="hero-eyebrow">Websites &amp; Dashboards · Monticello, IL</span>
+      <h1>I build websites and dashboards for <em>local businesses.</em></h1>
+      <p class="hero-sub">Clean one-page sites from $500. Custom dashboards that pull your CRM's live numbers onto one screen, from $1,200.</p>
       <div class="hero-buttons">
         <a href="#work" class="btn btn-gold">See My Work</a>
         <a href="#contact" class="btn btn-outline">Get In Touch</a>
@@ -1312,7 +1468,7 @@
       <div class="features-header fade-up">
         <p class="section-label">What You Get</p>
         <h2 class="section-heading">Everything your business needs online</h2>
-        <p class="section-sub">No bloated templates, no proprietary builders. Just clean, hand-coded websites built to perform.</p>
+        <p class="section-sub">No bloated templates, no proprietary builders. Just clean, hand-coded work — whether that's the site customers find you through or the dashboard your team runs on.</p>
       </div>
 
       <div class="features-grid">
@@ -1350,7 +1506,21 @@
             </svg>
           </div>
           <h3>Built to Last</h3>
-          <p>I hand off clean, organized code you own outright. No proprietary builders, no monthly platform fees, no lock-in. Your site is yours — forever.</p>
+          <p>I hand off clean, organized code you own outright. No proprietary builders, no monthly platform fees, no lock-in. What I build for you is yours — forever.</p>
+        </div>
+
+        <div class="feature-card fade-up delay-4">
+          <div class="feature-icon">
+            <!-- Bar chart / dashboard icon -->
+            <svg viewBox="0 0 24 24">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+              <line x1="3" y1="20" x2="21" y2="20"/>
+            </svg>
+          </div>
+          <h3>Your Numbers, One Screen</h3>
+          <p>Custom dashboards that pull live data straight from your CRM — no exports, no spreadsheets, no manual entry. Open it in the morning and see exactly where the business stands.</p>
         </div>
       </div>
     </div>
@@ -1366,48 +1536,71 @@
       </div>
 
       <div class="pricing-grid">
-        <!-- Card A -->
+        <!-- Card A — Websites -->
         <div class="pricing-card fade-up delay-1">
-          <p class="pricing-tier">Build Only</p>
-          <h3>One-Time Project</h3>
+          <p class="pricing-tier">Websites</p>
+          <h3>Starter Landing Page</h3>
+          <p class="pricing-desc">A clean one-page site to put your business online.</p>
           <div class="pricing-price">
-            <div class="price-amount">$300</div>
-            <div class="price-note">One-time payment. You own everything.</div>
+            <div class="price-amount">$500</div>
+            <div class="price-note">One-time · you host it, you own it</div>
           </div>
           <ul class="pricing-list">
-            <li>You own the files — no strings attached</li>
-            <li>Mobile-responsive on all devices</li>
-            <li>Up to 5 sections or pages</li>
-            <li>Contact form included</li>
-            <li>2 rounds of revisions</li>
-            <li>Delivered in 2–3 weeks</li>
+            <li>Custom single-page design</li>
+            <li>Looks great on phones &amp; desktop</li>
+            <li>Contact form that reaches you</li>
+            <li>Basic SEO setup</li>
+            <li>Delivered ready to host on your own account</li>
+            <li>One round of revisions</li>
           </ul>
-          <a href="#contact" class="btn btn-navy btn-pricing">Get Started</a>
+          <a href="#contact" class="btn btn-navy btn-pricing">Get started</a>
         </div>
 
-        <!-- Card B (featured) -->
+        <!-- Card B — Dashboards (featured) -->
         <div class="pricing-card featured fade-up delay-2">
-          <span class="pricing-badge">Hands Off</span>
-          <p class="pricing-tier">Build + Host</p>
-          <h3>Ongoing Partnership</h3>
+          <span class="pricing-badge">Most popular</span>
+          <p class="pricing-tier">Dashboards</p>
+          <h3>Custom Dashboard</h3>
+          <p class="pricing-desc">Your CRM's live numbers, in one clean screen your team actually checks.</p>
           <div class="pricing-price">
-            <div class="price-amount">$300 <span style="font-size:1.2rem; font-weight:400; color:rgba(255,255,255,.6)">+</span> $35<span style="font-size:1.4rem; font-weight:400">/mo</span></div>
-            <div class="price-note">Everything in Build Only, plus ongoing care.</div>
+            <div class="price-amount">$1,200</div>
+            <div class="price-note">Base build · includes 2 tabs</div>
+          </div>
+          <p class="pricing-addon">
+            Need more views? Add tabs for $200 each.
+            <span class="addon-example">Example — a 5-tab dashboard: $1,200 + 3 tabs = $1,800</span>
+          </p>
+          <ul class="pricing-list">
+            <li>Connects to your CRM through its API</li>
+            <li>Built &amp; demoed on sample data first — you approve before we connect anything real</li>
+            <li>Go-live included: I help you generate your API key and switch it on</li>
+            <li>Deployed to your own hosting account — you own it outright</li>
+            <li>Auto-updating — no manual data entry</li>
+          </ul>
+          <a href="#contact" class="btn btn-gold btn-pricing">Start your dashboard</a>
+        </div>
+
+        <!-- Card C — Ongoing support -->
+        <div class="pricing-card fade-up delay-3">
+          <p class="pricing-tier">Ongoing</p>
+          <h3>Maintenance &amp; Support</h3>
+          <p class="pricing-desc">Tweaks, fixes, and small changes after your dashboard is live.</p>
+          <div class="pricing-price">
+            <div class="price-amount">$45<span style="font-size:1.4rem; font-weight:400">/hr</span></div>
+            <div class="price-note">First 2 hours each month are on me</div>
           </div>
           <ul class="pricing-list">
-            <li>Everything in Build Only</li>
-            <li>I host and maintain your site</li>
-            <li>SSL certificate included</li>
-            <li>Monthly content updates (up to 1 hr)</li>
-            <li>Priority email support</li>
-            <li>Domain setup assistance</li>
+            <li>Up to 2 hours of small changes &amp; fixes each month, included</li>
+            <li>Anything beyond that billed at $45/hr</li>
+            <li>I always get your OK before any billable work</li>
+            <li>Runs on your own hosting account — no monthly markup, no lock-in</li>
           </ul>
-          <a href="#contact" class="btn btn-gold btn-pricing">Get Started</a>
+          <a href="#contact" class="btn btn-navy btn-pricing">Get in touch</a>
         </div>
       </div>
 
       <p class="pricing-note fade-up">
-        Pricing reflects portfolio rates — I'm building my track record and keeping costs accessible for local businesses that deserve a real online presence.
+        Every project starts with a conversation, not an invoice. If your situation doesn't fit neatly into one of these, tell me what you're trying to do and I'll give you a straight answer on what it would take.
       </p>
     </div>
   </section>
@@ -1418,12 +1611,12 @@
       <div class="work-header fade-up">
         <p class="section-label">Recent Work</p>
         <h2 class="section-heading">Sites built to make an impression</h2>
-        <p class="section-sub">These demo sites showcase what I can build for your business. Each one is hand-coded to fit its industry.</p>
+        <p class="section-sub">Live client sites plus a few demos, each hand-coded to fit its industry. Dashboard work is coming to this section soon.</p>
       </div>
 
       <div class="work-grid">
         <!-- Beauty Nook (Live Client) -->
-        <div class="work-card real-client fade-up delay-1">
+        <div class="work-card real-client client-beauty-nook fade-up delay-1">
           <div class="work-preview">
             <span class="work-client-badge">Live Client</span>
             <img src="beauty-nook/logo.png" alt="The Beauty Nook" class="work-preview-logo">
@@ -1438,8 +1631,39 @@
           </div>
         </div>
 
+        <!-- Monticello Appliance Repair (Live Client) -->
+        <div class="work-card real-client client-monticello-appliance fade-up delay-2">
+          <div class="work-preview">
+            <span class="work-client-badge">Live Client</span>
+            <div class="work-preview-grid"></div>
+            <div class="work-preview-icon">
+              <!-- Wrench icon — matches the site's own favicon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="work-body">
+            <span class="work-tag">Appliance Repair · Monticello, IL</span>
+            <h3>Monticello Appliance Repair</h3>
+            <p>A purple-and-gold site for a family-owned repair shop serving Piatt County. Built around the one thing customers actually need — the phone number — with the service list and coverage area right behind it.</p>
+            <a href="/monticello-appliance-repair/" target="_blank" rel="noopener" class="work-link">
+              View Site <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────
+             DASHBOARD EXAMPLE SLOT — reserved.
+             Drop the dashboard case-study card here when the example is
+             ready so it lands directly after the live client work and
+             above the demo sites. Deliberately left as a comment rather
+             than an empty placeholder card: this page is live, and a
+             visible "coming soon" tile reads as an unfinished site.
+             ───────────────────────────────────────────────────────── -->
+
         <!-- Plumbing -->
-        <div class="work-card fade-up delay-2">
+        <div class="work-card fade-up delay-3">
           <div class="work-preview" style="background: #1a2744;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1460,7 +1684,7 @@
         </div>
 
         <!-- Salon -->
-        <div class="work-card fade-up delay-3">
+        <div class="work-card fade-up delay-4">
           <div class="work-preview" style="background: #2a2a2a;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1485,7 +1709,7 @@
         </div>
 
         <!-- Restaurant -->
-        <div class="work-card fade-up delay-4">
+        <div class="work-card fade-up delay-5">
           <div class="work-preview" style="background: #2d5a27;">
             <div class="work-preview-grid"></div>
             <div class="work-preview-icon">
@@ -1526,10 +1750,11 @@
           <span class="section-label">About</span>
           <h2 class="section-heading">Hey, I'm Clay.</h2>
           <p>I'm a teacher and web developer from Monticello, IL. I spend my days in the classroom and my evenings building things for the web. I started offering web design services because I kept seeing great local businesses with no online presence — and I knew I could fix that.</p>
-          <p>I keep my prices accessible because I'm building my portfolio and I want to do good work for people who deserve it. You get a real, hand-coded website — not a template you could've built yourself on Squarespace. And you get someone who actually cares whether it works.</p>
+          <p>The dashboards came from the same place. Once a business is online, the next problem is usually that its numbers are scattered across a CRM nobody wants to log into. So I build the one screen that puts them together.</p>
+          <p>Either way, you get real, hand-coded work — not a template you could've built yourself on Squarespace. And you get someone who actually cares whether it works.</p>
           <div class="about-stats">
             <div class="stat-item">
-              <strong>$300</strong>
+              <strong>$500</strong>
               <span>Starting price</span>
             </div>
             <div class="stat-item">
@@ -1587,11 +1812,11 @@
               <div class="form-grid">
                 <div class="form-group">
                   <label for="name">Your Name</label>
-                  <input type="text" id="name" name="name" placeholder="Jane Smith" autocomplete="name" />
+                  <input type="text" id="name" name="name" placeholder="Jane Smith" autocomplete="name" required />
                 </div>
                 <div class="form-group">
                   <label for="email">Email Address</label>
-                  <input type="email" id="email" name="email" placeholder="jane@yourbusiness.com" autocomplete="email" />
+                  <input type="email" id="email" name="email" placeholder="jane@yourbusiness.com" autocomplete="email" required />
                 </div>
                 <div class="form-group full">
                   <label for="business">Business Name</label>
@@ -1599,11 +1824,18 @@
                 </div>
                 <div class="form-group full">
                   <label for="message">Tell me about your project</label>
-                  <textarea id="message" name="message" placeholder="What kind of business do you run? Do you have an existing site? What's most important to you in a new one?"></textarea>
+                  <textarea id="message" name="message" placeholder="What kind of business do you run? Are you after a website, a dashboard, or both? If it's a dashboard, what CRM are you using?" required></textarea>
                 </div>
               </div>
+
+              <!-- Honeypot. Invisible to people, tempting to bots; the form
+                   service discards any submission that arrives with it ticked.
+                   Unchecked boxes aren't included in FormData, so it costs
+                   nothing on a legitimate send. -->
+              <input type="checkbox" name="botcheck" class="form-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
               <button type="submit" class="btn btn-gold form-submit">Send Message</button>
-              <p class="form-note">I'll get back to you within 24 hours.</p>
+              <p class="form-note" role="status" aria-live="polite">I'll get back to you within 24 hours.</p>
             </form>
           </div>
         </div>
@@ -1615,7 +1847,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-logo">Clay Dunker</div>
-      <div class="footer-tagline">Web Design for Local Businesses</div>
+      <div class="footer-tagline">Websites &amp; Dashboards for Local Businesses</div>
       <div class="footer-sep"></div>
       <div class="footer-contact">
         Monticello, IL &nbsp;·&nbsp; <a href="mailto:clay.dunker@gmail.com">clay.dunker@gmail.com</a>
@@ -1671,17 +1903,132 @@
 
     fadeElements.forEach(el => observer.observe(el));
 
-    // ── Form submit handler (non-functional demo) ─────────────────
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      const note = e.target.querySelector('.form-note');
+    // ── Contact form ──────────────────────────────────────────────
+    //
+    // Submissions POST to Web3Forms, which forwards them to CONTACT_EMAIL.
+    // Free tier is 250 submissions/month — if the site ever starts converting
+    // properly, that ceiling is the first thing that will break, and it fails
+    // as a rejected response (which the catch block surfaces), not silently.
+    //
+    // ⚠ CONTACT_ACCESS_KEY IS PUBLIC BY DESIGN. It ships in client-side HTML
+    //   and anyone can read it — that's how Web3Forms works, and it's why it
+    //   can't be an environment variable in a static file. It is not a
+    //   credential and grants no account access; the worst case is a stranger
+    //   using it to send mail to this same inbox. Restrict the key to
+    //   claydunker.com in the Web3Forms dashboard to shut that down. If it
+    //   ever does get abused, rotating it is just pasting a new one here.
+    //
+    // If the key is ever blanked out the form degrades rather than breaking —
+    // it opens the visitor's mail client with their answers pre-filled, so
+    // enquiries still reach the inbox. That branch is dormant while a key is
+    // set; keep it, it's the safety net.
+    //
+    // What it must never do is PRETEND. The version this replaced faked a green
+    // "Message Sent!" with no network call and dropped every lead on the floor.
+    // Whatever changes here, keep the rule: the confirmation only appears after
+    // something actually left the browser.
+    const CONTACT_ACCESS_KEY = '16c3fbf6-4663-4a1b-b77a-15f3a26bcf83';
+    const CONTACT_ENDPOINT   = 'https://api.web3forms.com/submit';
+    const CONTACT_EMAIL      = 'clay.dunker@gmail.com';
+    const CONTACT_SUBJECT    = 'New enquiry from claydunker.com';
 
-      btn.textContent = 'Message Sent!';
-      btn.style.background = '#2d7a47';
+    const FORM_COLOR_SUCCESS = '#2d7a47';
+    const FORM_COLOR_ERROR   = '#b3261e';
+    const FORM_COLOR_PENDING = '#9a9a94';
+
+    // The note is written with innerHTML so the fallback mailto link is
+    // clickable, which means anything interpolated into it must be escaped —
+    // error text comes back from a remote API.
+    const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+
+    const mailtoFallback =
+      `<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`;
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const btn  = form.querySelector('button[type="submit"]');
+      const note = form.querySelector('.form-note');
+      const originalLabel = btn.textContent;
+
+      const setNote = (html, color) => {
+        note.innerHTML = html;
+        note.style.color = color;
+      };
+
+      // No key configured yet? Don't error out and don't fake a send — hand
+      // the visitor's own typing off to their mail client so the enquiry still
+      // reaches the inbox. Once CONTACT_ACCESS_KEY is set this branch is dead
+      // code and the send becomes seamless (no mail app, no context switch).
+      if (!CONTACT_ACCESS_KEY) {
+        const f = Object.fromEntries(new FormData(form).entries());
+        const body = [
+          `Name: ${f.name || ''}`,
+          `Email: ${f.email || ''}`,
+          `Business: ${f.business || ''}`,
+          '',
+          f.message || ''
+        ].join('\n');
+
+        window.location.href =
+          `mailto:${CONTACT_EMAIL}` +
+          `?subject=${encodeURIComponent(CONTACT_SUBJECT)}` +
+          `&body=${encodeURIComponent(body)}`;
+
+        setNote(
+          `Opening your email app with this message ready to send. ` +
+          `If nothing happened, write to ${mailtoFallback} instead.`,
+          FORM_COLOR_PENDING
+        );
+        return;
+      }
+
       btn.disabled = true;
-      note.textContent = 'Thanks for reaching out — I\'ll be in touch within 24 hours.';
-      note.style.color = '#2d7a47';
+      btn.textContent = 'Sending…';
+      setNote('Sending your message…', FORM_COLOR_PENDING);
+
+      const payload = Object.fromEntries(new FormData(form).entries());
+      payload.access_key = CONTACT_ACCESS_KEY;
+      payload.subject    = CONTACT_SUBJECT;
+
+      try {
+        const res = await fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // A non-2xx response still returns JSON explaining why, so read it
+        // before deciding what to show.
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || `${res.status} ${res.statusText}`);
+        }
+
+        btn.textContent = 'Message Sent!';
+        btn.style.background = FORM_COLOR_SUCCESS;
+        setNote(
+          "Thanks for reaching out — I'll be in touch within 24 hours.",
+          FORM_COLOR_SUCCESS
+        );
+        form.reset();
+
+      } catch (err) {
+        // Re-enable so the visitor can retry, and always leave them a route
+        // that doesn't depend on this form working.
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+        setNote(
+          `Sorry — that didn't send (${escapeHtml(err.message)}). ` +
+          `Please email me directly at ${mailtoFallback}.`,
+          FORM_COLOR_ERROR
+        );
+        console.error('[contact form]', err);
+      }
     }
 
     // ── Smooth scroll offset for sticky nav ──────────────────────
