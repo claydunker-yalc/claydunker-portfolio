@@ -99,6 +99,11 @@
       --radius:     10px;
       --radius-lg:  18px;
       --transition: 240ms ease;
+      /* Height of a work card's image header. Referenced in two places that
+         MUST stay in sync: .work-preview itself, and the invisible click
+         overlay (.work-link::after) that makes that header clickable. If they
+         drift, the clickable region stops matching what the user can see. */
+      --work-preview-height: 140px;
     }
 
     html {
@@ -780,6 +785,9 @@
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       display: flex;
       flex-direction: column;
+      /* Anchor for the click overlay below. .real-client and .showcase also
+         set this; it's declared here so plain demo cards get it too. */
+      position: relative;
     }
 
     .work-card:hover {
@@ -788,7 +796,7 @@
     }
 
     .work-preview {
-      height: 140px;
+      height: var(--work-preview-height);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -803,37 +811,11 @@
       background: inherit;
     }
 
-    .work-preview-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-
-    .work-preview-icon {
-      position: relative;
-      z-index: 1;
-      width: 52px;
-      height: 52px;
-      background: rgba(255,255,255,.12);
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .work-preview-icon svg {
-      width: 26px;
-      height: 26px;
-      stroke: rgba(255,255,255,.85);
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    /* NOTE: .work-preview-grid and .work-preview-icon used to live here — the
+       faint grid pattern and centred SVG that filled card headers before every
+       card had a real image. Removed once the last icon card was replaced.
+       If a future card has no image available, prefer sourcing one over
+       reviving them; a single icon card among photo cards reads as missing. */
 
     .work-body {
       padding: 1.6rem 1.6rem 1.4rem;
@@ -886,6 +868,64 @@
       color: var(--gold);
       gap: .6rem;
       border-color: var(--gold);
+    }
+
+    /* ─── CLICKABLE CARD HEADER ─────────────────────────────────────
+       The image header opens the same destination as the "View Site" link
+       at the bottom of the card.
+
+       This is done by stretching an invisible pseudo-element from the real
+       link up over the header, rather than by wrapping the header in a second
+       <a>. That matters: two anchors to one destination means two tab stops
+       and the link announced twice to screen readers. With this approach the
+       accessibility tree still sees exactly one link per card, while mouse
+       and touch users get the large target they expect.
+
+       Covers only the header, not the whole card, so the description text
+       stays selectable. Height is tied to --work-preview-height. */
+    .work-link::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--work-preview-height);
+      z-index: 4;
+    }
+
+    /* Photo headers. The image sits under the badge and the click overlay;
+       object-fit keeps it from distorting at any card width. */
+    .work-preview-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Scrim: photos vary in brightness and the badge sits on top of them, so
+       darken the corners enough that white/accent text stays legible over any
+       image. Sits between the photo and the badge. */
+    .work-card.has-image .work-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.05) 45%, rgba(0,0,0,.30) 100%);
+      z-index: 2;
+    }
+
+    /* Slow zoom on hover — ties the header to the card's existing lift. */
+    .work-card.has-image .work-preview-image {
+      transition: transform 0.5s ease;
+    }
+
+    .work-card.has-image:hover .work-preview-image {
+      transform: scale(1.06);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .work-card.has-image:hover .work-preview-image { transform: none; }
     }
 
     /* ─── LIVE CLIENT CARD VARIANT ──────────────────────────────────
@@ -1653,16 +1693,10 @@
         </div>
 
         <!-- Monticello Appliance Repair (Live Client) -->
-        <div class="work-card real-client client-monticello-appliance fade-up delay-2">
+        <div class="work-card real-client client-monticello-appliance has-image fade-up delay-2">
           <div class="work-preview">
+            <img src="work-previews/monticello-charter-street.jpg" alt="Historic buildings on Charter Street in Monticello, Illinois" class="work-preview-image" loading="lazy" width="900" height="448" />
             <span class="work-client-badge">Live Client</span>
-            <div class="work-preview-grid"></div>
-            <div class="work-preview-icon">
-              <!-- Wrench icon — matches the site's own favicon -->
-              <svg viewBox="0 0 24 24">
-                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-              </svg>
-            </div>
           </div>
           <div class="work-body">
             <span class="work-tag">Appliance Repair · Monticello, IL</span>
@@ -1675,19 +1709,10 @@
         </div>
 
         <!-- HVAC Operations Dashboard (demo — fictional data) -->
-        <div class="work-card showcase fade-up delay-3">
+        <div class="work-card showcase has-image fade-up delay-3">
           <div class="work-preview">
+            <img src="work-previews/hvac-dashboard.png" alt="The HVAC operations dashboard, showing revenue and job metric tiles above a revenue performance chart" class="work-preview-image" loading="lazy" width="900" height="373" />
             <span class="work-client-badge">Live Demo</span>
-            <div class="work-preview-grid"></div>
-            <div class="work-preview-icon">
-              <!-- Bar chart icon — matches the dashboards feature card above -->
-              <svg viewBox="0 0 24 24">
-                <line x1="18" y1="20" x2="18" y2="10"/>
-                <line x1="12" y1="20" x2="12" y2="4"/>
-                <line x1="6" y1="20" x2="6" y2="14"/>
-                <line x1="3" y1="20" x2="21" y2="20"/>
-              </svg>
-            </div>
           </div>
           <div class="work-body">
             <span class="work-tag">Dashboard · Home Services</span>
@@ -1700,15 +1725,12 @@
         </div>
 
         <!-- Plumbing -->
-        <div class="work-card fade-up delay-4">
+        <div class="work-card has-image fade-up delay-4">
           <div class="work-preview" style="background: #1a2744;">
-            <div class="work-preview-grid"></div>
-            <div class="work-preview-icon">
-              <!-- Wrench / tools icon -->
-              <svg viewBox="0 0 24 24">
-                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-              </svg>
-            </div>
+            <!-- Each demo card reuses that demo site's own hero image, so the
+                 card previews the page it links to rather than showing
+                 unrelated stock art. -->
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&amp;fit=crop&amp;w=800&amp;q=75" alt="Hargrove Plumbing &amp; Heating demo site" class="work-preview-image" loading="lazy" />
           </div>
           <div class="work-body">
             <span class="work-tag">Plumbing / HVAC</span>
@@ -1721,19 +1743,9 @@
         </div>
 
         <!-- Salon -->
-        <div class="work-card fade-up delay-5">
+        <div class="work-card has-image fade-up delay-5">
           <div class="work-preview" style="background: #2a2a2a;">
-            <div class="work-preview-grid"></div>
-            <div class="work-preview-icon">
-              <!-- Scissors icon -->
-              <svg viewBox="0 0 24 24">
-                <circle cx="6" cy="6" r="3"/>
-                <circle cx="6" cy="18" r="3"/>
-                <line x1="20" y1="4" x2="8.12" y2="15.88"/>
-                <line x1="14.47" y1="14.48" x2="20" y2="20"/>
-                <line x1="8.12" y1="8.12" x2="12" y2="12"/>
-              </svg>
-            </div>
+            <img src="https://images.unsplash.com/photo-1470259078422-826894b933aa?auto=format&amp;fit=crop&amp;w=800&amp;q=75" alt="The Gilded Chair demo site" class="work-preview-image" loading="lazy" />
           </div>
           <div class="work-body">
             <span class="work-tag">Beauty / Salon</span>
@@ -1746,17 +1758,9 @@
         </div>
 
         <!-- Restaurant -->
-        <div class="work-card fade-up delay-6">
+        <div class="work-card has-image fade-up delay-6">
           <div class="work-preview" style="background: #2d5a27;">
-            <div class="work-preview-grid"></div>
-            <div class="work-preview-icon">
-              <!-- Fork & knife icon -->
-              <svg viewBox="0 0 24 24">
-                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/>
-                <line x1="7" y1="2" x2="7" y2="22"/>
-                <path d="M21 15V2l-3 5-3-5v13a3 3 0 006 0z"/>
-              </svg>
-            </div>
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&amp;fit=crop&amp;w=800&amp;q=75" alt="The Millrace Kitchen demo site" class="work-preview-image" loading="lazy" />
           </div>
           <div class="work-body">
             <span class="work-tag">Restaurant / Food</span>
