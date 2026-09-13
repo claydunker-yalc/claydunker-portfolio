@@ -23,10 +23,31 @@
   WHAT IT SELLS
   Dashboards that merge Shopify / email / ads / inventory / customer data into
   one view, aimed at a founder deciding what to promote, reorder, and stop.
-  Deliberately NOT priced on this page — unlike /local/, which lists tiers.
-  The CTA is a conversation ("Book a data map"), because scope varies per
-  brand's stack. Don't paste the /local/ pricing table in here without
-  deciding that question first.
+  Two steps, priced on the page and DIFFERENT from the /local/ tiers:
+    1. Data Audit        — $500, a scoped map of the brand's data + decisions
+    2. Profit Dashboard  — $2.5k–$4k fixed scope, then $400/mo optional care
+  The audit is deliberately the cheap first step; the dashboard is sold as its
+  follow-on, not as a standalone. These numbers appear in the pricing cards
+  only — but /local/ carries its own, unrelated set, so when Clay changes
+  prices, ask WHICH page, and never sync one to the other.
+
+  THE LOOK: SOFT, NOT ENGINEERED (reworked 2026-09-13)
+  Clay's note was that the page felt too geometric. Three square grids were
+  removed — the hero's 60px grid, the 28px grid in the work-card headers, and
+  the 40px grid in the About panel — and replaced with curved, organic forms:
+  flowing "silk ribbon" lines (see .silk), soft radial blooms, and a petal
+  shape in place of the rotated square. The ribbons are the site's signature
+  device; if a new section needs texture, reuse them rather than inventing a
+  fourth pattern, and do NOT reach for a repeating straight-line grid.
+
+  Removed in the same pass: this page had inherited the OLD navy-and-gold
+  palette in eight places — rgba(200,151,42,…) gold tints on the eyebrow pill,
+  button glows, feature and contact icons and the input focus ring, plus a
+  literal #243060 navy on the About panel and the .btn-navy hover, all of
+  which rendered blue-and-gold on a blush page. They are now rose. If anything
+  ever looks off-key here, check it against the :root palette first — note
+  that the variables are still NAMED for the old design (--navy is plum,
+  --gold is rose), which is the likeliest way a wrong colour gets in again.
 
   WHAT IT DEPENDS ON
   · /beauty-brand-dashboard/ — the synthetic demo, linked from the hero CTA
@@ -267,7 +288,10 @@
 
     /* ─── HERO ──────────────────────────────────────────────────── */
     #hero {
-      background: linear-gradient(145deg, var(--navy) 0%, var(--navy-deep) 100%);
+      background:
+        radial-gradient(58% 44% at 14% 18%, rgba(239,194,190,.11), transparent 68%),
+        radial-gradient(54% 42% at 88% 76%, rgba(173,102,113,.17), transparent 70%),
+        linear-gradient(145deg, var(--navy) 0%, var(--navy-deep) 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -276,16 +300,38 @@
       overflow: hidden;
     }
 
-    /* Subtle grid overlay */
-    #hero::before {
-      content: '';
+    /* ── Silk ribbons ────────────────────────────────────────────
+       The site's signature background texture, replacing the square
+       grid this hero used to carry. Rigid 60px gridlines read as
+       engineering; these flowing lines read as fabric, which is the
+       register this page wants. Drawn as a real inline <svg> in the
+       markup (see .silk) rather than a CSS data-URI so the curves stay
+       legible and editable — regenerate with a sine sweep if they ever
+       need retuning. Two copies sit side by side and drift left
+       forever; each is exactly one viewBox wide, so the seam between
+       them is invisible ONLY while both keep the same width and the
+       translate distance stays -50%. Change one, change all three. */
+    .silk {
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(239,194,190,0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(239,194,190,0.08) 1px, transparent 1px);
-      background-size: 60px 60px;
+      width: 200%;
+      height: 100%;
       pointer-events: none;
+      fill: none;
+      stroke: #efc2be;
+      stroke-linecap: round;
+      animation: silk-drift 90s linear infinite;
+    }
+
+    @keyframes silk-drift {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+
+    /* The drift is decoration, never information — anyone who has asked
+       their OS to calm motion down gets the ribbons standing still. */
+    @media (prefers-reduced-motion: reduce) {
+      .silk { animation: none; }
     }
 
     /* Glow blob */
@@ -315,8 +361,8 @@
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--gold);
-      background: rgba(200,151,42,.12);
-      border: 1px solid rgba(200,151,42,.3);
+      background: rgba(206,137,144,.12);
+      border: 1px solid rgba(206,137,144,.3);
       padding: .35rem 1rem;
       border-radius: 100px;
       margin-bottom: 1.8rem;
@@ -373,7 +419,7 @@
     .btn-gold:hover {
       background: var(--gold-light);
       transform: translateY(-2px);
-      box-shadow: 0 6px 22px rgba(200,151,42,.4);
+      box-shadow: 0 6px 22px rgba(206,137,144,.4);
     }
 
     .btn-outline {
@@ -482,7 +528,7 @@
     .feature-icon {
       width: 52px;
       height: 52px;
-      background: rgba(200,151,42,.1);
+      background: rgba(206,137,144,.1);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -669,7 +715,7 @@
     }
 
     .btn-navy:hover {
-      background: #243060;
+      background: #4a333a;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(26,39,68,.3);
     }
@@ -736,13 +782,16 @@
       background: inherit;
     }
 
+    /* Card-header texture. Was a 28px grid; now two soft blooms that
+       catch light off the card's own gradient. Keep it gradient-only —
+       any 1px line here re-introduces the engineered look the rest of
+       the page is deliberately avoiding. */
     .work-preview-grid {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 28px 28px;
+        radial-gradient(120% 90% at 20% 14%, rgba(255,255,255,.13), transparent 62%),
+        radial-gradient(115% 85% at 86% 90%, rgba(255,255,255,.07), transparent 60%);
     }
 
     .work-preview-icon {
@@ -782,7 +831,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--gold);
-      background: rgba(200,151,42,.1);
+      background: rgba(206,137,144,.1);
       padding: .25rem .7rem;
       border-radius: 100px;
       margin-bottom: .8rem;
@@ -896,22 +945,34 @@
     .geo-bg {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--navy) 0%, #243060 100%);
+      background: linear-gradient(150deg, #5a3a43 0%, var(--navy-deep) 100%);
       border-radius: var(--radius-lg);
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-lg);
     }
 
-    /* Grid lines */
+    /* Soft glow behind the composition, replacing the 40px grid. */
     .geo-bg::before {
       content: '';
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background:
+        radial-gradient(60% 50% at 28% 26%, rgba(239,194,190,.13), transparent 70%),
+        radial-gradient(55% 45% at 78% 82%, rgba(206,137,144,.10), transparent 72%);
+    }
+
+    /* Same ribbon motif as the hero, scaled down. Static here — a second
+       moving element in the About section competes with the copy. */
+    .geo-silk {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: #ce8990;
+      stroke-linecap: round;
+      pointer-events: none;
     }
 
     /* Gold circle */
@@ -919,7 +980,7 @@
       position: absolute;
       width: 52%;
       height: 52%;
-      border: 2px solid rgba(200,151,42,.6);
+      border: 1.5px solid rgba(206,137,144,.55);
       border-radius: 50%;
       top: 12%;
       left: 12%;
@@ -930,61 +991,51 @@
       position: absolute;
       width: 28%;
       height: 28%;
-      background: rgba(200,151,42,.22);
+      background: rgba(206,137,144,.20);
       border-radius: 50%;
       top: 24%;
       left: 24%;
-      border: 1px solid rgba(200,151,42,.5);
+      border: 1px solid rgba(206,137,144,.42);
     }
 
-    /* Diagonal line */
+    /* Were two straight diagonals. Now wide, shallow arcs: a hairline
+       on ONE edge of an oversized circle, so only the gentlest part of
+       the curve crosses the panel. Sized in % of the panel, so the
+       sweep stays shallow at every width. */
     .geo-line {
       position: absolute;
-      width: 130%;
-      height: 1px;
-      background: rgba(255,255,255,.08);
-      top: 62%;
-      left: -15%;
-      transform: rotate(-22deg);
+      width: 170%;
+      height: 170%;
+      left: -35%;
+      top: 26%;
+      border-top: 1px solid rgba(255,255,255,.10);
+      border-radius: 50%;
+      transform: rotate(-7deg);
     }
 
     .geo-line-2 {
       position: absolute;
-      width: 130%;
-      height: 1px;
-      background: rgba(200,151,42,.18);
-      top: 38%;
-      left: -15%;
-      transform: rotate(-22deg);
+      width: 150%;
+      height: 150%;
+      left: -22%;
+      top: -52%;
+      border-bottom: 1px solid rgba(206,137,144,.22);
+      border-radius: 50%;
+      transform: rotate(5deg);
     }
 
-    /* Corner accent */
+    /* Was a rotated rounded square. Now a petal — the asymmetric
+       border-radius (round/point/round/point) is what makes the shape
+       read as botanical rather than geometric. */
     .geo-corner {
       position: absolute;
-      bottom: 14%;
-      right: 12%;
-      width: 28%;
-      height: 28%;
-      border: 2px solid rgba(200,151,42,.45);
-      border-radius: 6px;
-      transform: rotate(12deg);
-    }
-
-    /* Dot cluster */
-    .geo-dots {
-      position: absolute;
-      top: 18%;
-      right: 16%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
-    }
-
-    .geo-dot {
-      width: 4px;
-      height: 4px;
-      background: rgba(200,151,42,.55);
-      border-radius: 50%;
+      bottom: 13%;
+      right: 11%;
+      width: 30%;
+      height: 30%;
+      border: 1.5px solid rgba(206,137,144,.42);
+      border-radius: 62% 0 62% 0;
+      transform: rotate(-6deg);
     }
 
     /* Text card overlay */
@@ -1002,7 +1053,7 @@
     .geo-card-line {
       height: 2px;
       border-radius: 2px;
-      background: rgba(200,151,42,.7);
+      background: rgba(206,137,144,.75);
       margin-bottom: 6px;
     }
 
@@ -1106,7 +1157,7 @@
     .contact-icon {
       width: 36px;
       height: 36px;
-      background: rgba(200,151,42,.1);
+      background: rgba(206,137,144,.1);
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -1174,7 +1225,7 @@
     .form-group input:focus,
     .form-group textarea:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(200,151,42,.12);
+      box-shadow: 0 0 0 3px rgba(206,137,144,.12);
     }
 
     .form-group input::placeholder,
@@ -1332,6 +1383,28 @@
 
   <!-- ─── HERO ──────────────────────────────────────────────────── -->
   <section id="hero">
+    <svg class="silk" viewBox="0 0 2880 900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <g>
+      <path d="M-120 48C-102 51 -47 61 -10 68C27 75 63 83 100 89C137 95 173 100 210 104C247 107 283 109 320 109C357 109 393 107 430 105C467 103 503 99 540 96C577 92 613 89 650 86C687 84 723 82 760 80C797 79 833 78 870 77C907 76 943 75 980 73C1017 71 1053 69 1090 66C1127 63 1163 58 1200 54C1237 49 1273 44 1310 40C1347 35 1383 31 1420 29C1457 27 1512 27 1530 27" stroke-opacity="0.09" stroke-width="1.10"/>
+      <path d="M-120 197C-102 200 -47 210 -10 214C27 219 63 222 100 223C137 224 173 222 210 221C247 219 283 215 320 211C357 208 393 203 430 200C467 196 503 193 540 191C577 188 613 187 650 185C687 184 723 183 760 182C797 181 833 179 870 177C907 175 943 171 980 168C1017 164 1053 159 1090 156C1127 152 1163 147 1200 144C1237 142 1273 140 1310 140C1347 140 1383 142 1420 146C1457 149 1512 159 1530 161" stroke-opacity="0.05" stroke-width="0.75"/>
+      <path d="M-120 335C-102 335 -47 337 -10 336C27 334 63 331 100 327C137 324 173 318 210 314C247 310 283 306 320 302C357 299 393 297 430 295C467 293 503 292 540 291C577 289 613 289 650 287C687 285 723 283 760 281C797 278 833 274 870 271C907 268 943 263 980 260C1017 258 1053 255 1090 254C1127 253 1163 254 1200 257C1237 259 1273 264 1310 270C1347 275 1383 283 1420 290C1457 297 1512 307 1530 311" stroke-opacity="0.10" stroke-width="1.35"/>
+      <path d="M-120 443C-102 441 -47 434 -10 430C27 425 63 419 100 415C137 411 173 407 210 405C247 402 283 401 320 399C357 398 393 397 430 396C467 395 503 394 540 392C577 391 613 388 650 385C687 383 723 379 760 376C797 374 833 370 870 369C907 368 943 368 980 369C1017 371 1053 374 1090 379C1127 384 1163 391 1200 397C1237 404 1273 412 1310 419C1347 425 1383 432 1420 436C1457 441 1512 444 1530 445" stroke-opacity="0.06" stroke-width="0.90"/>
+      <path d="M-120 530C-102 527 -47 520 -10 516C27 512 63 510 100 508C137 506 173 506 210 505C247 504 283 504 320 503C357 502 393 500 430 499C467 497 503 494 540 492C577 489 613 486 650 485C687 483 723 482 760 483C797 484 833 486 870 490C907 493 943 499 980 506C1017 512 1053 520 1090 526C1127 533 1163 541 1200 546C1237 551 1273 556 1310 558C1347 560 1383 560 1420 559C1457 558 1512 553 1530 551" stroke-opacity="0.09" stroke-width="1.10"/>
+      <path d="M-120 618C-102 617 -47 614 -10 613C27 612 63 612 100 612C137 612 173 611 210 610C247 609 283 608 320 606C357 605 393 602 430 601C467 599 503 598 540 598C577 598 613 599 650 602C687 605 723 609 760 615C797 620 833 627 870 634C907 641 943 649 980 654C1017 660 1053 666 1090 669C1127 672 1163 674 1200 673C1237 673 1273 670 1310 667C1347 664 1383 659 1420 655C1457 650 1512 643 1530 641" stroke-opacity="0.05" stroke-width="0.75"/>
+      <path d="M-120 721C-102 721 -47 721 -10 721C27 721 63 721 100 720C137 719 173 717 210 716C247 715 283 713 320 713C357 713 393 713 430 715C467 717 503 720 540 725C577 729 613 736 650 742C687 748 723 756 760 762C797 769 833 775 870 779C907 783 943 786 980 787C1017 787 1053 786 1090 783C1127 780 1163 775 1200 771C1237 766 1273 760 1310 755C1347 751 1383 746 1420 743C1457 739 1512 736 1530 735" stroke-opacity="0.10" stroke-width="1.35"/>
+      <path d="M-120 832C-102 832 -47 831 -10 831C27 830 63 829 100 829C137 829 173 828 210 829C247 831 283 833 320 836C357 840 393 845 430 851C467 856 503 864 540 870C577 876 613 883 650 888C687 893 723 897 760 898C797 900 833 900 870 898C907 896 943 891 980 887C1017 882 1053 876 1090 871C1127 865 1163 859 1200 855C1237 851 1273 847 1310 845C1347 842 1383 841 1420 840C1457 839 1512 838 1530 838" stroke-opacity="0.06" stroke-width="0.90"/>
+      </g>
+      <g transform="translate(1440,0)">
+      <path d="M-120 48C-102 51 -47 61 -10 68C27 75 63 83 100 89C137 95 173 100 210 104C247 107 283 109 320 109C357 109 393 107 430 105C467 103 503 99 540 96C577 92 613 89 650 86C687 84 723 82 760 80C797 79 833 78 870 77C907 76 943 75 980 73C1017 71 1053 69 1090 66C1127 63 1163 58 1200 54C1237 49 1273 44 1310 40C1347 35 1383 31 1420 29C1457 27 1512 27 1530 27" stroke-opacity="0.09" stroke-width="1.10"/>
+      <path d="M-120 197C-102 200 -47 210 -10 214C27 219 63 222 100 223C137 224 173 222 210 221C247 219 283 215 320 211C357 208 393 203 430 200C467 196 503 193 540 191C577 188 613 187 650 185C687 184 723 183 760 182C797 181 833 179 870 177C907 175 943 171 980 168C1017 164 1053 159 1090 156C1127 152 1163 147 1200 144C1237 142 1273 140 1310 140C1347 140 1383 142 1420 146C1457 149 1512 159 1530 161" stroke-opacity="0.05" stroke-width="0.75"/>
+      <path d="M-120 335C-102 335 -47 337 -10 336C27 334 63 331 100 327C137 324 173 318 210 314C247 310 283 306 320 302C357 299 393 297 430 295C467 293 503 292 540 291C577 289 613 289 650 287C687 285 723 283 760 281C797 278 833 274 870 271C907 268 943 263 980 260C1017 258 1053 255 1090 254C1127 253 1163 254 1200 257C1237 259 1273 264 1310 270C1347 275 1383 283 1420 290C1457 297 1512 307 1530 311" stroke-opacity="0.10" stroke-width="1.35"/>
+      <path d="M-120 443C-102 441 -47 434 -10 430C27 425 63 419 100 415C137 411 173 407 210 405C247 402 283 401 320 399C357 398 393 397 430 396C467 395 503 394 540 392C577 391 613 388 650 385C687 383 723 379 760 376C797 374 833 370 870 369C907 368 943 368 980 369C1017 371 1053 374 1090 379C1127 384 1163 391 1200 397C1237 404 1273 412 1310 419C1347 425 1383 432 1420 436C1457 441 1512 444 1530 445" stroke-opacity="0.06" stroke-width="0.90"/>
+      <path d="M-120 530C-102 527 -47 520 -10 516C27 512 63 510 100 508C137 506 173 506 210 505C247 504 283 504 320 503C357 502 393 500 430 499C467 497 503 494 540 492C577 489 613 486 650 485C687 483 723 482 760 483C797 484 833 486 870 490C907 493 943 499 980 506C1017 512 1053 520 1090 526C1127 533 1163 541 1200 546C1237 551 1273 556 1310 558C1347 560 1383 560 1420 559C1457 558 1512 553 1530 551" stroke-opacity="0.09" stroke-width="1.10"/>
+      <path d="M-120 618C-102 617 -47 614 -10 613C27 612 63 612 100 612C137 612 173 611 210 610C247 609 283 608 320 606C357 605 393 602 430 601C467 599 503 598 540 598C577 598 613 599 650 602C687 605 723 609 760 615C797 620 833 627 870 634C907 641 943 649 980 654C1017 660 1053 666 1090 669C1127 672 1163 674 1200 673C1237 673 1273 670 1310 667C1347 664 1383 659 1420 655C1457 650 1512 643 1530 641" stroke-opacity="0.05" stroke-width="0.75"/>
+      <path d="M-120 721C-102 721 -47 721 -10 721C27 721 63 721 100 720C137 719 173 717 210 716C247 715 283 713 320 713C357 713 393 713 430 715C467 717 503 720 540 725C577 729 613 736 650 742C687 748 723 756 760 762C797 769 833 775 870 779C907 783 943 786 980 787C1017 787 1053 786 1090 783C1127 780 1163 775 1200 771C1237 766 1273 760 1310 755C1347 751 1383 746 1420 743C1457 739 1512 736 1530 735" stroke-opacity="0.10" stroke-width="1.35"/>
+      <path d="M-120 832C-102 832 -47 831 -10 831C27 830 63 829 100 829C137 829 173 828 210 829C247 831 283 833 320 836C357 840 393 845 430 851C467 856 503 864 540 870C577 876 613 883 650 888C687 893 723 897 760 898C797 900 833 900 870 898C907 896 943 891 980 887C1017 882 1053 876 1090 871C1127 865 1163 859 1200 855C1237 851 1273 847 1310 845C1347 842 1383 841 1420 840C1457 839 1512 838 1530 838" stroke-opacity="0.06" stroke-width="0.90"/>
+      </g>
+    </svg>
     <div class="hero-inner">
       <span class="hero-eyebrow">For independent skincare &amp; body-care brands</span>
       <h1>A calmer way to see what’s <em>really working.</em></h1>
@@ -1541,16 +1614,21 @@
         <div class="fade-up">
           <div class="about-illustration">
             <div class="geo-bg">
+              <svg class="geo-silk" viewBox="0 0 420 460" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <g>
+          <path d="M-120 47C-102 52 -47 71 -10 74C27 77 63 68 100 64C137 60 173 54 210 50C247 47 283 46 320 42C357 38 393 26 430 26C467 26 522 40 540 43" stroke-opacity="0.16" stroke-width="1.00"/>
+          <path d="M-120 146C-102 147 -47 152 -10 149C27 147 63 134 100 129C137 125 173 126 210 122C247 119 283 111 320 109C357 107 393 106 430 111C467 117 522 137 540 142" stroke-opacity="0.10" stroke-width="0.70"/>
+          <path d="M-120 232C-102 229 -47 218 -10 213C27 208 63 203 100 200C137 196 173 195 210 193C247 190 283 182 320 185C357 188 393 202 430 210C467 217 522 227 540 230" stroke-opacity="0.20" stroke-width="1.20"/>
+          <path d="M-120 300C-102 296 -47 282 -10 278C27 273 63 276 100 273C137 271 173 264 210 265C247 265 283 270 320 277C357 283 393 302 430 306C467 310 522 302 540 301" stroke-opacity="0.16" stroke-width="1.00"/>
+          <path d="M-120 360C-102 359 -47 353 -10 350C27 348 63 347 100 347C137 346 173 343 210 347C247 352 283 370 320 376C357 382 393 388 430 386C467 384 522 369 540 365" stroke-opacity="0.10" stroke-width="0.70"/>
+          <path d="M-120 427C-102 427 -47 428 -10 427C27 427 63 422 100 424C137 427 173 436 210 443C247 450 283 465 320 466C357 468 393 456 430 451C467 445 522 436 540 434" stroke-opacity="0.20" stroke-width="1.20"/>
+                </g>
+              </svg>
               <div class="geo-circle"></div>
               <div class="geo-circle-inner"></div>
               <div class="geo-line"></div>
               <div class="geo-line-2"></div>
               <div class="geo-corner"></div>
-              <div class="geo-dots">
-                <div class="geo-dot"></div><div class="geo-dot"></div><div class="geo-dot"></div><div class="geo-dot"></div>
-                <div class="geo-dot"></div><div class="geo-dot"></div><div class="geo-dot"></div><div class="geo-dot"></div>
-                <div class="geo-dot"></div><div class="geo-dot"></div><div class="geo-dot"></div><div class="geo-dot"></div>
-              </div>
               <div class="geo-card">
                 <div class="geo-card-line"></div>
                 <div class="geo-card-line"></div>
