@@ -16,24 +16,28 @@
   and do not relabel this as a case study. If a real client dashboard ever
   replaces it, that is a new file, not an edit to this one.
 
-  WHY THE MONTH SELECTOR EXISTS, AND WHAT IT ACTUALLY COVERS
+  THE MONTH SELECTOR (rebuilt 2026-09-13)
   A static screenshot invites "does it actually work?" — a working control
-  answers that without a backend. But read the mechanism before trusting it:
-  the two months are NOT a dataset. Each switchable value is stored in
-  data-oct / data-sep attributes on the element that displays it, and the
-  script swaps textContent on the 6 elements that carry those attributes —
-  the four KPI tiles plus the change label. That is all.
+  answers that without a backend. Six months are selectable and EVERY panel
+  recomputes: the four KPI tiles, the revenue/margin chart, the donut, the
+  margin breakdown, the signals list and the product table.
 
-  KNOWN INCONSISTENCY (unfixed as of 2026-09-13): everything else on the page
-  is hard-coded October. Switch to September and the contribution-margin tile
-  reads 55.8% while the donut beside it still reads 58.4%, the revenue chart
-  keeps October's shape, and the margin table keeps October's rows. On a page
-  whose whole pitch is trustworthy numbers, that contradiction is the first
-  thing a sharp prospect will notice. Fixing it means either giving the donut,
-  chart and table data-oct/data-sep equivalents (and inventing coherent
-  September figures for them), or dropping the selector to a single month.
-  Adding a third month means touching every data-* attribute by hand; if that
-  ever happens, move to a real dataset + render function first.
+  It did not always. The first version stored two months in data-oct /
+  data-sep attributes on five elements and swapped their textContent, leaving
+  everything else hard-coded to October — so switching to September showed
+  55.8% in the margin tile and 58.4% in the donut beside it, under a heading
+  that still said October. Clay's read was exactly right: it looked like a
+  malfunction. On a page selling trustworthy numbers that is the most
+  expensive possible bug.
+
+  Now there is one array (MONTHS, in the script block) and one render()
+  function that rebuilds the whole view from it. To add a month, append a
+  record; nothing in the markup needs touching. Two things to respect:
+  the margin + cost shares must total 100 (the donut draws margin as its
+  arc), and the chart window is TRAILING, so five months of history must sit
+  behind the earliest selectable month. checkData() enforces both at load and
+  shows a banner ON THE PAGE if either breaks — this page must never render
+  quietly wrong numbers again.
 
   WHAT IT DEPENDS ON
   · Links back to the homepage as "/" (root-absolute). The homepage links here
@@ -65,6 +69,7 @@
     .ring-area{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}.ring{width:142px;height:142px;border-radius:50%;background:conic-gradient(var(--rose-deep) 0 58%,var(--blush) 58% 100%);display:grid;place-items:center;margin:auto}.ring::after{content:'';width:92px;height:92px;background:#fff;border-radius:50%;position:absolute}.ring-inner{position:relative;z-index:1;text-align:center}.ring-inner strong{display:block;font-size:24px;letter-spacing:-.05em}.ring-inner small{font-size:10px;color:var(--muted)}.metric-list{display:grid;gap:10px}.metric{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #f0e9e6;padding-bottom:8px;font-size:11px}.metric:last-child{border:0}.metric span{color:var(--muted)}.metric b{font-weight:700}.signal{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #f0e9e6}.signal:last-child{border:0}.signal-dot{width:8px;height:8px;border-radius:50%;background:var(--rose-deep);margin-top:6px;flex:0 0 auto}.signal-dot.sage{background:var(--sage-deep)}.signal strong{display:block;font-size:12px}.signal p{margin:2px 0 0;color:var(--muted);font-size:11px}.products{margin-top:16px}.table{width:100%;border-collapse:collapse}.table th{text-align:left;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:0 0 10px}.table th:not(:first-child),.table td:not(:first-child){text-align:right}.table td{border-top:1px solid #f0e9e6;padding:12px 0;font-size:12px}.product{display:flex;align-items:center;gap:9px;text-align:left}.product-swatch{width:28px;height:28px;border-radius:9px;background:var(--blush);display:grid;place-items:center;color:var(--rose-deep);font:14px 'DM Serif Display',serif}.product-swatch.sage{background:var(--sage);color:var(--sage-deep)}.product-swatch.plum{background:#eadfe5;color:var(--plum)}.bar{height:6px;width:72px;background:#f0e9e6;border-radius:99px;display:inline-block;vertical-align:middle;overflow:hidden;margin-right:6px}.bar i{height:100%;display:block;background:var(--rose-deep);border-radius:inherit}.status{font-size:10px;padding:4px 7px;border-radius:99px;background:var(--sage);color:var(--sage-deep)}.status.watch{background:var(--blush);color:var(--rose-deep)}
     .footer-cta{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:34px 0 50px}.footer-cta p{color:var(--muted);margin:4px 0 0}.button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:99px;padding:12px 18px;background:var(--rose-deep);color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(169,97,109,.22);transition:transform .2s,background .2s}.button:hover{background:#8f4f5b;transform:translateY(-2px)}
     @media(max-width:850px){.intro{display:block}.controls{margin-top:22px;width:max-content}.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.footer-cta{display:block}.footer-cta .button{margin-top:18px}}@media(max-width:560px){.shell{padding:0 16px}.topbar-right .back{display:none}.dash{padding:13px;border-radius:20px}.dash-head{display:block}.source-list{margin-top:12px}.kpis{gap:8px}.kpi{padding:12px;min-height:98px}.kpi-value{font-size:21px}.ring-area{grid-template-columns:1fr}.ring{width:128px;height:128px}.table{min-width:560px}.products{overflow:auto}.intro{padding-top:32px}.intro h1{font-size:42px}}
+    .data-warning{background:#fff4f4;border:1px solid #e6b9bd;color:#8f4f5b;border-radius:12px;padding:10px 13px;font-size:12px;margin-bottom:14px;line-height:1.5}
   </style>
 </head>
 <body>
@@ -77,32 +82,195 @@
     <main>
       <section class="intro">
         <div><div class="eyebrow">For independent skincare &amp; body-care brands</div><h1>A calmer way to see what’s really working.</h1><p>This sample dashboard brings store, email, advertising, inventory, and customer data into one practical view—so a founder can decide what to promote, reorder, and stop.</p></div>
-        <div class="controls"><label for="period">Showing</label><select id="period"><option value="october">October 2025</option><option value="september">September 2025</option></select></div>
+        <div class="controls"><label for="period">Showing</label><select id="period"></select></div>
       </section>
 
       <section class="dash" aria-label="Synthetic beauty brand dashboard">
         <div class="dash-head"><div><div class="dash-title">Morrow &amp; Moss <span style="color:var(--rose-deep)">·</span> Owner view</div><div class="dash-sub">A synthetic example for a growing skincare brand</div></div><div class="source-list"><span class="source">Shopify</span><span class="source">Klaviyo</span><span class="source">Meta Ads</span><span class="source">Inventory CSV</span></div></div>
+        <div class="data-warning" id="dataWarning" hidden></div>
         <div class="kpis">
-          <div class="kpi"><div class="kpi-label">Net revenue</div><div class="kpi-value" data-oct="$86,420" data-sep="$79,180">$86,420</div><div class="kpi-change" data-oct="↑ 9.1% vs. prior month" data-sep="↑ 4.8% vs. prior month">↑ 9.1% vs. prior month</div></div>
-          <div class="kpi"><div class="kpi-label">Contribution margin</div><div class="kpi-value" data-oct="58.4%" data-sep="55.8%">58.4%</div><div class="kpi-change">↑ 2.6 pts</div></div>
-          <div class="kpi"><div class="kpi-label">Repeat purchase rate</div><div class="kpi-value" data-oct="32.6%" data-sep="30.2%">32.6%</div><div class="kpi-change">↑ 2.4 pts</div></div>
-          <div class="kpi"><div class="kpi-label">Inventory to watch</div><div class="kpi-value" data-oct="4 SKUs" data-sep="6 SKUs">4 SKUs</div><div class="kpi-change down">Needs a decision</div></div>
+          <div class="kpi"><div class="kpi-label">Net revenue</div><div class="kpi-value" id="kpiRevenue">—</div><div class="kpi-change" id="kpiRevenueChange">—</div></div>
+          <div class="kpi"><div class="kpi-label">Contribution margin</div><div class="kpi-value" id="kpiMargin">—</div><div class="kpi-change" id="kpiMarginChange">—</div></div>
+          <div class="kpi"><div class="kpi-label">Repeat purchase rate</div><div class="kpi-value" id="kpiRepeat">—</div><div class="kpi-change" id="kpiRepeatChange">—</div></div>
+          <div class="kpi"><div class="kpi-label">Inventory to watch</div><div class="kpi-value" id="kpiInventory">—</div><div class="kpi-change" id="kpiInventoryChange">—</div></div>
         </div>
         <div class="grid">
-          <article class="panel"><div class="panel-head"><div><h2>Revenue &amp; contribution</h2><div class="panel-note">Last 6 months · after product cost, shipping, discounts &amp; ads</div></div><div class="legend"><span>Revenue</span><span>Margin</span></div></div><div class="chart-wrap"><svg viewBox="0 0 720 210" role="img" aria-label="Revenue and contribution margin trend"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d79699" stop-opacity=".28"/><stop offset="1" stop-color="#d79699" stop-opacity="0"/></linearGradient></defs><line class="chart-grid" x1="0" y1="28" x2="720" y2="28"/><line class="chart-grid" x1="0" y1="82" x2="720" y2="82"/><line class="chart-grid" x1="0" y1="136" x2="720" y2="136"/><line class="chart-grid" x1="0" y1="190" x2="720" y2="190"/><path class="chart-area" d="M0 160 C55 145 70 150 120 135 S175 145 240 112 S300 128 360 105 S425 95 480 73 S540 92 600 60 S665 69 720 42 L720 190 L0 190 Z"/><path class="chart-line" d="M0 160 C55 145 70 150 120 135 S175 145 240 112 S300 128 360 105 S425 95 480 73 S540 92 600 60 S665 69 720 42"/><path d="M0 178 C65 170 80 174 120 164 S185 171 240 152 S305 158 360 143 S430 150 480 132 S545 141 600 118 S670 122 720 104" fill="none" stroke="#687763" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 7"/><circle class="chart-dot" cx="720" cy="42" r="5"/></svg></div><div class="chart-labels"><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span></div></article>
-          <article class="panel"><div class="panel-head"><div><h2>Where the margin goes</h2><div class="panel-note">October contribution margin</div></div></div><div class="ring-area"><div class="ring"><div class="ring-inner"><strong>58.4%</strong><small>contribution</small></div></div><div class="metric-list"><div class="metric"><span>Product cost</span><b>22.1%</b></div><div class="metric"><span>Paid media</span><b>10.8%</b></div><div class="metric"><span>Shipping + fees</span><b>8.7%</b></div><div class="metric"><span>Discounts + refunds</span><b>0.0%</b></div></div></div></article>
-          <article class="panel"><div class="panel-head"><div><h2>Signals worth seeing</h2><div class="panel-note">A short list for this week’s decisions</div></div></div><div class="signal"><span class="signal-dot"></span><div><strong>Overnight Renewal Serum</strong><p>Highest repeat-purchase rate at 41%. Consider a replenishment flow.</p></div></div><div class="signal"><span class="signal-dot sage"></span><div><strong>Rosewater Mist</strong><p>12 days of inventory left. Reorder before the next campaign.</p></div></div><div class="signal"><span class="signal-dot"></span><div><strong>Meta prospecting</strong><p>Strong first orders, but 18% below the blended repeat-customer value.</p></div></div></article>
-          <article class="panel"><div class="panel-head"><div><h2>Product decisions</h2><div class="panel-note">Sorted by revenue contribution</div></div></div><div class="products"><table class="table"><thead><tr><th>Product</th><th>Margin</th><th>Repeat</th><th>Status</th></tr></thead><tbody><tr><td><div class="product"><span class="product-swatch">✦</span>Overnight Serum</div></td><td><span class="bar"><i style="width:86%"></i></span>68%</td><td>41%</td><td><span class="status">Promote</span></td></tr><tr><td><div class="product"><span class="product-swatch sage">◌</span>Cloud Cream</div></td><td><span class="bar"><i style="width:72%"></i></span>57%</td><td>34%</td><td><span class="status">Healthy</span></td></tr><tr><td><div class="product"><span class="product-swatch plum">❋</span>Rosewater Mist</div></td><td><span class="bar"><i style="width:60%"></i></span>49%</td><td>28%</td><td><span class="status watch">Reorder</span></td></tr></tbody></table></div></article>
+          <article class="panel"><div class="panel-head"><div><h2>Revenue &amp; contribution</h2><div class="panel-note" id="chartNote">Last 6 months · after product cost, shipping, discounts &amp; ads</div></div><div class="legend"><span>Revenue</span><span>Margin</span></div></div><div class="chart-wrap"><svg viewBox="0 0 720 210" role="img" aria-label="Revenue and contribution margin trend"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d79699" stop-opacity=".28"/><stop offset="1" stop-color="#d79699" stop-opacity="0"/></linearGradient></defs><line class="chart-grid" x1="0" y1="28" x2="720" y2="28"/><line class="chart-grid" x1="0" y1="82" x2="720" y2="82"/><line class="chart-grid" x1="0" y1="136" x2="720" y2="136"/><line class="chart-grid" x1="0" y1="190" x2="720" y2="190"/><path class="chart-area" id="chartArea" d=""/><path class="chart-line" id="chartLine" d=""/><path id="chartMargin" d="" fill="none" stroke="#687763" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 7"/><circle class="chart-dot" id="chartDot" cx="720" cy="42" r="5"/></svg></div><div class="chart-labels" id="chartLabels"></div></article>
+          <article class="panel"><div class="panel-head"><div><h2>Where the margin goes</h2><div class="panel-note" id="marginNote">—</div></div></div><div class="ring-area"><div class="ring" id="ring"><div class="ring-inner"><strong id="ringPct">—</strong><small>contribution</small></div></div><div class="metric-list" id="metricList"></div></div></article>
+          <article class="panel"><div class="panel-head"><div><h2>Signals worth seeing</h2><div class="panel-note">A short list for this month’s decisions</div></div></div><div id="signalList"></div></article>
+          <article class="panel"><div class="panel-head"><div><h2>Product decisions</h2><div class="panel-note">Sorted by revenue contribution</div></div></div><div class="products"><table class="table"><thead><tr><th>Product</th><th>Margin</th><th>Repeat</th><th>Status</th></tr></thead><tbody id="productBody"></tbody></table></div></article>
         </div>
       </section>
       <section class="footer-cta"><div><div class="eyebrow">A sample of the system</div><h2 style="font:34px 'DM Serif Display',serif;margin:8px 0 0;letter-spacing:-.03em">The real version uses your data.</h2><p>Start with a $500 data audit to map the sources, decisions, and reports your brand actually needs.</p></div><a class="button" href="mailto:clay.dunker@gmail.com?subject=Beauty%20brand%20data%20audit">Ask about an audit&nbsp; →</a></section>
     </main>
   </div>
   <script>
-    const period = document.getElementById('period');
-    period.addEventListener('change', () => {
-      document.querySelectorAll('[data-oct]').forEach(el => { el.textContent = el.dataset[period.value === 'october' ? 'oct' : 'sep']; });
+  /* ──────────────────────────────────────────────────────────────────────
+     MONTHLY DATA — the single source of truth for this page.
+
+     Every figure on screen is derived from this array. Nothing is written
+     into the markup by hand any more; the previous version kept values in
+     data-oct/data-sep attributes on five elements, which meant switching
+     month changed those five and left the chart, the donut and the margin
+     table showing October for ever. That read as a broken dashboard, which
+     is the worst possible impression for a page selling trustworthy numbers.
+
+     INVARIANT: margin + productCost + paidMedia + shipping + discounts
+     must equal 100 for every month — they are shares of revenue, and the
+     donut draws `margin` as its filled arc. checkData() below verifies this
+     at load and SHOWS A BANNER on the page if it ever breaks, rather than
+     rendering a quietly wrong chart.
+
+     The window is trailing: selecting a month charts it plus the five before
+     it, so MONTHS must keep five months of history behind the earliest
+     selectable month (SELECTABLE_COUNT). Add new months by appending.
+     `products` and `signals` are only needed on selectable months.
+     ────────────────────────────────────────────────────────────────────── */
+  const MONTHS = [
+    { key:'dec2024', label:'December 2024', short:'Dec', revenue:61400, margin:43.9, repeat:20.2, inventory:7, costs:{productCost:24.9, paidMedia:16.2, shipping:9.6, discounts:5.4} },
+    { key:'jan2025', label:'January 2025',  short:'Jan', revenue:38900, margin:49.6, repeat:24.8, inventory:3, costs:{productCost:23.8, paidMedia:12.1, shipping:9.0, discounts:5.5} },
+    { key:'feb2025', label:'February 2025', short:'Feb', revenue:43500, margin:51.3, repeat:25.6, inventory:4, costs:{productCost:23.4, paidMedia:11.6, shipping:8.9, discounts:4.8} },
+    { key:'mar2025', label:'March 2025',    short:'Mar', revenue:48700, margin:52.0, repeat:26.3, inventory:5, costs:{productCost:23.1, paidMedia:11.9, shipping:8.8, discounts:4.2} },
+    { key:'apr2025', label:'April 2025',    short:'Apr', revenue:52100, margin:53.4, repeat:27.1, inventory:3, costs:{productCost:22.9, paidMedia:11.4, shipping:8.8, discounts:3.5} },
+    { key:'may2025', label:'May 2025',      short:'May', revenue:57600, margin:54.1, repeat:27.8, inventory:4, costs:{productCost:22.8, paidMedia:11.2, shipping:8.8, discounts:3.1},
+      products:[ ['Overnight Serum','✦','',64,38,'Promote',''], ['Cloud Cream','◌','sage',55,31,'Healthy',''], ['Rosewater Mist','❋','plum',47,25,'Healthy',''] ],
+      signals:[ ['Overnight Renewal Serum','Repeat rate climbed to 38%. Worth building a replenishment flow.',''],
+                ['Cloud Cream','Margin held at 55% straight through the spring promo.','sage'],
+                ['Welcome email flow','Drove 21% of first orders this month at no extra spend.',''] ] },
+    { key:'jun2025', label:'June 2025',     short:'Jun', revenue:61900, margin:53.2, repeat:28.6, inventory:5, costs:{productCost:23.0, paidMedia:12.4, shipping:8.9, discounts:2.5},
+      products:[ ['Overnight Serum','✦','',65,39,'Promote',''], ['Cloud Cream','◌','sage',54,32,'Healthy',''], ['Rosewater Mist','❋','plum',46,26,'Reorder','watch'] ],
+      signals:[ ['Rosewater Mist','Margin slipped to 46% — freight surcharge on the last batch.',''],
+                ['Meta prospecting','Spend up 11% but first-order value is flat. Worth a look.',''],
+                ['Cloud Cream','Repeat steady at 32%. No action needed this month.','sage'] ] },
+    { key:'jul2025', label:'July 2025',     short:'Jul', revenue:66300, margin:54.8, repeat:29.4, inventory:3, costs:{productCost:22.6, paidMedia:11.5, shipping:8.8, discounts:2.3},
+      products:[ ['Overnight Serum','✦','',66,40,'Promote',''], ['Cloud Cream','◌','sage',56,33,'Healthy',''], ['Rosewater Mist','❋','plum',48,27,'Healthy',''] ],
+      signals:[ ['Overnight Renewal Serum','Best margin month yet at 66%. A bundle could carry it further.','sage'],
+                ['Discounting','Down to 2.3% of revenue — the full-price test is holding.','sage'],
+                ['Rosewater Mist','Back to 48% margin now the freight surcharge has cleared.','sage'] ] },
+    { key:'aug2025', label:'August 2025',   short:'Aug', revenue:71800, margin:53.2, repeat:29.1, inventory:5, costs:{productCost:22.9, paidMedia:13.1, shipping:8.9, discounts:1.9},
+      products:[ ['Overnight Serum','✦','',65,39,'Healthy',''], ['Cloud Cream','◌','sage',55,33,'Healthy',''], ['Rosewater Mist','❋','plum',45,26,'Reorder','watch'] ],
+      signals:[ ['Paid media','13.1% of revenue, the highest since December. Review the creative.',''],
+                ['Rosewater Mist','19 days of inventory left. Reorder before the autumn push.',''],
+                ['Repeat rate','Down 0.3 pts — the first monthly dip since January.',''] ] },
+    { key:'sep2025', label:'September 2025',short:'Sep', revenue:79180, margin:55.8, repeat:30.2, inventory:6, costs:{productCost:22.4, paidMedia:11.7, shipping:8.8, discounts:1.3},
+      products:[ ['Overnight Serum','✦','',67,40,'Promote',''], ['Cloud Cream','◌','sage',56,34,'Healthy',''], ['Rosewater Mist','❋','plum',48,27,'Reorder','watch'] ],
+      signals:[ ['Overnight Renewal Serum','Repeat rate at 40% — the replenishment flow is working.','sage'],
+                ['Rosewater Mist','12 days of inventory left. Reorder before the next campaign.',''],
+                ['Meta prospecting','Strong first orders, but 18% below blended repeat value.',''] ] },
+    { key:'oct2025', label:'October 2025',  short:'Oct', revenue:86420, margin:58.4, repeat:32.6, inventory:4, costs:{productCost:22.1, paidMedia:10.8, shipping:8.7, discounts:0.0},
+      products:[ ['Overnight Serum','✦','',68,41,'Promote',''], ['Cloud Cream','◌','sage',57,34,'Healthy',''], ['Rosewater Mist','❋','plum',49,28,'Reorder','watch'] ],
+      signals:[ ['Overnight Renewal Serum','Highest repeat-purchase rate yet at 41%. Keep promoting it.','sage'],
+                ['Rosewater Mist','12 days of inventory left. Reorder before the next campaign.',''],
+                ['Discounting','Held at 0% of revenue and margin still rose 2.6 pts.','sage'] ] }
+  ];
+
+  /* Tunables. Chart geometry matches the SVG viewBox in the markup — change
+     one and you must change the other. */
+  const WINDOW_MONTHS    = 6;    // months charted, including the selected one
+  const SELECTABLE_COUNT = 6;    // how many recent months the dropdown offers
+  const COST_ROWS = [['Product cost','productCost'],['Paid media','paidMedia'],['Shipping + fees','shipping'],['Discounts + refunds','discounts']];
+  const CHART = { w:720, baseline:190, revTop:25, revBottom:185, marTop:95, marBottom:182, marMin:40, marMax:65 };
+
+  const $ = id => document.getElementById(id);
+  const money = n => '$' + n.toLocaleString('en-US');
+  const pts   = d => (d >= 0 ? '↑ ' : '↓ ') + Math.abs(d).toFixed(1) + ' pts';
+
+  /* Say so on the page, not in the console. A silently wrong dashboard is
+     worse than one that admits it has a problem. */
+  function warn(msg) {
+    const el = $('dataWarning');
+    el.textContent = 'Demo data problem: ' + msg;
+    el.hidden = false;
+  }
+
+  function checkData() {
+    const bad = MONTHS.filter(m => {
+      const sum = m.margin + m.costs.productCost + m.costs.paidMedia + m.costs.shipping + m.costs.discounts;
+      return Math.abs(sum - 100) > 0.05;
     });
+    if (bad.length) warn(bad.map(m => m.label).join(', ') + ' — margin and costs do not add up to 100% of revenue.');
+    const selectable = MONTHS.slice(-SELECTABLE_COUNT);
+    const missing = selectable.filter(m => !m.products || !m.signals);
+    if (missing.length) warn(missing.map(m => m.label).join(', ') + ' — selectable month is missing products or signals.');
+    if (MONTHS.length < SELECTABLE_COUNT + WINDOW_MONTHS - 1)
+      warn('not enough history: the earliest selectable month cannot fill a ' + WINDOW_MONTHS + '-month chart.');
+  }
+
+  /* Catmull-Rom through the points, so the trend reads as a curve rather
+     than a polyline. Endpoints duplicate their neighbour for the tangent. */
+  function smooth(points) {
+    if (points.length < 2) return '';
+    let d = `M${points[0][0]} ${points[0][1].toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i - 1] || points[i], p1 = points[i], p2 = points[i + 1], p3 = points[i + 2] || points[i + 1];
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d += `C${c1[0].toFixed(1)} ${c1[1].toFixed(1)} ${c2[0].toFixed(1)} ${c2[1].toFixed(1)} ${p2[0]} ${p2[1].toFixed(1)}`;
+    }
+    return d;
+  }
+
+  function render(key) {
+    const idx = MONTHS.findIndex(m => m.key === key);
+    if (idx === -1) { warn('no data for "' + key + '".'); return; }
+    const m = MONTHS[idx], prev = MONTHS[idx - 1];
+
+    /* KPIs — changes are computed against the previous month, never typed in */
+    $('kpiRevenue').textContent = money(m.revenue);
+    $('kpiRevenueChange').textContent = prev
+      ? ((m.revenue >= prev.revenue ? '↑ ' : '↓ ') + Math.abs((m.revenue / prev.revenue - 1) * 100).toFixed(1) + '% vs. prior month')
+      : 'No prior month in this sample';
+    $('kpiMargin').textContent  = m.margin.toFixed(1) + '%';
+    $('kpiMarginChange').textContent = prev ? pts(m.margin - prev.margin) : '—';
+    $('kpiRepeat').textContent  = m.repeat.toFixed(1) + '%';
+    $('kpiRepeatChange').textContent = prev ? pts(m.repeat - prev.repeat) : '—';
+    $('kpiInventory').textContent = m.inventory + (m.inventory === 1 ? ' SKU' : ' SKUs');
+    $('kpiInventoryChange').textContent = m.inventory >= 5 ? 'Needs a decision' : 'Under control';
+    $('kpiInventoryChange').className = 'kpi-change' + (m.inventory >= 5 ? ' down' : '');
+
+    /* Chart — trailing window ending on the selected month */
+    const win  = MONTHS.slice(Math.max(0, idx - WINDOW_MONTHS + 1), idx + 1);
+    const revs = win.map(x => x.revenue);
+    const lo = Math.min(...revs) * 0.88, hi = Math.max(...revs) * 1.06;
+    const step = CHART.w / (win.length - 1);
+    const revPts = win.map((x, i) => [Math.round(i * step), CHART.revBottom - (x.revenue - lo) / (hi - lo) * (CHART.revBottom - CHART.revTop)]);
+    const marPts = win.map((x, i) => {
+      const t = Math.min(1, Math.max(0, (x.margin - CHART.marMin) / (CHART.marMax - CHART.marMin)));
+      return [Math.round(i * step), CHART.marBottom - t * (CHART.marBottom - CHART.marTop)];
+    });
+    const line = smooth(revPts);
+    $('chartLine').setAttribute('d', line);
+    $('chartArea').setAttribute('d', `${line} L${CHART.w} ${CHART.baseline} L0 ${CHART.baseline} Z`);
+    $('chartMargin').setAttribute('d', smooth(marPts));
+    const last = revPts[revPts.length - 1];
+    $('chartDot').setAttribute('cx', last[0]);
+    $('chartDot').setAttribute('cy', last[1].toFixed(1));
+    $('chartLabels').innerHTML = win.map(x => `<span>${x.short}</span>`).join('');
+    $('chartNote').textContent = `${win[0].short} – ${win[win.length - 1].short} · after product cost, shipping, discounts & ads`;
+
+    /* Donut + breakdown — the pair that used to disagree with the KPI tile */
+    $('ringPct').textContent  = m.margin.toFixed(1) + '%';
+    $('ring').style.background = `conic-gradient(var(--rose-deep) 0 ${m.margin}%, var(--blush) ${m.margin}% 100%)`;
+    $('marginNote').textContent = m.label + ' contribution margin';
+    $('metricList').innerHTML = COST_ROWS
+      .map(([name, k]) => `<div class="metric"><span>${name}</span><b>${m.costs[k].toFixed(1)}%</b></div>`).join('');
+
+    /* Signals + product table */
+    $('signalList').innerHTML = (m.signals || [])
+      .map(([title, text, tone]) => `<div class="signal"><span class="signal-dot ${tone}"></span><div><strong>${title}</strong><p>${text}</p></div></div>`).join('');
+    $('productBody').innerHTML = (m.products || [])
+      .map(([name, mark, swatch, margin, repeat, status, statusClass]) =>
+        `<tr><td><div class="product"><span class="product-swatch ${swatch}">${mark}</span>${name}</div></td>` +
+        `<td><span class="bar"><i style="width:${Math.min(100, Math.round(margin * 1.25))}%"></i></span>${margin}%</td>` +
+        `<td>${repeat}%</td><td><span class="status ${statusClass}">${status}</span></td></tr>`).join('');
+  }
+
+  const period = $('period');
+  period.innerHTML = MONTHS.slice(-SELECTABLE_COUNT).reverse()
+    .map(m => `<option value="${m.key}">${m.label}</option>`).join('');
+  period.addEventListener('change', () => render(period.value));
+  checkData();
+  render(period.value);
   </script>
 </body>
 </html>
